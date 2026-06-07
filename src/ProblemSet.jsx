@@ -15,7 +15,7 @@ function flattenContests(contests) {
       const extraTagSet = new Set(extraTags);
       out.push({
         id: String(p.problem_id),
-        contest: c.contest_name,
+        contest: c.contest_name + ' ' + c.year,
         region: c.region,
         year: c.year,
         searchKey: `${c.region || ''} ${c.contest_name || ''} ${c.year || ''}`,
