@@ -269,7 +269,7 @@ function ProblemsTable({ showTag, problems, updateStatus }) {
 export default function ProblemSet() {
   const [showTag, setShowTag] = useState(false);
   const [filter, setFilter] = useState("all");
-  const [sort, setSort] = useState("difficulty_desc");
+  const [sort, setSort] = useState("solve_rate_desc");
   const [searchInput, setSearchInput] = useState("");
   const [committedSearch, setCommittedSearch] = useState("");
   const [region, setRegion] = useState("all");

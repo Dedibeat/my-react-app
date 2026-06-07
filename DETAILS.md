@@ -269,6 +269,53 @@ Plus the previous session's uncommitted changes (DB fix, etc.) listed in the "Is
 
 ---
 
+## Frontend changes (this session)
+
+Five small UI-only changes, all in `src/ProblemSet.{jsx,css}`. None touched the backend, the data, the deploy config, or any unrelated file.
+
+### 1. Tag badges
+
+The Tags cell used to render the joined string `"math, ad-hoc"` as plain text. Now each tag is its own pill-shaped `<span class="tag">` inside a flex-wrap `.tags` container, styled with the same family as the difficulty badge (rounded background, subtle border, `nowrap`).
+
+- `flattenContests` keeps the `tagList` array, the joined `tags` string (still used by the search hay), and an `extraTagSet` of `extra_tags`.
+- Extra tags are prefixed with `*` (e.g. `*math`) and get `title="extra tag"` on hover, so the LLM's tiered confidence is visible without color-coding.
+- Tag background is a flat neutral `#f1f1f1` (no longer HSL-by-confidence — the per-problem color wasn't visible because all tags of a problem shared the same hue).
+- Mobile (≤768px) keeps tags visible by switching the 4th card cell to `flex-direction: column` so the `Tags` label sits above the wrapping badges.
+
+### 2. Search button icon
+
+Replaced the "Search" text in the search button with a 16×16 inline SVG magnifying glass (Feather-style). Added a `.btn-icon` modifier (`width:32px; height:32px; display:inline-flex; justify/align center`) to keep the button square. `aria-label="Search"` + `title="Search"` for keyboard/screen-reader users. Input type is still `type="search"`, Enter still commits.
+
+### 3. Two columns instead of one "Difficulty" cell
+
+`difficulty_estimate` is LLM-derived per problem with 4 values (`easy`/`medium`/`hard`/`very_hard`, plus 24 missing). It was being thrown away by `flattenContests`. The previous "Difficulty" column was actually showing the calculated solve rate.
+
+- The old column is now labeled **Solve Rate** (header rename only, no logic change; `DifficultyBadge` still renders the red→green HSL gradient on the percent value).
+- New **Difficulty** column to the right, populated from `difficulty_estimate`. New `DifficultyLabel` component renders each value as a pill with a fixed hue (green→yellow→orange→red, all 85% lightness). `very_hard` displays as "very hard" for readability. Missing values render as a muted `—`.
+- Mobile `::before` label list updated to match the new column order: `Tags / Solve Rate / Difficulty / Status`.
+
+### 4. Sort logic rewrite
+
+- The previous `difficulty_desc` / `difficulty_asc` values were misnomers — they sorted by solve rate. They now mean what the label says.
+- New `DIFFICULTY_RANK = { easy: 1, medium: 2, hard: 3, very_hard: 4 }`. Problems with no `difficulty_estimate` map to `Infinity`, so they sort to the bottom in both directions.
+- `Difficulty ↓ / ↑` primary sort = rank, secondary sort = solve rate in the same direction. So within `very_hard`, the lowest-solve-rate ones come first under `↓`; within `easy`, the highest-solve-rate ones come first under `↓`.
+- Added `Solve Rate ↓` and `Solve Rate ↑` options to the dropdown (the user asked for "sort by solve rate"; added both directions for symmetry with the other columns).
+- Dropdown order: `Difficulty ↓ / Difficulty ↑ / Solve Rate ↓ / Solve Rate ↑ / ID ↑`.
+- Default selection changed to `solve_rate_desc` (easiest problems first by solve rate).
+
+### 5. What was NOT touched
+
+- `src/search.js` and the boolean search AST are unchanged.
+- `data/tagged.json` and `public/tagged.json` are unchanged in this session.
+- Backend (`src/server.py`, `src/auth.py`, `src/status.py`, `src/db.py`) and deploy config (`vercel.json`, `vite.config.js`) are unchanged.
+- The two pre-existing lint errors in `App.jsx` and `api.js` are still there (unrelated).
+
+### Build / lint
+
+`npm run build` is clean. `npm run lint` shows only the two pre-existing errors noted at the bottom of this file.
+
+---
+
 ## Codebase overview
 
 ### Repo layout

@@ -8,7 +8,7 @@ problems.json is dummy data used in implementing.
 Final goal is to deploy it online. To do that i'm thinking vercel app. Keep it in mind.
 documentation: https://vercel.com/docs
 
-Commit your changes after task is done
+Commit your changes and explainur chagnes in DETAILS.md after task is done
 When coding follow the below rules:
 
 ## 1. Think Before Coding
