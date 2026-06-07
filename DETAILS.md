@@ -448,3 +448,73 @@ Action taken: ran `vercel --prod --yes` from the repo root.
 What was NOT done:
 - `git push` was skipped — the local working tree is already in sync with `origin/master`, and the GitHub→Vercel webhook is what is not firing. Pushing again would not change anything. The canonical production URL is now in sync with `master` via the manual `vercel --prod` above.
 - The `AGENTS.md` simplification in the working tree (replacing the legacy rules preamble with `First read DETAILS.md`) is left uncommitted — it is the user's pending edit, not part of this deploy task.
+
+## Migration to GitHub Pages (this session)
+
+The new live URL is **https://dedibeat.github.io** (user page repo `Dedibeat/dedibeat.github.io`, default branch `main`, GitHub Pages on). The Vercel deployment is now redundant but left in place for now.
+
+### What changed in this repo
+
+- `src/api.js`: replaced the relative `/api/*` paths with `${API_BASE}${path}`, where
+  `API_BASE = import.meta.env.VITE_API_BASE || "https://my-react-app-33zw.onrender.com"`.
+  Vite inlines `import.meta.env.VITE_*` at build time. If the env var is unset (the
+  normal case), the bundle is hard-wired to Render. The dev server proxy in
+  `vite.config.js` still points `/api` to `http://127.0.0.1:8000` so local dev is
+  unaffected.
+- That's the only source change. No backend changes, no data changes, no config
+  changes.
+
+### What was pushed to `Dedibeat/dedibeat.github.io`
+
+Wiped the older vanilla-JS "Live Problem Set" placeholder and replaced it with the
+Vite build:
+
+- removed: `index.html`, `scripts.js`, `search.js`, `styles.css`, `num-logo.png`, `search-tip.txt`
+- added: `index.html`, `assets/index-wuD9Q862.js`, `assets/index-DyN98pTy.css`, `tagged.json`, `.nojekyll`
+
+`tagged.json` is the full ~11 MB dataset (Vite's `publicDir: 'data'` in
+`vite.config.js` copies it into the build). `.nojekyll` disables the Jekyll
+processor so the `assets/` directory is served as-is.
+
+### What I did NOT do
+
+- Source was **not** moved into `dedibeat.github.io`. The page repo holds only the
+  build output; the source stays in `Dedibeat/my-react-app` (this repo). If you'd
+  rather have the React source live in the page repo too, say so and I'll move it.
+- The Vercel deployment at `https://my-react-app-mu-ecru.vercel.app` was **not**
+  removed. `vercel.json` still has the `/api/*` rewrite. Both can be deleted when
+  you've confirmed the GH Pages + Render setup is solid.
+- The `git push` from the previous session's commit (`f32d0e8`) is still
+  unpushed. The build that is now live on GH Pages was assembled locally
+  (`npm run build` against the in-tree source) and pushed via SSH directly to
+  `Dedibeat/dedibeat.github.io`, bypassing GitHub. `my-react-app` is still one
+  commit ahead of `origin/master`.
+
+### Action item you have to do manually
+
+The Render backend still has the old `CORS_ORIGINS` (whatever it was — almost
+certainly just `http://localhost:5173` and possibly the Vercel origin). The
+browser will block every API call from `https://dedibeat.github.io` until you
+add that origin. Confirmed by preflight:
+
+```
+$ curl -sI -X OPTIONS https://my-react-app-33zw.onrender.com/api/health \
+    -H "Origin: https://dedibeat.github.io" \
+    -H "Access-Control-Request-Method: GET"
+HTTP/2 400
+vary: Origin
+```
+
+→ In the Render dashboard for `my-react-app-33zw`, set `CORS_ORIGINS` to
+`https://dedibeat.github.io` (comma-separate if you also want to keep the old
+origins working). After that, signup / login / status from the GH Pages site
+will start succeeding.
+
+### Live verification
+
+- `curl -s https://dedibeat.github.io/` returns the Vite `index.html` referencing `assets/index-wuD9Q862.js` and `assets/index-DyN98pTy.css`.
+- `curl -s https://dedibeat.github.io/assets/index-wuD9Q862.js` contains both `my-react-app-33zw.onrender.com` and all four sort keys (`difficulty_desc`, `difficulty_asc`, `solve_rate_desc`, `solve_rate_asc`).
+- `curl -sI https://dedibeat.github.io/tagged.json` → `200`, `content-type: application/json`.
+- The `has_pages: true` flag on the repo confirms GitHub Pages is on (the old
+  read-time `Mon, 25 Aug 2025` cache was just edge propagation; a re-curl
+  seconds later showed the new content).

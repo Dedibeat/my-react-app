@@ -1,5 +1,9 @@
 const TOKEN_KEY = "pset.token";
 
+const API_BASE =
+  import.meta.env.VITE_API_BASE ||
+  "https://my-react-app-33zw.onrender.com";
+
 export function getToken() {
   return localStorage.getItem(TOKEN_KEY) || "";
 }
@@ -13,7 +17,7 @@ async function request(path, opts = {}) {
   const headers = { "Content-Type": "application/json", ...(opts.headers || {}) };
   const token = getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
-  const res = await fetch(path, { ...opts, headers });
+  const res = await fetch(`${API_BASE}${path}`, { ...opts, headers });
   if (!res.ok) {
     let msg = `HTTP ${res.status}`;
     try {
