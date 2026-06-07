@@ -174,3 +174,215 @@ npm run dev
 Vite's dev server (5173) proxies `/api/*` → `localhost:8000`, matching the Vercel prod setup. Schema is auto-created on first request.
 
 **Sandbox note:** if verifying in a Codex-style sandbox, run the server and the test curls in the **same** `exec_command` — background uvicorn processes started with `nohup`/`disown` get reaped between separate `exec_command` calls, and subsequent curls will hit a dead process. The earlier "server died on the first request" symptom in the previous session's notes was almost certainly this, not a real bug.
+
+
+## Frontend changes (next session)
+
+This session was entirely frontend + data. Backend untouched. None of these changes are pushed to GitHub yet — `git status` shows them as uncommitted.
+
+### 1. Fixed dead controls (filter / sort / search / status click)
+
+`ProblemSet.jsx` originally rendered a `Controls` component whose inputs and selects had `id` attributes but no `onChange` handlers, and the parent had no state to read from. The result: typing in search did nothing, changing the sort did nothing, and the Status cell was unclickable when the status was empty (the `<span>` had `display: grid` and zero intrinsic width because the CSS min-width rule was scoped to classed `td`s only).
+
+Wired everything through React state:
+- `filter`, `sort`, `region`, `searchInput`, `committedSearch` live in `ProblemSet`.
+- `visible` is a single `useMemo([problems, filter, sort, region, searchAst])` that produces the final list. Both `<Top total={visible.length} />` and `<ProblemsTable problems={visible} />` read from it, so the summary count and the table rows are guaranteed to agree.
+- Status span now has `minWidth: 120, padding: 8, cursor: pointer` inline so the click target is always ≥120px wide even when status is empty. Empty cells render a muted `—` placeholder so the affordance is visible.
+
+### 2. Search button + delayed filter
+
+Per request: typing alone should not filter; only the Search button (or Enter) commits. Split into two states:
+- `searchInput` — what the user is typing.
+- `committedSearch` — what `parseSearch` is run against.
+
+`<button type="button">` (explicit, to prevent any accidental form submit) calls `setCommittedSearch(searchInput)`. Enter on the input also commits via `onKeyDown`.
+
+### 3. Region filter
+
+New `Region:` dropdown. `regions` is computed from the dataset via `useMemo([problems])` and sorted. Starts with `All`, then one entry per unique region. The seven regions in `tagged.json` are: Asia East Continent, Asia Pacific, Asia West Continent, Europe, Latin America, North America, Northern Eurasia.
+
+### 4. Boolean search (`and` / `or` / `not` / parens / `|` / `-foo` / `"phrase"`)
+
+The user uploaded an old `search.js` (originally at the repo root, moved to `src/search.js`). It exports:
+- `tokenizeSearch(input)` → token stream
+- `parseSearch(input)` → AST (or `null` for empty input)
+- `evalSearchAst(node, hay)` → boolean
+
+Two real bugs were in the file (the user flagged it as "may be incomplete or wrong"):
+
+1. **`or` keyword was not recognized** — only `|` worked. Tokenizer only mapped `'and'`, `'not'`, and `'|'`; `or` fell through to be parsed as a literal TERM. So `graph OR tree` parsed as `graph AND or AND tree` (with implicit AND), which never matched. Fixed by adding `lower === 'or'` next to `'and'`/`'not'`.
+2. **`NOT`/`-foo` as a prefix was silently dropped** when followed by a TERM. The original implicit-AND rule only fired between two atoms (TERM/`)` and TERM/`(`), so `foo -bar` produced tokens `[TERM(foo), NOT, TERM(bar)]` with no AND inserted. The parser then consumed only `TERM(foo)` and returned it, dropping the rest. Fixed the rule to also insert AND when the previous token is an atom *or* a unary prefix (NOT) followed by TERM/`(`. The correct shape is `[TERM(foo), AND, NOT, TERM(bar)]` so the parser produces `AND(TERM(foo), NOT(TERM(bar)))`.
+
+Hay passed to the evaluator: `${name} ${searchKey} ${tags}`.toLowerCase(), where `searchKey = region + ' ' + contest_name + ' ' + year` (per the original spec). Verified the parser with 30+ cases against the real dataset (`graph`, `graph AND tree`, `(graph OR tree) AND dp`, `ICPC 2024 -geometry`, `Hangzhou`, `NOT NOT foo`, etc.).
+
+### 5. Difficulty is now solve-rate, not average score
+
+The cell used to show `p.average_score` (e.g. 93.32 for id 8072). Changed `flattenContests` to compute the percentage of teams that solved:
+
+```js
+difficulty: (p.total_number_of_participant > 0
+  ? (p.problem_solved_in_contest / p.total_number_of_participant) * 100
+  : 0),
+```
+
+For id 8072: 2249 solved / 2669 total = **84.26%** (was 93.32). The `DifficultyBadge` already takes a 0–100 number and colorizes green→red via HSL hue, so it works as-is. Sort and top-N logic didn't need changes.
+
+### 6. Deduped `tagged.json` — two passes
+
+The dataset had 2658 problem entries but only 1799 unique `problem_url`s. Pass 1 (this session, earlier) deduped by `problem_url` and dropped the JSON from 15.6 MB to 11.8 MB.
+
+But after that, the browser console started showing React duplicate-key warnings on `10596, 10601, 14917, 14922, 14931, …`. Root cause: 85 `problem_id`s were used in **2+ contests with different URLs** — e.g. id `6303` exists at `qoj.ac/contest/1197/problem/6303` (ICPC) *and* `qoj.ac/contest/1481/problem/6303` (EC-Final 2023 Warm Up). URL-dedup missed them. Pass 2 (this session, later) deduped by `problem_id` first, then URL:
+
+```python
+seen_ids, seen_urls = set(), set()
+for contest in data:
+    contest["problems"] = [p for p in contest["problems"]
+        if p["problem_id"] not in seen_ids
+        and p["problem_url"] not in seen_urls
+        and not (seen_ids.add(p["problem_id"]) or seen_urls.add(p["problem_url"]))]
+```
+
+Result: 1799 → **1668** problems, 131 extras removed, 0 remaining duplicate ids. Mirrored to `data/tagged.json` and `public/tagged.json`. `dist/tagged.json` is regenerated by the build.
+
+**Side note about the "table not filtered" complaint:** that was caused by the React key warning. When two `<tr key="10596">` siblings exist, React's reconciler can leave stale rows mounted in some browsers even when `visible` shrinks, making it look like the table isn't responding to the search. The dedup fixed the keys and the table now correctly tracks the count.
+
+### 7. Show-tags button label flips
+
+Minor: button now reads "Show tags" / "Hide tags" based on `showTag` state, so the affordance is obvious. CSS unchanged (`#problemsTable.tags-hidden th:nth-child(4), #problemsTable.tags-hidden td:nth-child(4) { display: none; }` was already correct).
+
+### 8. Small CSS tweak
+
+Added `#searchInput { min-width: 220px; padding: 6px; margin-right: 4px; }` to `ProblemSet.css` so the search box has a reasonable width next to its button. No other CSS changes.
+
+### Uncommitted working tree
+
+```
+ M DETAILS.md             (this file)
+ M src/ProblemSet.jsx
+ M src/ProblemSet.css
+ M data/tagged.json
+ M public/tagged.json
+?? src/search.js
+```
+
+Plus the previous session's uncommitted changes (DB fix, etc.) listed in the "Issue 3" section above.
+
+---
+
+## Codebase overview
+
+### Repo layout
+
+```
+my-react-app/
+├── AGENTS.md                  agent conventions (surgical changes, simplicity, etc.)
+├── README.md                  user-facing setup + deploy
+├── DETAILS.md                 this file
+├── package.json               React deps (React 19, Vite 7, react-markdown etc.)
+├── vite.config.js             publicDir: 'data', dev proxy /api → :8000
+├── vercel.json                rewrites /api/* → Render
+├── index.html                 Vite root
+├── data/
+│   └── tagged.json            the main dataset (now 1668 problems, ~11.3 MB)
+├── public/
+│   └── tagged.json            mirror of data/tagged.json (Vite serves data/, not public/, but kept in sync for safety)
+├── dist/                      vite build output (gitignored, deploys to Vercel)
+└── src/
+    ├── main.jsx               <StrictMode><App/></StrictMode>
+    ├── App.jsx                login / signup / me, gates ProblemSet
+    ├── App.css                (empty)
+    ├── index.css              (commented out)
+    ├── ProblemSet.jsx         the main table + controls + filters
+    ├── ProblemSet.css         table + controls + responsive card layout
+    ├── search.js              boolean-search tokenizer/parser/evaluator
+    ├── api.js                 fetch wrapper with JWT (Bearer token in localStorage "pset.token")
+    ├── problems.json          LEGACY dummy data, not used (left alone per AGENTS.md "Surgical Changes")
+    ├── assets/                static assets
+    ├── auth.py                FastAPI /api/auth/* router
+    ├── db.py                  Turso HTTP pipeline (stdlib only, no libsql)
+    ├── status.py              FastAPI /api/status/* router
+    ├── server.py              FastAPI app, CORS, exception handler
+    ├── __init__.py            empty
+    ├── __pycache__/           python bytecode
+    └── _pyproject.toml, requirements.txt at the repo root
+```
+
+### Frontend data flow
+
+1. `App.jsx` checks `localStorage.pset.token`. If absent, shows login/signup form. If present, calls `api.me()` to validate, then renders `<ProblemSet/>`.
+2. `ProblemSet.jsx` `useEffect` fetches two things in parallel:
+   - `/tagged.json` (Vite serves it from `data/` via `publicDir`).
+   - `api.getStatus()` → `{problemId: status, ...}` from the backend.
+3. `flattenContests(dataset)` flattens the nested `[{contest, problems: [...]}, ...]` into a flat array of problems, computing `difficulty`, `searchKey`, joined `tags`, etc. per problem.
+4. `useMemo` derives `regions` (unique non-null regions, sorted) and `searchAst` (parsed from `committedSearch` via `parseSearch`).
+5. `useMemo` derives `visible` from `[problems, filter, sort, region, searchAst]`:
+   - region filter (exact match unless "all")
+   - quick filter (solved/unsolved/no submission)
+   - boolean search (eval AST against hay)
+   - sort
+6. `<Top total={visible.length}/>` and `<ProblemsTable problems={visible}/>` both read from the same `visible` — they cannot disagree.
+7. Status edits call `api.setStatus/clearStatus` and optimistically update local state, rolling back on error.
+
+### Backend data flow
+
+- `src/server.py` mounts `auth_router` and `status_router` and enables CORS for the Vercel origin.
+- `src/db.py` talks to Turso via the libSQL HTTP pipeline API directly using stdlib `urllib` + a hand-rolled cursor (`_RemoteCursor` decodes the typed-value envelope). This replaced the libsql native client (which was segfaulting on concurrent requests via Hrana).
+- `src/auth.py` issues HS256 JWTs (PyJWT) with bcrypt-hashed passwords.
+- `src/status.py` upserts into `problem_status (user_id, problem_id, status)` with `ON CONFLICT … DO UPDATE`.
+
+### Dataset shape
+
+`tagged.json` is an array of contests:
+
+```json
+[
+  {
+    "contest_id": 1485,
+    "contest_name": "ICPC",
+    "year": 2023,
+    "region": "Asia East Continent",
+    "contest_url": "https://qoj.ac/contest/1485",
+    "editorial_url": null,
+    "problems": [
+      {
+        "problem_id": 8072,
+        "problem_label": "A",
+        "problem_name": "Qualifiers Ranking Rules",
+        "problem_url": "https://qoj.ac/contest/1485/problem/8072",
+        "problem_solved_in_contest": 2249,
+        "problem_score": 100,
+        "total_number_of_participant": 2669,
+        "average_score": 93.32,
+        "statement": "...",
+        "analysis_notes": {...},
+        "primary_tags": ["implementation", "strings"],
+        "secondary_tags": ["simulation"],
+        "extra_tags": [],
+        "difficulty_estimate": "easy",
+        "confidence": 0.55,
+        ...
+      }
+    ]
+  }
+]
+```
+
+`flattenContests` discards everything except: id, contest_name, region, year, problem_name, joined tags, problem_url, problem_solved_in_contant, total_number_of_participant (used to compute difficulty on the fly). The LLM-derived `statement`, `analysis_notes`, etc. are not used by the UI.
+
+### Deploy
+
+Unchanged from the backend-fix session:
+- Vercel (static SPA + edge rewrite) serves the React app.
+- Vercel rewrite forwards `/api/*` → Render.
+- Render runs `uvicorn src.server:app --host 0.0.0.0 --port $PORT`.
+- Render env: `LIBSQL_URL`, `LIBSQL_AUTH_TOKEN` (or `TURSO_URL`/`TURSO_TOKEN`), `JWT_SECRET`, `CORS_ORIGINS`.
+- `git push origin master` triggers both Vercel (frontend) and Render (API) auto-deploy.
+
+### What is still dead code / untracked
+
+- `src/problems.json` (legacy dummy dataset, not used) — leaving alone per AGENTS.md surgical-changes rule.
+- `public/tagged.json` is a mirror of `data/tagged.json`. Vite actually serves from `data/` (`publicDir: 'data'`), so `public/tagged.json` is not served at runtime, but it's tracked in git and updated alongside `data/tagged.json` for safety. Could be removed in a future cleanup.
+
+### Lint status
+
+`npm run lint` is clean for all new code. The 2 remaining errors are pre-existing in `App.jsx` (`react-hooks/set-state-in-effect`) and `api.js` (`no-empty` try/catch), both unrelated to this session's work and not in the user's request.

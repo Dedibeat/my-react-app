@@ -47,6 +47,35 @@ th { background: #f7f7f7; }
   border: 1px solid rgba(0,0,0,0.06);
 }
 
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+.tag {
+  font-size: 0.85rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #000;
+  display: inline-block;
+  background: #f1f1f1;
+  border: 1px solid rgba(0,0,0,0.08);
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.muted-difficulty { background: #f0f0f0; color: #999; }
+
+.btn-icon {
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 /* Status colors */
 .status-solved { background: #c8f7c5; }
 .status-unsolved { background: #ffd7d7; }
@@ -158,8 +187,9 @@ a.link-small { font-size:0.9rem; margin-left:6px; color:#0366d6; }
   tbody td:nth-child(2)::before { content: "Contest"; font-weight:600; margin-right:8px; color:#333; }
   tbody td:nth-child(3)::before { content: "Problem"; font-weight:600; margin-right:8px; color:#333; }
   tbody td:nth-child(4)::before { content: "Tags"; font-weight:600; margin-right:8px; color:#333; }
-  tbody td:nth-child(5)::before { content: "Difficulty"; font-weight:600; margin-right:8px; color:#333; }
-  tbody td:nth-child(6)::before { content: "Status"; font-weight:600; margin-right:8px; color:#333; }
+  tbody td:nth-child(5)::before { content: "Solve Rate"; font-weight:600; margin-right:8px; color:#333; }
+  tbody td:nth-child(6)::before { content: "Difficulty"; font-weight:600; margin-right:8px; color:#333; }
+  tbody td:nth-child(7)::before { content: "Status"; font-weight:600; margin-right:8px; color:#333; }
 
   /* Keep left label and right value separated */
   tbody td::before {
@@ -193,11 +223,10 @@ a.link-small { font-size:0.9rem; margin-left:6px; color:#0366d6; }
   /* Difficulty badge sizing on mobile */
   .difficulty { padding: 4px 8px; font-size: 14px; }
 
-  /* small visual tweak for tags (they can be long) */
+  /* tags: stack label above so badges can wrap freely */
   tbody td:nth-child(4) {
-    max-width: 40%;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
   }
 }

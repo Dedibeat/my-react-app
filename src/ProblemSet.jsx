@@ -7,7 +7,12 @@ function flattenContests(contests) {
   const out = [];
   for (const c of contests) {
     for (const p of c.problems || []) {
-      const tags = [...(p.primary_tags || []), ...(p.secondary_tags || []), ...(p.extra_tags || [])].join(', ');
+      const primaryTags = p.primary_tags || [];
+      const secondaryTags = p.secondary_tags || [];
+      const extraTags = p.extra_tags || [];
+      const tagList = [...primaryTags, ...secondaryTags, ...extraTags];
+      const tags = tagList.join(', ');
+      const extraTagSet = new Set(extraTags);
       out.push({
         id: String(p.problem_id),
         contest: c.contest_name,
@@ -16,6 +21,9 @@ function flattenContests(contests) {
         searchKey: `${c.region || ''} ${c.contest_name || ''} ${c.year || ''}`,
         name: p.problem_name,
         tags,
+        tagList,
+        extraTagSet,
+        difficultyEstimate: p.difficulty_estimate || '',
         difficulty: (p.total_number_of_participant > 0
           ? (p.problem_solved_in_contest / p.total_number_of_participant) * 100
           : 0),
@@ -73,6 +81,8 @@ function Controls(props) {
         >
           <option value="difficulty_desc">Difficulty ↓</option>
           <option value="difficulty_asc">Difficulty ↑</option>
+          <option value="solve_rate_desc">Solve Rate ↓</option>
+          <option value="solve_rate_asc">Solve Rate ↑</option>
           <option value="id_asc">ID ↑</option>
         </select>
       </label>
@@ -87,8 +97,29 @@ function Controls(props) {
           onChange={(e) => setSearchInput(e.target.value)}
           onKeyDown={(e) => { if (e.key === 'Enter') onCommitSearch(); }}
         />
-        <button id="searchButton" type="button" className="btn" onClick={onCommitSearch}>
-          Search
+        <button
+          id="searchButton"
+          type="button"
+          className="btn btn-icon"
+          onClick={onCommitSearch}
+          aria-label="Search"
+          title="Search"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
         </button>
       </label>
 
@@ -123,6 +154,20 @@ function DifficultyBadge({ percent }) {
       {typeof percent === 'number' ? percent.toFixed(2) : percent}
     </span>
   );
+}
+
+const DIFFICULTY_COLOR = {
+  easy: 'hsl(120, 70%, 85%)',
+  medium: 'hsl(60, 70%, 85%)',
+  hard: 'hsl(30, 70%, 85%)',
+  very_hard: 'hsl(0, 70%, 85%)',
+};
+
+function DifficultyLabel({ value }) {
+  if (!value) return <span className="difficulty muted-difficulty">—</span>;
+  const bg = DIFFICULTY_COLOR[value] || 'hsl(0, 0%, 92%)';
+  const label = value === 'very_hard' ? 'very hard' : value;
+  return <span className="difficulty" style={{ background: bg }}>{label}</span>;
 }
 
 const getStatusClass = (status) => {
@@ -180,6 +225,7 @@ function ProblemsTable({ showTag, problems, updateStatus }) {
             <th>Contest</th>
             <th>Problem</th>
             <th>Tags</th>
+            <th>Solve Rate</th>
             <th>Difficulty</th>
             <th style={{ width: 180 }}>Status (click to edit)</th>
           </tr>
@@ -192,8 +238,20 @@ function ProblemsTable({ showTag, problems, updateStatus }) {
               <td>
                 <a href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>
               </td>
-              <td>{p.tags}</td>
+              <td>
+                <div className="tags">
+                  {p.tagList.map((t, i) => {
+                    const isExtra = p.extraTagSet.has(t);
+                    return (
+                      <span key={i} className="tag" title={isExtra ? 'extra tag' : undefined}>
+                        {isExtra ? `*${t}` : t}
+                      </span>
+                    );
+                  })}
+                </div>
+              </td>
               <td><DifficultyBadge percent={p.difficulty} /></td>
+              <td><DifficultyLabel value={p.difficultyEstimate} /></td>
               <td className={getStatusClass(p.status)}>
                 <StatusEditor
                   value={p.status}
@@ -283,11 +341,25 @@ export default function ProblemSet() {
       list = list.filter((p) => evalSearchAst(searchAst, hay(p)));
     }
 
+    const DIFFICULTY_RANK = { easy: 1, medium: 2, hard: 3, very_hard: 4 };
+    const diffRank = (p) => (p.difficultyEstimate in DIFFICULTY_RANK ? DIFFICULTY_RANK[p.difficultyEstimate] : Infinity);
+    const solveRate = (p) => Number(p.difficulty) || 0;
+
     const sorted = list.slice();
     if (sort === "difficulty_desc") {
-      sorted.sort((a, b) => (Number(b.difficulty) || 0) - (Number(a.difficulty) || 0));
+      sorted.sort((a, b) => {
+        const d = diffRank(b) - diffRank(a);
+        return d !== 0 ? d : solveRate(b) - solveRate(a);
+      });
     } else if (sort === "difficulty_asc") {
-      sorted.sort((a, b) => (Number(a.difficulty) || 0) - (Number(b.difficulty) || 0));
+      sorted.sort((a, b) => {
+        const d = diffRank(a) - diffRank(b);
+        return d !== 0 ? d : solveRate(a) - solveRate(b);
+      });
+    } else if (sort === "solve_rate_desc") {
+      sorted.sort((a, b) => solveRate(b) - solveRate(a));
+    } else if (sort === "solve_rate_asc") {
+      sorted.sort((a, b) => solveRate(a) - solveRate(b));
     } else if (sort === "id_asc") {
       sorted.sort((a, b) => Number(a.id) - Number(b.id));
     }
