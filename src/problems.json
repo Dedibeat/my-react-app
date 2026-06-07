@@ -1,0 +1,2360 @@
+[
+  {
+    "id": "104",
+    "contest": "WF 2024",
+    "name": "Bingo for the Win!",
+    "tags": "[b, probability, expected_value, counting, combinatorics, implementation]",
+    "difficulty": "100.0%",
+    "teamsSolved": "113",
+    "status": "AC"
+  },
+  {
+    "id": "108",
+    "contest": "WF 2024",
+    "name": "Friendly Rivalry",
+    "tags": "[f, graph, connected_components, knapsack, binary_search]",
+    "difficulty": "100.0%",
+    "teamsSolved": "113",
+    "status": "AC"
+  },
+  {
+    "id": "217",
+    "contest": "Yokohama 2023",
+    "name": "Yokohama Phenomena",
+    "tags": "A: strings, pattern-counting, brute-force, implementation",
+    "difficulty": "100.0%",
+    "teamsSolved": "86",
+    "status": ""
+  },
+  {
+    "id": "43",
+    "contest": "SWERC 2021",
+    "name": "Cakes",
+    "tags": "math, implementation",
+    "difficulty": "99.5%",
+    "teamsSolved": "565",
+    "status": "AC"
+  },
+  {
+    "id": "117",
+    "contest": "Hong Kong 2024",
+    "name": "The Story of Emperor Bie",
+    "tags": "[c, greedy, max_element, simulation, arrays, proof_by_observation]",
+    "difficulty": "99.1%",
+    "teamsSolved": "343",
+    "status": "AC"
+  },
+  {
+    "id": "105",
+    "contest": "WF 2024",
+    "name": "Citizenship",
+    "tags": "[c, implementation, date_math, prefix_sums, sliding_window]",
+    "difficulty": "99.1%",
+    "teamsSolved": "112",
+    "status": "WA"
+  },
+  {
+    "id": "87",
+    "contest": "Hangzhou 2024",
+    "name": "Kind of Bingo",
+    "tags": "arrays, greedy, implementation, sorting",
+    "difficulty": "99.0%",
+    "teamsSolved": "623",
+    "status": "AC"
+  },
+  {
+    "id": "145",
+    "contest": "Nanjing 2024",
+    "name": "Left Shifting 3",
+    "tags": "[E, strings, rotations, substring_count, sliding_window, greedy, implementation]",
+    "difficulty": "98.9%",
+    "teamsSolved": "746",
+    "status": "AC"
+  },
+  {
+    "id": "228",
+    "contest": "Yokohama 2022",
+    "name": "Hasty Santa Claus",
+    "tags": "A: bipartite-matching, maxflow, scheduling, greedy",
+    "difficulty": "98.9%",
+    "teamsSolved": "93",
+    "status": ""
+  },
+  {
+    "id": "229",
+    "contest": "Yokohama 2022",
+    "name": "Interactive Number Guessing",
+    "tags": "B: interactive, constructive, number-theory, queries",
+    "difficulty": "98.9%",
+    "teamsSolved": "93",
+    "status": ""
+  },
+  {
+    "id": "222",
+    "contest": "Yokohama 2023",
+    "name": "Color Inversion on a Huge Chessboard",
+    "tags": "F: queries, simulation, connected-components, data-structures, implementation",
+    "difficulty": "98.8%",
+    "teamsSolved": "85",
+    "status": ""
+  },
+  {
+    "id": "76",
+    "contest": "Hangzhou 2023",
+    "name": "V-Diagram",
+    "tags": "[m, binary_search, arrays, greedy, optimization]",
+    "difficulty": "98.7%",
+    "teamsSolved": "740",
+    "status": "AC"
+  },
+  {
+    "id": "162",
+    "contest": "Nanjing 2023",
+    "name": "Counter",
+    "tags": "K — [dp, simulation, game_theory, decision, binary_search, combinatorics]",
+    "difficulty": "98.4%",
+    "teamsSolved": "662",
+    "status": "AC"
+  },
+  {
+    "id": "139",
+    "contest": "Chengdu 2024",
+    "name": "Recover Statistics",
+    "tags": "[L, constructive, statistics, quantiles, constructive_construction, implementation]",
+    "difficulty": "98.2%",
+    "teamsSolved": "694",
+    "status": ""
+  },
+  {
+    "id": "239",
+    "contest": "Yokohama 2021",
+    "name": "Loop of Chocolate",
+    "tags": "A: geometry, computational-geometry, inclusion-exclusion, implementation",
+    "difficulty": "97.7%",
+    "teamsSolved": "43",
+    "status": ""
+  },
+  {
+    "id": "240",
+    "contest": "Yokohama 2021",
+    "name": "Lottery Fun Time",
+    "tags": "B: counting, greedy, simulation, implementation",
+    "difficulty": "97.7%",
+    "teamsSolved": "43",
+    "status": ""
+  },
+  {
+    "id": "77",
+    "contest": "Hangzhou 2024",
+    "name": "AUS",
+    "tags": "dsu, graph, mapping, strings",
+    "difficulty": "97.6%",
+    "teamsSolved": "614",
+    "status": "AC"
+  },
+  {
+    "id": "39",
+    "contest": "SWERC 2021",
+    "name": "Gratitude",
+    "tags": "strings, hash_map, counting, sorting, stable_sort",
+    "difficulty": "97.4%",
+    "teamsSolved": "553",
+    "status": "AC"
+  },
+  {
+    "id": "28",
+    "contest": "Shanghai 2024",
+    "name": "Conquer the Multiples",
+    "tags": "games, game_theory, parity, casework, math",
+    "difficulty": "97.2%",
+    "teamsSolved": "632",
+    "status": "AC"
+  },
+  {
+    "id": "21",
+    "contest": "Hong Kong 2022",
+    "name": "Another Goose Goose Duck Problem",
+    "tags": "math, greedy, ad-hoc",
+    "difficulty": "97.2%",
+    "teamsSolved": "419",
+    "status": "AC"
+  },
+  {
+    "id": "24",
+    "contest": "Hong Kong 2022",
+    "name": "Maximum GCD",
+    "tags": "number_theory, greedy, math, divisors",
+    "difficulty": "96.1%",
+    "teamsSolved": "414",
+    "status": "AC"
+  },
+  {
+    "id": "128",
+    "contest": "Chengdu 2024",
+    "name": "Arrow a Row",
+    "tags": "[A, strings, constructive, pattern_construction, greedy, implementation]",
+    "difficulty": "95.6%",
+    "teamsSolved": "676",
+    "status": ""
+  },
+  {
+    "id": "111",
+    "contest": "WF 2024",
+    "name": "Steppe on It",
+    "tags": "[i, tree_dp, binary_search, covering, dfs, greedy]",
+    "difficulty": "95.6%",
+    "teamsSolved": "108",
+    "status": ""
+  },
+  {
+    "id": "185",
+    "contest": "Hefei 2023",
+    "name": "Colorful Balloons",
+    "tags": "F — strings, sorting, brute_force, implementation",
+    "difficulty": "95.6%",
+    "teamsSolved": "581",
+    "status": "AC"
+  },
+  {
+    "id": "34",
+    "contest": "Shanghai 2024",
+    "name": "In Search of the Ultimate Artifact",
+    "tags": "greedy, sorting, math, modular_arithmetic",
+    "difficulty": "95.5%",
+    "teamsSolved": "621",
+    "status": "AC"
+  },
+  {
+    "id": "256",
+    "contest": "Chengdu 2025",
+    "name": "GCD of Subsets",
+    "tags": "",
+    "difficulty": "95.5%",
+    "teamsSolved": "848",
+    "status": "AC"
+  },
+  {
+    "id": "99",
+    "contest": "Kunming 2024",
+    "name": "Just another Sorting Problem",
+    "tags": "[j, game_theory, permutations, casework, constructive, combinatorics]",
+    "difficulty": "95.4%",
+    "teamsSolved": "620",
+    "status": "AC"
+  },
+  {
+    "id": "73",
+    "contest": "Hangzhou 2023",
+    "name": "Mysterious Tree",
+    "tags": "[j, interactive, graph, degree_queries, logic]",
+    "difficulty": "95.3%",
+    "teamsSolved": "715",
+    "status": "AC"
+  },
+  {
+    "id": "150",
+    "contest": "Nanjing 2024",
+    "name": "Social Media",
+    "tags": "[J, graph, counting, greedy, frequency_count, casework, bipartite_insight, implementation]",
+    "difficulty": "95.1%",
+    "teamsSolved": "717",
+    "status": "AC"
+  },
+  {
+    "id": "54",
+    "contest": "CERC 2024",
+    "name": "CERC Plaques",
+    "tags": "bipartite_matching, hashing, constructive",
+    "difficulty": "95.0%",
+    "teamsSolved": "191",
+    "status": "AC"
+  },
+  {
+    "id": "55",
+    "contest": "CERC 2024",
+    "name": "Divisors",
+    "tags": "number_theory, factorization, pollard_rho, divisors, hashing",
+    "difficulty": "95.0%",
+    "teamsSolved": "191",
+    "status": "AC"
+  },
+  {
+    "id": "259",
+    "contest": "Chengdu 2025",
+    "name": "Judging Papers",
+    "tags": "",
+    "difficulty": "94.8%",
+    "teamsSolved": "842",
+    "status": "AC"
+  },
+  {
+    "id": "102",
+    "contest": "Kunming 2024",
+    "name": "Matrix Construction",
+    "tags": "[m, constructive, matrix, anti_diagonal, constructive_proof, implementation]",
+    "difficulty": "94.8%",
+    "teamsSolved": "616",
+    "status": "AC"
+  },
+  {
+    "id": "10",
+    "contest": "Shenyang 2024",
+    "name": "Make Them Believe",
+    "tags": "ad-hoc, implementation, simulation",
+    "difficulty": "94.6%",
+    "teamsSolved": "559",
+    "status": "AC"
+  },
+  {
+    "id": "169",
+    "contest": "Shenyang 2023",
+    "name": "Swiss Stage",
+    "tags": "C — math, combinatorics",
+    "difficulty": "94.3%",
+    "teamsSolved": "527",
+    "status": "AC"
+  },
+  {
+    "id": "53",
+    "contest": "CERC 2024",
+    "name": "Bad Digits",
+    "tags": "constructive, base_conversion, big_integer, combinatorics",
+    "difficulty": "94.0%",
+    "teamsSolved": "189",
+    "status": "AC"
+  },
+  {
+    "id": "134",
+    "contest": "Chengdu 2024",
+    "name": "Expanding Array",
+    "tags": "[G, bitwise, xor, and_or, closure, set, constructive]",
+    "difficulty": "93.5%",
+    "teamsSolved": "661",
+    "status": ""
+  },
+  {
+    "id": "137",
+    "contest": "Chengdu 2024",
+    "name": "Grand Prix of Ballance",
+    "tags": "[J, simulation, event_processing, leaderboard, implementation, careful_casework]",
+    "difficulty": "93.2%",
+    "teamsSolved": "659",
+    "status": ""
+  },
+  {
+    "id": "195",
+    "contest": "Jinan 2023",
+    "name": "Largest Digit",
+    "tags": "D — digits, brute_force, math, implementation, number-properties",
+    "difficulty": "92.5%",
+    "teamsSolved": "568",
+    "status": "AC"
+  },
+  {
+    "id": "184",
+    "contest": "Hefei 2023",
+    "name": "Matrix Distances",
+    "tags": "E — math, sorting, prefix_sums, coordinate_compression, implementation",
+    "difficulty": "92.1%",
+    "teamsSolved": "560",
+    "status": "AC"
+  },
+  {
+    "id": "125",
+    "contest": "Hong Kong 2024",
+    "name": "LR String",
+    "tags": "[k, strings, subsequence, next_occurrence, greedy, implementation]",
+    "difficulty": "91.3%",
+    "teamsSolved": "316",
+    "status": "AC"
+  },
+  {
+    "id": "205",
+    "contest": "Yokohama 2024",
+    "name": "Ribbon on the Christmas Present",
+    "tags": "A: greedy, simulation, implementation",
+    "difficulty": "90.6%",
+    "teamsSolved": "77",
+    "status": ""
+  },
+  {
+    "id": "200",
+    "contest": "Jinan 2023",
+    "name": "Strange Sorting",
+    "tags": "I — permutations, greedy, sorting-operations, constructive, simulation, arrays",
+    "difficulty": "90.6%",
+    "teamsSolved": "556",
+    "status": "AC"
+  },
+  {
+    "id": "176",
+    "contest": "Shenyang 2023",
+    "name": "Graft and Transplant",
+    "tags": "J — trees, game_theory",
+    "difficulty": "90.3%",
+    "teamsSolved": "505",
+    "status": "AC"
+  },
+  {
+    "id": "218",
+    "contest": "Yokohama 2023",
+    "name": "Rank Promotion",
+    "tags": "B: prefix-sum, sliding-window, greedy, math, implementation",
+    "difficulty": "89.5%",
+    "teamsSolved": "77",
+    "status": ""
+  },
+  {
+    "id": "206",
+    "contest": "Yokohama 2024",
+    "name": "The Sparsest Number in Between",
+    "tags": "B: bit, greedy, constructive, math",
+    "difficulty": "89.4%",
+    "teamsSolved": "76",
+    "status": ""
+  },
+  {
+    "id": "248",
+    "contest": "Yokohama 2021",
+    "name": "The Cross Covers Everything",
+    "tags": "J: geometry, counting, sorting, binary-search",
+    "difficulty": "86.4%",
+    "teamsSolved": "38",
+    "status": ""
+  },
+  {
+    "id": "234",
+    "contest": "Yokohama 2022",
+    "name": "Remodeling the Dungeon",
+    "tags": "G: tree, graph, diameter, tree-dp",
+    "difficulty": "86.2%",
+    "teamsSolved": "81",
+    "status": ""
+  },
+  {
+    "id": "67",
+    "contest": "Hangzhou 2023",
+    "name": "Operator Precedence",
+    "tags": "[d, constructive, math, sequence_construction, implementation]",
+    "difficulty": "85.6%",
+    "teamsSolved": "642",
+    "status": "AC"
+  },
+  {
+    "id": "63",
+    "contest": "CERC 2024",
+    "name": "Labyrinth",
+    "tags": "graph, functional_graph, cycle_detection, preprocessing",
+    "difficulty": "83.6%",
+    "teamsSolved": "168",
+    "status": ""
+  },
+  {
+    "id": "209",
+    "contest": "Yokohama 2024",
+    "name": "E-Circuit Is Now on Sale!",
+    "tags": "E: simulation, implementation, dfs, ad-hoc",
+    "difficulty": "83.5%",
+    "teamsSolved": "71",
+    "status": ""
+  },
+  {
+    "id": "106",
+    "contest": "WF 2024",
+    "name": "Doubles Horseback Wrestling",
+    "tags": "[d, greedy, sorting, multiset, two_pointers, matching]",
+    "difficulty": "83.2%",
+    "teamsSolved": "94",
+    "status": ""
+  },
+  {
+    "id": "14",
+    "contest": "Hong Kong 2022",
+    "name": "TreeScript",
+    "tags": "trees, dp, dp_sibiling",
+    "difficulty": "82.8%",
+    "teamsSolved": "357",
+    "status": "AC"
+  },
+  {
+    "id": "250",
+    "contest": "Chengdu 2025",
+    "name": "A Lot of Paintings",
+    "tags": "",
+    "difficulty": "82.8%",
+    "teamsSolved": "735",
+    "status": "AC"
+  },
+  {
+    "id": "232",
+    "contest": "Yokohama 2022",
+    "name": "Incredibly Cute Penguin Chicks",
+    "tags": "E: strings, dp, combinatorics, counting, modular-arithmetic",
+    "difficulty": "81.9%",
+    "teamsSolved": "77",
+    "status": "AC"
+  },
+  {
+    "id": "97",
+    "contest": "Kunming 2024",
+    "name": "Horizon Scanning",
+    "tags": "[h, geometry, angles, atan2, circular_array, sliding_window]",
+    "difficulty": "80.2%",
+    "teamsSolved": "521",
+    "status": "WA"
+  },
+  {
+    "id": "42",
+    "contest": "SWERC 2021",
+    "name": "Jogging",
+    "tags": "graphs, shortest_paths, dijkstra, reachability, intervals",
+    "difficulty": "79.0%",
+    "teamsSolved": "449",
+    "status": "AC"
+  },
+  {
+    "id": "27",
+    "contest": "Shanghai 2024",
+    "name": "Basic Graph Algorithm",
+    "tags": "graphs, dfs_order, greedy, simulation, data_structures",
+    "difficulty": "78.8%",
+    "teamsSolved": "512",
+    "status": "AC"
+  },
+  {
+    "id": "81",
+    "contest": "Hangzhou 2024",
+    "name": "Elevator II",
+    "tags": "greedy, implementation, priority_queue, sorting",
+    "difficulty": "78.2%",
+    "teamsSolved": "492",
+    "status": "AC"
+  },
+  {
+    "id": "220",
+    "contest": "Yokohama 2023",
+    "name": "Nested Repetition Compression",
+    "tags": "D: strings, dp, compression, substring-repetition, implementation",
+    "difficulty": "77.9%",
+    "teamsSolved": "67",
+    "status": "NI"
+  },
+  {
+    "id": "192",
+    "contest": "Jinan 2023",
+    "name": "Many Many Heads",
+    "tags": "A — parentheses, strings, stack, constructive, combinatorics, implementation, math",
+    "difficulty": "77.7%",
+    "teamsSolved": "477",
+    "status": "AC"
+  },
+  {
+    "id": "60",
+    "contest": "CERC 2024",
+    "name": "Illuminati",
+    "tags": "permutations, constructive, hashing, graph, mapping",
+    "difficulty": "77.6%",
+    "teamsSolved": "156",
+    "status": "AC"
+  },
+  {
+    "id": "159",
+    "contest": "Nanjing 2023",
+    "name": "Equivalent Rewriting",
+    "tags": "L — [greedy, sorting, combinatorics, math, constructive, scheduling]",
+    "difficulty": "77.6%",
+    "teamsSolved": "522",
+    "status": "AC"
+  },
+  {
+    "id": "156",
+    "contest": "Nanjing 2023",
+    "name": "Primitive Root",
+    "tags": "C — [number_theory, bitwise, xor, modular_arithmetic, range_counting, math, bit_manipulation]",
+    "difficulty": "76.7%",
+    "teamsSolved": "516",
+    "status": "AC"
+  },
+  {
+    "id": "49",
+    "contest": "SWERC 2021",
+    "name": "Unique Activities",
+    "tags": "strings, suffix_array, suffix_automaton, lcp",
+    "difficulty": "76.6%",
+    "teamsSolved": "435",
+    "status": "AC"
+  },
+  {
+    "id": "41",
+    "contest": "SWERC 2021",
+    "name": "Safe Distance",
+    "tags": "computational_geometry, binary_search, union_find, disks, graph",
+    "difficulty": "76.2%",
+    "teamsSolved": "433",
+    "status": "AC"
+  },
+  {
+    "id": "227",
+    "contest": "Yokohama 2023",
+    "name": "Probing the Disk",
+    "tags": "K: interactive, geometry, binary-search, constructive",
+    "difficulty": "74.4%",
+    "teamsSolved": "64",
+    "status": ""
+  },
+  {
+    "id": "84",
+    "contest": "Hangzhou 2024",
+    "name": "Heavy-light Decomposition",
+    "tags": "constructive, trees",
+    "difficulty": "74.4%",
+    "teamsSolved": "468",
+    "status": "AC"
+  },
+  {
+    "id": "171",
+    "contest": "Shenyang 2023",
+    "name": "Sheep Eat Wolves",
+    "tags": "E — graph, simulation (state-space)",
+    "difficulty": "74.2%",
+    "teamsSolved": "415",
+    "status": "AC"
+  },
+  {
+    "id": "207",
+    "contest": "Yokohama 2024",
+    "name": "Omnes Viae Yokohamam Ducunt?",
+    "tags": "C: graph, shortest-paths, dijkstra",
+    "difficulty": "74.1%",
+    "teamsSolved": "63",
+    "status": "AC"
+  },
+  {
+    "id": "151",
+    "contest": "Nanjing 2024",
+    "name": "Strips",
+    "tags": "[K, greedy, intervals, interval_covering, constructive, sorting, implementation]",
+    "difficulty": "71.5%",
+    "teamsSolved": "539",
+    "status": "AC"
+  },
+  {
+    "id": "160",
+    "contest": "Nanjing 2023",
+    "name": "Knapsack",
+    "tags": "M — [arrays, monotonic_stack, data_structures, prefix_suffix, dynamic_updates, set]",
+    "difficulty": "68.9%",
+    "teamsSolved": "464",
+    "status": "AC"
+  },
+  {
+    "id": "136",
+    "contest": "Chengdu 2024",
+    "name": "Good Partitions",
+    "tags": "[I, gcd, segment_tree, number_theory, divisors, online_updates]",
+    "difficulty": "68.9%",
+    "teamsSolved": "487",
+    "status": "WA"
+  },
+  {
+    "id": "261",
+    "contest": "Chengdu 2025",
+    "name": "Label Matching",
+    "tags": "",
+    "difficulty": "68.1%",
+    "teamsSolved": "605",
+    "status": "AC"
+  },
+  {
+    "id": "242",
+    "contest": "Yokohama 2021",
+    "name": "Wireless Communication Network",
+    "tags": "D: DP, tree, interval-DP, combinatorics",
+    "difficulty": "65.9%",
+    "teamsSolved": "29",
+    "status": ""
+  },
+  {
+    "id": "198",
+    "contest": "Jinan 2023",
+    "name": "Gifts from Knowledge",
+    "tags": "G — matrices, binary-matrix, graph-constraints, union-find, components, counting, graph",
+    "difficulty": "64.5%",
+    "teamsSolved": "396",
+    "status": "AC"
+  },
+  {
+    "id": "189",
+    "contest": "Hefei 2023",
+    "name": "Takeout Delivering",
+    "tags": "J — graph, mst, maximum_spanning_tree, dfs, bottleneck_paths",
+    "difficulty": "64.3%",
+    "teamsSolved": "391",
+    "status": "AC"
+  },
+  {
+    "id": "32",
+    "contest": "Shanghai 2024",
+    "name": "Geometry Task",
+    "tags": "binary_search, greedy, sorting, geometry",
+    "difficulty": "62.9%",
+    "teamsSolved": "409",
+    "status": "NI"
+  },
+  {
+    "id": "221",
+    "contest": "Yokohama 2023",
+    "name": "Chayas",
+    "tags": "E: bitmask, subset-dp, fast-zeta-transform, combinatorics, bitset",
+    "difficulty": "62.8%",
+    "teamsSolved": "54",
+    "status": ""
+  },
+  {
+    "id": "5",
+    "contest": "Shenyang 2024",
+    "name": "Light Up the Grid",
+    "tags": "bitmask, state_compression, graph, shortest_path",
+    "difficulty": "62.6%",
+    "teamsSolved": "370",
+    "status": "AC"
+  },
+  {
+    "id": "177",
+    "contest": "Shenyang 2023",
+    "name": "Maximum Rating",
+    "tags": "K — combinatorics, data_structures",
+    "difficulty": "62.1%",
+    "teamsSolved": "347",
+    "status": "AC"
+  },
+  {
+    "id": "4",
+    "contest": "Shenyang 2024",
+    "name": "Dot Product Game",
+    "tags": "math, permutations, inversion_count, dp_games, parity",
+    "difficulty": "61.8%",
+    "teamsSolved": "365",
+    "status": "AC"
+  },
+  {
+    "id": "71",
+    "contest": "Hangzhou 2023",
+    "name": "Sugar Sweet II",
+    "tags": "[h, probability, expectation, functional_graph, dp, tree]",
+    "difficulty": "61.6%",
+    "teamsSolved": "462",
+    "status": "AC"
+  },
+  {
+    "id": "231",
+    "contest": "Yokohama 2022",
+    "name": "Move One Coin",
+    "tags": "D: geometry, pattern-matching, rotation, hashing",
+    "difficulty": "60.6%",
+    "teamsSolved": "57",
+    "status": ""
+  },
+  {
+    "id": "89",
+    "contest": "Hangzhou 2024",
+    "name": "Make It Divisible",
+    "tags": "cartesian_tree, gcd, number_theory, rmq",
+    "difficulty": "60.4%",
+    "teamsSolved": "380",
+    "status": "AC"
+  },
+  {
+    "id": "215",
+    "contest": "Yokohama 2024",
+    "name": "Scheduling Two Meetings",
+    "tags": "K: bitmask, dp, zeta-transform, combinatorics",
+    "difficulty": "60.0%",
+    "teamsSolved": "51",
+    "status": "AC"
+  },
+  {
+    "id": "129",
+    "contest": "Chengdu 2024",
+    "name": "Athlete Welcome Ceremony",
+    "tags": "[B, dp, combinatorics, prefix_sums, counting, offline_queries]",
+    "difficulty": "59.8%",
+    "teamsSolved": "423",
+    "status": ""
+  },
+  {
+    "id": "101",
+    "contest": "Kunming 2024",
+    "name": "Last Chance: Threads of Despair",
+    "tags": "[l, greedy, two_pointers, sorting, simulation, implementation]",
+    "difficulty": "59.4%",
+    "teamsSolved": "386",
+    "status": ""
+  },
+  {
+    "id": "103",
+    "contest": "WF 2024",
+    "name": "Billboards",
+    "tags": "[a, piecewise_linear, integration, prefix_sums, binary_search, greedy, implementation]",
+    "difficulty": "59.3%",
+    "teamsSolved": "67",
+    "status": ""
+  },
+  {
+    "id": "186",
+    "contest": "Hefei 2023",
+    "name": "Streak Manipulation",
+    "tags": "G — dp, binary_search, strings, interval_dp, optimization",
+    "difficulty": "58.2%",
+    "teamsSolved": "354",
+    "status": ""
+  },
+  {
+    "id": "223",
+    "contest": "Yokohama 2023",
+    "name": "Fortune Telling",
+    "tags": "G: probability, dp, recursion, expectation, optimization",
+    "difficulty": "57.0%",
+    "teamsSolved": "49",
+    "status": "AC"
+  },
+  {
+    "id": "47",
+    "contest": "SWERC 2021",
+    "name": "Emails",
+    "tags": "graphs, connectivity, bitset, doubling, bfs",
+    "difficulty": "55.5%",
+    "teamsSolved": "315",
+    "status": "AC"
+  },
+  {
+    "id": "2",
+    "contest": "Shenyang 2024",
+    "name": "Magical Palette",
+    "tags": "number_theory, constructive, modular_arithmetic",
+    "difficulty": "54.8%",
+    "teamsSolved": "324",
+    "status": ""
+  },
+  {
+    "id": "29",
+    "contest": "Shanghai 2024",
+    "name": "Decrease and Swap",
+    "tags": "constructive, invariants, simulation, greedy",
+    "difficulty": "54.8%",
+    "teamsSolved": "356",
+    "status": ""
+  },
+  {
+    "id": "251",
+    "contest": "Chengdu 2025",
+    "name": "Blood Memories",
+    "tags": "",
+    "difficulty": "54.5%",
+    "teamsSolved": "484",
+    "status": ""
+  },
+  {
+    "id": "96",
+    "contest": "Kunming 2024",
+    "name": "GCD",
+    "tags": "[g, number_theory, gcd, brute_force, bounded_search, dp]",
+    "difficulty": "54.0%",
+    "teamsSolved": "351",
+    "status": "AC"
+  },
+  {
+    "id": "18",
+    "contest": "Hong Kong 2022",
+    "name": "Goose, goose, DUCK?",
+    "tags": "data_structures, segment_tree, counting",
+    "difficulty": "53.8%",
+    "teamsSolved": "232",
+    "status": "NI"
+  },
+  {
+    "id": "154",
+    "contest": "Nanjing 2023",
+    "name": "Cool, It’s Yesterday Four Times More",
+    "tags": "I — [implementation, intervals, sorting, greedy, simulation, verification, math]",
+    "difficulty": "53.6%",
+    "teamsSolved": "361",
+    "status": ""
+  },
+  {
+    "id": "25",
+    "contest": "Hong Kong 2022",
+    "name": "Permutation Compression",
+    "tags": "greedy, data_structures, fenwick, set",
+    "difficulty": "53.4%",
+    "teamsSolved": "230",
+    "status": "AC"
+  },
+  {
+    "id": "213",
+    "contest": "Yokohama 2024",
+    "name": "Greatest of the Greatest Common Divisors",
+    "tags": "I: number-theory, data_structures, segment-tree, offline",
+    "difficulty": "52.9%",
+    "teamsSolved": "45",
+    "status": "AC"
+  },
+  {
+    "id": "147",
+    "contest": "Nanjing 2024",
+    "name": "Binary Tree",
+    "tags": "[G, interactive, graph, tree, centroid_strategy, divide_and_conquer, queries, algorithmic]",
+    "difficulty": "51.6%",
+    "teamsSolved": "389",
+    "status": "AC"
+  },
+  {
+    "id": "70",
+    "contest": "Hangzhou 2023",
+    "name": "Snake Move",
+    "tags": "[g, grid, shortest_path, dijkstra, deque_optimization, bfs]",
+    "difficulty": "51.2%",
+    "teamsSolved": "384",
+    "status": "AC"
+  },
+  {
+    "id": "126",
+    "contest": "Hong Kong 2024",
+    "name": "Flipping Paths",
+    "tags": "[l, grids, parity, path_construction, prefix_sums, constructive]",
+    "difficulty": "50.6%",
+    "teamsSolved": "175",
+    "status": ""
+  },
+  {
+    "id": "62",
+    "contest": "CERC 2024",
+    "name": "King's Festival",
+    "tags": "bitmask, dp, brute_force, optimization",
+    "difficulty": "50.2%",
+    "teamsSolved": "101",
+    "status": "AC"
+  },
+  {
+    "id": "142",
+    "contest": "Nanjing 2024",
+    "name": "Birthday Gift",
+    "tags": "[B, strings, parity_transform, stack_simulation, greedy, counting, implementation]",
+    "difficulty": "47.3%",
+    "teamsSolved": "357",
+    "status": "AC"
+  },
+  {
+    "id": "46",
+    "contest": "SWERC 2021",
+    "name": "Figurines",
+    "tags": "data_structures, fenwick, ordered_set, simulation, offline",
+    "difficulty": "47.2%",
+    "teamsSolved": "268",
+    "status": ""
+  },
+  {
+    "id": "202",
+    "contest": "Jinan 2023",
+    "name": "Rainbow Subarray",
+    "tags": "K — arrays, sliding-window, median-maintenance, two-pointers, data-structures, greedy, optimization",
+    "difficulty": "45.8%",
+    "teamsSolved": "281",
+    "status": "AC"
+  },
+  {
+    "id": "92",
+    "contest": "Kunming 2024",
+    "name": "Coin",
+    "tags": "[c, josephus, math, simulation, sqrt_decomposition, divide_and_conquer]",
+    "difficulty": "45.7%",
+    "teamsSolved": "297",
+    "status": ""
+  },
+  {
+    "id": "165",
+    "contest": "Nanjing 2023",
+    "name": "Elevator",
+    "tags": "J — [strings, suffix, aho_corasick, z_algorithm, persistent_segment_tree, trees, automaton, data_structures]",
+    "difficulty": "45.3%",
+    "teamsSolved": "305",
+    "status": "AC"
+  },
+  {
+    "id": "245",
+    "contest": "Yokohama 2021",
+    "name": "Genealogy of Puppets",
+    "tags": "G: DP, counting, trees, combinatorics",
+    "difficulty": "43.2%",
+    "teamsSolved": "19",
+    "status": ""
+  },
+  {
+    "id": "44",
+    "contest": "SWERC 2021",
+    "name": "Mentors",
+    "tags": "combinatorics, dp, counting, modular_arithmetic",
+    "difficulty": "40.1%",
+    "teamsSolved": "228",
+    "status": "AC"
+  },
+  {
+    "id": "233",
+    "contest": "Yokohama 2022",
+    "name": "Make a Loop",
+    "tags": "F: constructive, combinatorics, geometry, parity",
+    "difficulty": "39.4%",
+    "teamsSolved": "37",
+    "status": ""
+  },
+  {
+    "id": "57",
+    "contest": "CERC 2024",
+    "name": "Flats",
+    "tags": "sweep_line, intervals, union_find, data_structures",
+    "difficulty": "39.3%",
+    "teamsSolved": "79",
+    "status": ""
+  },
+  {
+    "id": "15",
+    "contest": "Hong Kong 2022",
+    "name": "Big Picture",
+    "tags": "probability, expectation, counting",
+    "difficulty": "38.7%",
+    "teamsSolved": "167",
+    "status": "AC"
+  },
+  {
+    "id": "121",
+    "contest": "Hong Kong 2024",
+    "name": "Yelkrab",
+    "tags": "[g, trie, lcp, grouping, divisors, offline_updates, combinatorics]",
+    "difficulty": "37.9%",
+    "teamsSolved": "131",
+    "status": "AC"
+  },
+  {
+    "id": "82",
+    "contest": "Hangzhou 2024",
+    "name": "Fuzzy Ranking",
+    "tags": "graph, offline, prefix_sums, queries, scc",
+    "difficulty": "37.2%",
+    "teamsSolved": "234",
+    "status": "AC"
+  },
+  {
+    "id": "204",
+    "contest": "Jinan 2023",
+    "name": "Almost Convex",
+    "tags": "M — computational-geometry, convex-hull, polar-sort, point-in-triangle, combinatorics, geometry",
+    "difficulty": "37.1%",
+    "teamsSolved": "228",
+    "status": "AC"
+  },
+  {
+    "id": "13",
+    "contest": "Shenyang 2024",
+    "name": "Obliviate, Then Reincarnate",
+    "tags": "graph, scc, cycle_detection, modular_arithmetic, reachability",
+    "difficulty": "35.5%",
+    "teamsSolved": "210",
+    "status": "AC"
+  },
+  {
+    "id": "182",
+    "contest": "Hefei 2023",
+    "name": "Cyclic Substrings",
+    "tags": "C — strings, palindromes, palindromic_tree, automaton, occurrence_count, data_structures",
+    "difficulty": "35.2%",
+    "teamsSolved": "214",
+    "status": ""
+  },
+  {
+    "id": "166",
+    "contest": "Nanjing 2023",
+    "name": "Trapping Rain Water",
+    "tags": "B — [geometry, computational_geometry, optimization, calculus, numerical_methods, math]",
+    "difficulty": "35.1%",
+    "teamsSolved": "236",
+    "status": "AC"
+  },
+  {
+    "id": "138",
+    "contest": "Chengdu 2024",
+    "name": "Magical Set",
+    "tags": "[K, flow, max_flow, min_cost_max_flow, bipartite_matching, factorization]",
+    "difficulty": "34.7%",
+    "teamsSolved": "245",
+    "status": ""
+  },
+  {
+    "id": "252",
+    "contest": "Chengdu 2025",
+    "name": "Crossing River",
+    "tags": "",
+    "difficulty": "33.8%",
+    "teamsSolved": "300",
+    "status": ""
+  },
+  {
+    "id": "19",
+    "contest": "Hong Kong 2022",
+    "name": "Sum of Numbers",
+    "tags": "dp, backtrack, brute_force",
+    "difficulty": "32.5%",
+    "teamsSolved": "140",
+    "status": "TL"
+  },
+  {
+    "id": "241",
+    "contest": "Yokohama 2021",
+    "name": "Reversible Compression",
+    "tags": "C: strings, graph, shortest-path, DP, automaton",
+    "difficulty": "31.8%",
+    "teamsSolved": "14",
+    "status": ""
+  },
+  {
+    "id": "208",
+    "contest": "Yokohama 2024",
+    "name": "Tree Generators",
+    "tags": "D: tree, combinatorics, parsing",
+    "difficulty": "31.8%",
+    "teamsSolved": "27",
+    "status": ""
+  },
+  {
+    "id": "122",
+    "contest": "Hong Kong 2024",
+    "name": "Mah-jong",
+    "tags": "[h, combinatorics, enumeration, prefix_sums, two_pointers, buckets]",
+    "difficulty": "30.1%",
+    "teamsSolved": "104",
+    "status": ""
+  },
+  {
+    "id": "253",
+    "contest": "Chengdu 2025",
+    "name": "Deductive Snooker Scoring",
+    "tags": "",
+    "difficulty": "30.0%",
+    "teamsSolved": "266",
+    "status": ""
+  },
+  {
+    "id": "247",
+    "contest": "Yokohama 2021",
+    "name": "“Even” Division",
+    "tags": "I: graph, spanning-tree, constructive, greedy",
+    "difficulty": "29.5%",
+    "teamsSolved": "13",
+    "status": ""
+  },
+  {
+    "id": "45",
+    "contest": "SWERC 2021",
+    "name": "Decoration",
+    "tags": "graph, functional_graph, greedy, number_theory, constructive",
+    "difficulty": "29.2%",
+    "teamsSolved": "166",
+    "status": ""
+  },
+  {
+    "id": "196",
+    "contest": "Jinan 2023",
+    "name": "I Just Want... One More...",
+    "tags": "E — bipartite-graph, maximum-flow, matching, residual-graph, counting, graph, combinatorics",
+    "difficulty": "29.0%",
+    "teamsSolved": "178",
+    "status": ""
+  },
+  {
+    "id": "179",
+    "contest": "Shenyang 2023",
+    "name": "Outro: True Love Waits",
+    "tags": "M — graph, bitwise",
+    "difficulty": "29.0%",
+    "teamsSolved": "162",
+    "status": ""
+  },
+  {
+    "id": "132",
+    "contest": "Chengdu 2024",
+    "name": "Disrupting Communications",
+    "tags": "[E, tree_dp, lca, subtree_dp, prefix_sums, combinatorics]",
+    "difficulty": "28.4%",
+    "teamsSolved": "201",
+    "status": ""
+  },
+  {
+    "id": "181",
+    "contest": "Hefei 2023",
+    "name": "Queue Sorting",
+    "tags": "B — combinatorics, dp, lis, subsequences, counting, math",
+    "difficulty": "28.3%",
+    "teamsSolved": "172",
+    "status": "AC"
+  },
+  {
+    "id": "116",
+    "contest": "Hong Kong 2024",
+    "name": "Defeat the Enemies",
+    "tags": "[b, dp, knapsack, enumeration, damage_model, optimization, implementation]",
+    "difficulty": "27.7%",
+    "teamsSolved": "96",
+    "status": ""
+  },
+  {
+    "id": "16",
+    "contest": "Hong Kong 2022",
+    "name": "Painting Grid",
+    "tags": "constructive, combinatorics",
+    "difficulty": "27.1%",
+    "teamsSolved": "117",
+    "status": ""
+  },
+  {
+    "id": "94",
+    "contest": "Kunming 2024",
+    "name": "Extracting Weights",
+    "tags": "[e, tree, linear_algebra_xor_basis, interactive, gaussian_elimination, bitset]",
+    "difficulty": "25.8%",
+    "teamsSolved": "168",
+    "status": ""
+  },
+  {
+    "id": "237",
+    "contest": "Yokohama 2022",
+    "name": "Traveling Salesperson in an Island",
+    "tags": "J: computational-geometry, TSP, shortest-paths, polygon",
+    "difficulty": "25.5%",
+    "teamsSolved": "24",
+    "status": ""
+  },
+  {
+    "id": "246",
+    "contest": "Yokohama 2021",
+    "name": "Cancer DNA",
+    "tags": "H: randomized-algorithms, sampling, probability, FPRAS",
+    "difficulty": "25.0%",
+    "teamsSolved": "11",
+    "status": ""
+  },
+  {
+    "id": "112",
+    "contest": "WF 2024",
+    "name": "The Silk Road . . . with Robots!",
+    "tags": "[j, dp, divide_and_conquer, segment_tree, offline_updates, state_dp]",
+    "difficulty": "24.8%",
+    "teamsSolved": "28",
+    "status": ""
+  },
+  {
+    "id": "50",
+    "contest": "SWERC 2021",
+    "name": "Restaurants",
+    "tags": "matching, stable_matching, gale_shapley, greedy, data_structures",
+    "difficulty": "24.6%",
+    "teamsSolved": "140",
+    "status": ""
+  },
+  {
+    "id": "226",
+    "contest": "Yokohama 2023",
+    "name": "Do It Yourself?",
+    "tags": "J: tree, greedy, laminar-matroid, heavy-light-decomposition, priority-queue",
+    "difficulty": "24.4%",
+    "teamsSolved": "21",
+    "status": ""
+  },
+  {
+    "id": "168",
+    "contest": "Shenyang 2023",
+    "name": "Turning Permutation",
+    "tags": "B — combinatorics (permutations)",
+    "difficulty": "24.2%",
+    "teamsSolved": "135",
+    "status": ""
+  },
+  {
+    "id": "78",
+    "contest": "Hangzhou 2024",
+    "name": "Barkley III",
+    "tags": "bitmask, data_structures, segment_tree",
+    "difficulty": "23.4%",
+    "teamsSolved": "147",
+    "status": "NI"
+  },
+  {
+    "id": "30",
+    "contest": "Shanghai 2024",
+    "name": "Equal Measure",
+    "tags": "graphs, biconnected_components, dfs, cycles",
+    "difficulty": "23.2%",
+    "teamsSolved": "151",
+    "status": ""
+  },
+  {
+    "id": "59",
+    "contest": "CERC 2024",
+    "name": "Hues",
+    "tags": "computational_geometry, circle_arrangement, arrangement, brute_force",
+    "difficulty": "22.9%",
+    "teamsSolved": "46",
+    "status": ""
+  },
+  {
+    "id": "170",
+    "contest": "Shenyang 2023",
+    "name": "Dark LaTeX vs. Light LaTeX",
+    "tags": "D — strings, algorithms",
+    "difficulty": "22.7%",
+    "teamsSolved": "127",
+    "status": ""
+  },
+  {
+    "id": "188",
+    "contest": "Hefei 2023",
+    "name": "Linguistics Puzzle",
+    "tags": "I — strings, hashing, combinatorics, search, brute_force",
+    "difficulty": "22.4%",
+    "teamsSolved": "136",
+    "status": ""
+  },
+  {
+    "id": "175",
+    "contest": "Shenyang 2023",
+    "name": "Three Rectangles",
+    "tags": "I — geometry, combinatorics",
+    "difficulty": "21.1%",
+    "teamsSolved": "118",
+    "status": ""
+  },
+  {
+    "id": "131",
+    "contest": "Chengdu 2024",
+    "name": "Closest Derangement",
+    "tags": "[D, permutations, derangement, rmq, lexicographic_order, nth_element]",
+    "difficulty": "20.9%",
+    "teamsSolved": "148",
+    "status": ""
+  },
+  {
+    "id": "224",
+    "contest": "Yokohama 2023",
+    "name": "Task Assignment to Two Employees",
+    "tags": "H: greedy, sorting, graph-cut, maxflow, optimization",
+    "difficulty": "20.9%",
+    "teamsSolved": "18",
+    "status": ""
+  },
+  {
+    "id": "244",
+    "contest": "Yokohama 2021",
+    "name": "It's Surely Complex",
+    "tags": "F: number-theory, FFT/convolution, modular-arithmetic, combinatorics",
+    "difficulty": "20.5%",
+    "teamsSolved": "9",
+    "status": ""
+  },
+  {
+    "id": "114",
+    "contest": "WF 2024",
+    "name": "Where Am I Now?",
+    "tags": "[l, interactive, dfs, map_matching, rotations_translations, implementation]",
+    "difficulty": "20.4%",
+    "teamsSolved": "23",
+    "status": ""
+  },
+  {
+    "id": "235",
+    "contest": "Yokohama 2022",
+    "name": "Cake Decoration",
+    "tags": "H: number-theory, combinatorics, counting, math",
+    "difficulty": "20.2%",
+    "teamsSolved": "19",
+    "status": ""
+  },
+  {
+    "id": "143",
+    "contest": "Nanjing 2024",
+    "name": "Topology",
+    "tags": "[C, graph, tree_dp, combinatorics, binomial_coefficients, dp, math]",
+    "difficulty": "19.9%",
+    "teamsSolved": "150",
+    "status": ""
+  },
+  {
+    "id": "260",
+    "contest": "Chengdu 2025",
+    "name": "K-Coverage",
+    "tags": "",
+    "difficulty": "19.8%",
+    "teamsSolved": "176",
+    "status": ""
+  },
+  {
+    "id": "7",
+    "contest": "Shenyang 2024",
+    "name": "Guess the Polygon",
+    "tags": "geometry, interactive, computational_geometry, integration",
+    "difficulty": "19.1%",
+    "teamsSolved": "113",
+    "status": ""
+  },
+  {
+    "id": "56",
+    "contest": "CERC 2024",
+    "name": "Expression",
+    "tags": "parsing, boolean_algebra, truth_table, bitmask, constructive",
+    "difficulty": "18.9%",
+    "teamsSolved": "38",
+    "status": ""
+  },
+  {
+    "id": "193",
+    "contest": "Jinan 2023",
+    "name": "Graph Partitioning 2",
+    "tags": "B — trees, tree-dp, knapsack-like, sqrt-decomposition, combinatorics, dp, counting",
+    "difficulty": "18.9%",
+    "teamsSolved": "116",
+    "status": ""
+  },
+  {
+    "id": "225",
+    "contest": "Yokohama 2023",
+    "name": "Liquid Distribution",
+    "tags": "I: geometry, convexity, sorting, constructive, feasibility-check",
+    "difficulty": "18.6%",
+    "teamsSolved": "16",
+    "status": ""
+  },
+  {
+    "id": "157",
+    "contest": "Nanjing 2023",
+    "name": "Red Black Tree",
+    "tags": "G — [dp, knapsack, greedy, sorting, optimization, combinatorics, implementation]",
+    "difficulty": "16.3%",
+    "teamsSolved": "110",
+    "status": ""
+  },
+  {
+    "id": "69",
+    "contest": "Hangzhou 2023",
+    "name": "Top Cluster",
+    "tags": "[f, trees, lca, binary_search, mex, preprocessing]",
+    "difficulty": "15.3%",
+    "teamsSolved": "115",
+    "status": ""
+  },
+  {
+    "id": "216",
+    "contest": "Yokohama 2024",
+    "name": "Peculiar Protocol",
+    "tags": "L: dp, interval-dp, implementation, combinatorics",
+    "difficulty": "15.3%",
+    "teamsSolved": "13",
+    "status": ""
+  },
+  {
+    "id": "65",
+    "contest": "Hangzhou 2023",
+    "name": "Festival Decorating",
+    "tags": "[b, convolution, fft, bitset, big_small, offline]",
+    "difficulty": "15.2%",
+    "teamsSolved": "114",
+    "status": ""
+  },
+  {
+    "id": "120",
+    "contest": "Hong Kong 2024",
+    "name": "Money Game 2",
+    "tags": "[f, circular_dp, two_pointers, binary_expansion, prefix_sums, greedy]",
+    "difficulty": "15.0%",
+    "teamsSolved": "52",
+    "status": ""
+  },
+  {
+    "id": "58",
+    "contest": "CERC 2024",
+    "name": "Groceries",
+    "tags": "binary_search, greedy, two_pointers, circle, optimization",
+    "difficulty": "14.9%",
+    "teamsSolved": "30",
+    "status": ""
+  },
+  {
+    "id": "86",
+    "contest": "Hangzhou 2024",
+    "name": "Japanese Bands",
+    "tags": "bitmask, combinatorics, precomputation",
+    "difficulty": "14.3%",
+    "teamsSolved": "90",
+    "status": ""
+  },
+  {
+    "id": "149",
+    "contest": "Nanjing 2024",
+    "name": "Bingo",
+    "tags": "[I, combinatorics, counting, inclusion_exclusion, convolution, fft/ntt, factorials, math]",
+    "difficulty": "13.9%",
+    "teamsSolved": "105",
+    "status": ""
+  },
+  {
+    "id": "17",
+    "contest": "Hong Kong 2022",
+    "name": "Shortest Path Query",
+    "tags": "graphs, shortest_paths, dp, dp_convex_hull",
+    "difficulty": "13.9%",
+    "teamsSolved": "60",
+    "status": ""
+  },
+  {
+    "id": "61",
+    "contest": "CERC 2024",
+    "name": "Just Mining",
+    "tags": "max_flow, flow_on_trees, laminar_family, geometry",
+    "difficulty": "12.9%",
+    "teamsSolved": "26",
+    "status": ""
+  },
+  {
+    "id": "68",
+    "contest": "Hangzhou 2023",
+    "name": "Period of a String",
+    "tags": "[e, strings, periods, modular_arithmetic, constraints_propagation, implementation]",
+    "difficulty": "12.7%",
+    "teamsSolved": "95",
+    "status": ""
+  },
+  {
+    "id": "174",
+    "contest": "Shenyang 2023",
+    "name": "Line Graph Sequence",
+    "tags": "H — graph, graph_theory",
+    "difficulty": "12.3%",
+    "teamsSolved": "69",
+    "status": ""
+  },
+  {
+    "id": "64",
+    "contest": "Hangzhou 2023",
+    "name": "Submissions",
+    "tags": "[a, ad-hoc, implementation, simulation, sorting, casework]",
+    "difficulty": "12.3%",
+    "teamsSolved": "92",
+    "status": ""
+  },
+  {
+    "id": "35",
+    "contest": "Shanghai 2024",
+    "name": "Just-in-Time Render Analysis",
+    "tags": "trees, data_structures, fenwick, lca, dfs_order",
+    "difficulty": "12.0%",
+    "teamsSolved": "78",
+    "status": ""
+  },
+  {
+    "id": "9",
+    "contest": "Shenyang 2024",
+    "name": "Growing Tree",
+    "tags": "trees, backtrack, brute_force, recursion",
+    "difficulty": "11.8%",
+    "teamsSolved": "70",
+    "status": ""
+  },
+  {
+    "id": "211",
+    "contest": "Yokohama 2024",
+    "name": "Beyond the Former Explorer",
+    "tags": "G: interactive, search, implementation",
+    "difficulty": "11.8%",
+    "teamsSolved": "10",
+    "status": ""
+  },
+  {
+    "id": "262",
+    "contest": "Chengdu 2025",
+    "name": "Meeting for Meals",
+    "tags": "",
+    "difficulty": "11.7%",
+    "teamsSolved": "104",
+    "status": ""
+  },
+  {
+    "id": "238",
+    "contest": "Yokohama 2022",
+    "name": "New Year Festival",
+    "tags": "K: dp, bitmask, scheduling, optimization",
+    "difficulty": "11.7%",
+    "teamsSolved": "11",
+    "status": ""
+  },
+  {
+    "id": "153",
+    "contest": "Nanjing 2024",
+    "name": "Ordainer of Inexorable Judgment",
+    "tags": "[M, geometry, computational_geometry, convex_polygon, tangents, area_integration, sweep, math]",
+    "difficulty": "11.0%",
+    "teamsSolved": "83",
+    "status": ""
+  },
+  {
+    "id": "31",
+    "contest": "Shanghai 2024",
+    "name": "Fast Bogosort",
+    "tags": "probability, expectation, combinatorics, convolution, ntt, divide_and_conquer",
+    "difficulty": "10.8%",
+    "teamsSolved": "70",
+    "status": ""
+  },
+  {
+    "id": "95",
+    "contest": "Kunming 2024",
+    "name": "Flowers",
+    "tags": "[f, number_theory, primes, min_25_sieve, multiplicative_function, combinatorics]",
+    "difficulty": "10.3%",
+    "teamsSolved": "67",
+    "status": ""
+  },
+  {
+    "id": "258",
+    "contest": "Chengdu 2025",
+    "name": "Inside Triangle",
+    "tags": "",
+    "difficulty": "10.1%",
+    "teamsSolved": "90",
+    "status": ""
+  },
+  {
+    "id": "199",
+    "contest": "Jinan 2023",
+    "name": "Basic Substring Structure",
+    "tags": "H — strings, suffix-array, lcp, hashing, offline-updates, substring-algorithms, data-structures",
+    "difficulty": "9.6%",
+    "teamsSolved": "59",
+    "status": ""
+  },
+  {
+    "id": "83",
+    "contest": "Hangzhou 2024",
+    "name": "Gathering Mushrooms",
+    "tags": "dfs, functional_graph, implementation",
+    "difficulty": "9.4%",
+    "teamsSolved": "59",
+    "status": ""
+  },
+  {
+    "id": "243",
+    "contest": "Yokohama 2021",
+    "name": "Planning Railroad Discontinuation",
+    "tags": "E: graph, MST, Kruskal, union-find, optimization",
+    "difficulty": "9.1%",
+    "teamsSolved": "4",
+    "status": ""
+  },
+  {
+    "id": "8",
+    "contest": "Shenyang 2024",
+    "name": "Guide Map",
+    "tags": "trees, combinatorics, dfs_order, data_structures, persistent_segment_tree",
+    "difficulty": "9.0%",
+    "teamsSolved": "53",
+    "status": ""
+  },
+  {
+    "id": "146",
+    "contest": "Nanjing 2024",
+    "name": "Subway",
+    "tags": "[F, graph, shortest_path, dijkstra, state_graph, li_chao_tree, dynamic_convex_hull, data_structures, optimization]",
+    "difficulty": "8.9%",
+    "teamsSolved": "67",
+    "status": ""
+  },
+  {
+    "id": "23",
+    "contest": "Hong Kong 2022",
+    "name": "Dice Game",
+    "tags": "math, bitmask, divide_and_conquer, bitwise",
+    "difficulty": "8.6%",
+    "teamsSolved": "37",
+    "status": ""
+  },
+  {
+    "id": "20",
+    "contest": "Hong Kong 2022",
+    "name": "Paddle Star",
+    "tags": "geometry, math, casework, implementation",
+    "difficulty": "8.4%",
+    "teamsSolved": "36",
+    "status": ""
+  },
+  {
+    "id": "210",
+    "contest": "Yokohama 2024",
+    "name": "The Farthest Point",
+    "tags": "F: geometry, math, constructive",
+    "difficulty": "8.2%",
+    "teamsSolved": "7",
+    "status": ""
+  },
+  {
+    "id": "124",
+    "contest": "Hong Kong 2024",
+    "name": "Reconstruction",
+    "tags": "[j, trees, centroid, path_queries, lca, preprocessing, verification]",
+    "difficulty": "8.1%",
+    "teamsSolved": "28",
+    "status": ""
+  },
+  {
+    "id": "164",
+    "contest": "Nanjing 2023",
+    "name": "Grand Finale",
+    "tags": "H — [tiling, constructive, combinatorics, packing, geometry, parity, constructive_algorithms]",
+    "difficulty": "8.0%",
+    "teamsSolved": "54",
+    "status": ""
+  },
+  {
+    "id": "133",
+    "contest": "Chengdu 2024",
+    "name": "Double 11",
+    "tags": "[F, wqs_binary_search, dp, optimization, monotone_decision, divide_and_conquer]",
+    "difficulty": "7.8%",
+    "teamsSolved": "55",
+    "status": ""
+  },
+  {
+    "id": "91",
+    "contest": "Kunming 2024",
+    "name": "Brackets",
+    "tags": "[b, strings, hashing, stack, mo, offline, implementation]",
+    "difficulty": "7.7%",
+    "teamsSolved": "50",
+    "status": ""
+  },
+  {
+    "id": "191",
+    "contest": "Hefei 2023",
+    "name": "Information Spread",
+    "tags": "L — graph, dfs, virtual_tree, probability, dp",
+    "difficulty": "7.4%",
+    "teamsSolved": "45",
+    "status": ""
+  },
+  {
+    "id": "119",
+    "contest": "Hong Kong 2024",
+    "name": "Concave Hull",
+    "tags": "[e, geometry, convex_hull, polar_sort, enumeration, computational_geometry]",
+    "difficulty": "7.2%",
+    "teamsSolved": "25",
+    "status": ""
+  },
+  {
+    "id": "85",
+    "contest": "Hangzhou 2024",
+    "name": "Identify Chord",
+    "tags": "binary_search, interactive, math",
+    "difficulty": "6.5%",
+    "teamsSolved": "41",
+    "status": ""
+  },
+  {
+    "id": "190",
+    "contest": "Hefei 2023",
+    "name": "Campus Partition",
+    "tags": "K — graph, trees, tree_dp, segment_tree, data_structures",
+    "difficulty": "5.4%",
+    "teamsSolved": "33",
+    "status": ""
+  },
+  {
+    "id": "130",
+    "contest": "Chengdu 2024",
+    "name": "Chinese Chess",
+    "tags": "[C, interactive, bfs, decision_tree, game_simulation, queries]",
+    "difficulty": "5.4%",
+    "teamsSolved": "38",
+    "status": ""
+  },
+  {
+    "id": "110",
+    "contest": "WF 2024",
+    "name": "Maxwell’s Demon",
+    "tags": "[h, simulation, modular_arithmetic, kinematics, event_processing, linear_algebra_z2]",
+    "difficulty": "5.3%",
+    "teamsSolved": "6",
+    "status": ""
+  },
+  {
+    "id": "98",
+    "contest": "Kunming 2024",
+    "name": "Items",
+    "tags": "[i, generating_functions, fft, ntt, polynomial_exponentiation, convolution]",
+    "difficulty": "4.8%",
+    "teamsSolved": "31",
+    "status": ""
+  },
+  {
+    "id": "74",
+    "contest": "Hangzhou 2023",
+    "name": "Card Game",
+    "tags": "[k, data_structures, persistent_segment_tree, versioned_structures, dp_ranges]",
+    "difficulty": "4.5%",
+    "teamsSolved": "34",
+    "status": ""
+  },
+  {
+    "id": "51",
+    "contest": "SWERC 2021",
+    "name": "Fantasmagorie",
+    "tags": "grid, graph, constructive, bfs, computational_geometry",
+    "difficulty": "4.4%",
+    "teamsSolved": "25",
+    "status": ""
+  },
+  {
+    "id": "80",
+    "contest": "Hangzhou 2024",
+    "name": "Dividing Sequence",
+    "tags": "lyndon, strings",
+    "difficulty": "4.3%",
+    "teamsSolved": "27",
+    "status": ""
+  },
+  {
+    "id": "230",
+    "contest": "Yokohama 2022",
+    "name": "Secure the Top Secret",
+    "tags": "C: graph, min-cut, maxflow, grid",
+    "difficulty": "4.3%",
+    "teamsSolved": "4",
+    "status": ""
+  },
+  {
+    "id": "236",
+    "contest": "Yokohama 2022",
+    "name": "Quiz Contest",
+    "tags": "I: combinatorics, dp, counting, factorials",
+    "difficulty": "4.3%",
+    "teamsSolved": "4",
+    "status": ""
+  },
+  {
+    "id": "33",
+    "contest": "Shanghai 2024",
+    "name": "Hexagon Puzzle",
+    "tags": "combinatorics, constructive, greedy, tiling",
+    "difficulty": "4.2%",
+    "teamsSolved": "27",
+    "status": ""
+  },
+  {
+    "id": "93",
+    "contest": "Kunming 2024",
+    "name": "Dolls",
+    "tags": "[d, greedy, binary_search, discretization, interval_check, two_pointers]",
+    "difficulty": "4.0%",
+    "teamsSolved": "26",
+    "status": ""
+  },
+  {
+    "id": "158",
+    "contest": "Nanjing 2023",
+    "name": "Extending Distance",
+    "tags": "A — [grids, bfs, graph, simulation, reachability, functional_graph, state-space]",
+    "difficulty": "3.9%",
+    "teamsSolved": "26",
+    "status": ""
+  },
+  {
+    "id": "203",
+    "contest": "Jinan 2023",
+    "name": "Ticket to Ride",
+    "tags": "L — dp, knapsack-like, segment-tree, amortized-structures, optimization, dynamic-programming, data-structures",
+    "difficulty": "3.6%",
+    "teamsSolved": "22",
+    "status": ""
+  },
+  {
+    "id": "113",
+    "contest": "WF 2024",
+    "name": "Tower of noiHa",
+    "tags": "[k, recursion, hanoi, constructive, state_decoding, simulation]",
+    "difficulty": "3.5%",
+    "teamsSolved": "4",
+    "status": ""
+  },
+  {
+    "id": "37",
+    "contest": "Shanghai 2024",
+    "name": "Lazy Susan",
+    "tags": "dp, dp_interval, circular_dp, preprocessing",
+    "difficulty": "3.2%",
+    "teamsSolved": "21",
+    "status": ""
+  },
+  {
+    "id": "38",
+    "contest": "Shanghai 2024",
+    "name": "Machine Learning with Penguins",
+    "tags": "computational_geometry, geometry, circle_tests, robust_geometry, integer_arithmetic",
+    "difficulty": "3.2%",
+    "teamsSolved": "21",
+    "status": ""
+  },
+  {
+    "id": "48",
+    "contest": "SWERC 2021",
+    "name": "Daisy's Mazes",
+    "tags": "graph, bfs, automaton, state_space_search",
+    "difficulty": "3.2%",
+    "teamsSolved": "18",
+    "status": ""
+  },
+  {
+    "id": "161",
+    "contest": "Nanjing 2023",
+    "name": "Puzzle: Question Mark",
+    "tags": "D — [tree_dp, trees, dp, convexity, difference_array, combinatorics, optimization]",
+    "difficulty": "3.1%",
+    "teamsSolved": "21",
+    "status": ""
+  },
+  {
+    "id": "187",
+    "contest": "Hefei 2023",
+    "name": "Computational Complexity",
+    "tags": "H — math, floor_function, piecewise, precomputation, binary_search",
+    "difficulty": "3.0%",
+    "teamsSolved": "18",
+    "status": ""
+  },
+  {
+    "id": "107",
+    "contest": "WF 2024",
+    "name": "Flipping Container",
+    "tags": "[e, constructive, orientation_graph, eulerian_cycle, dp, knapsack_with_negatives]",
+    "difficulty": "2.7%",
+    "teamsSolved": "3",
+    "status": ""
+  },
+  {
+    "id": "6",
+    "contest": "Shenyang 2024",
+    "name": "Light Up the Hypercube",
+    "tags": "bitmask, linear_algebra_xor_basis, greedy, combinatorics",
+    "difficulty": "2.5%",
+    "teamsSolved": "15",
+    "status": ""
+  },
+  {
+    "id": "141",
+    "contest": "Nanjing 2024",
+    "name": "Hey, Have You Seen My Kangaroo?",
+    "tags": "[A, graph, grids, simulation, functional_graph, dfs, periodicity, implementation]",
+    "difficulty": "2.5%",
+    "teamsSolved": "19",
+    "status": ""
+  },
+  {
+    "id": "172",
+    "contest": "Shenyang 2023",
+    "name": "Ursa Minor",
+    "tags": "F — number_theory, data_structures",
+    "difficulty": "2.3%",
+    "teamsSolved": "13",
+    "status": ""
+  },
+  {
+    "id": "219",
+    "contest": "Yokohama 2023",
+    "name": "Ferris Wheel",
+    "tags": "C: combinatorics, catalan, non-crossing-matching, polya-enumeration, dp",
+    "difficulty": "2.3%",
+    "teamsSolved": "2",
+    "status": ""
+  },
+  {
+    "id": "249",
+    "contest": "Yokohama 2021",
+    "name": "Distributing the Treasure",
+    "tags": "K: matching, fair-division, greedy, max-weight-matching, combinatorics",
+    "difficulty": "2.3%",
+    "teamsSolved": "1",
+    "status": ""
+  },
+  {
+    "id": "88",
+    "contest": "Hangzhou 2024",
+    "name": "Let's Go! New Adventure",
+    "tags": "binary_search, dp, monotonicity, optimization",
+    "difficulty": "2.2%",
+    "teamsSolved": "14",
+    "status": ""
+  },
+  {
+    "id": "118",
+    "contest": "Hong Kong 2024",
+    "name": "Master of Both VI",
+    "tags": "[d, trees, segment_tree, matrix_dp, binary_search, dfs_order, offline_queries]",
+    "difficulty": "2.0%",
+    "teamsSolved": "7",
+    "status": ""
+  },
+  {
+    "id": "52",
+    "contest": "CERC 2024",
+    "name": "Anthem",
+    "tags": "string, greedy, constructive, graph",
+    "difficulty": "2.0%",
+    "teamsSolved": "4",
+    "status": ""
+  },
+  {
+    "id": "194",
+    "contest": "Jinan 2023",
+    "name": "Turn on the Light 2",
+    "tags": "C — graphs, trees, enumeration, dp, brute_force, combinatorics, graph-enumeration",
+    "difficulty": "2.0%",
+    "teamsSolved": "12",
+    "status": ""
+  },
+  {
+    "id": "1",
+    "contest": "Shenyang 2024",
+    "name": "Safety First",
+    "tags": "dp, dp_counting, combinatorics, optimization",
+    "difficulty": "1.9%",
+    "teamsSolved": "11",
+    "status": ""
+  },
+  {
+    "id": "173",
+    "contest": "Shenyang 2023",
+    "name": "Military Maneuver",
+    "tags": "G — geometry, probability (integration)",
+    "difficulty": "1.8%",
+    "teamsSolved": "10",
+    "status": ""
+  },
+  {
+    "id": "66",
+    "contest": "Hangzhou 2023",
+    "name": "Yet Another Shortest Path Query",
+    "tags": "[c, graph, shortest_path, planar_graph, graph_decomposition, offline]",
+    "difficulty": "1.7%",
+    "teamsSolved": "13",
+    "status": ""
+  },
+  {
+    "id": "197",
+    "contest": "Jinan 2023",
+    "name": "Say Hello to the Future",
+    "tags": "F — dp, divide-and-conquer, fenwick-tree, offline, contributions, combinatorics, data-structures",
+    "difficulty": "1.6%",
+    "teamsSolved": "10",
+    "status": ""
+  },
+  {
+    "id": "22",
+    "contest": "Hong Kong 2022",
+    "name": "Range Closest Pair of Points Query",
+    "tags": "geometry, data_structures, offline, fenwick, sqrt_decomposition",
+    "difficulty": "1.6%",
+    "teamsSolved": "7",
+    "status": ""
+  },
+  {
+    "id": "90",
+    "contest": "Kunming 2024",
+    "name": "Antivirus",
+    "tags": "[a, graph, dominator_tree, dp, segment_tree, hld, range_update]",
+    "difficulty": "1.5%",
+    "teamsSolved": "10",
+    "status": ""
+  },
+  {
+    "id": "254",
+    "contest": "Chengdu 2025",
+    "name": "Escaping from Trap",
+    "tags": "",
+    "difficulty": "1.5%",
+    "teamsSolved": "13",
+    "status": ""
+  },
+  {
+    "id": "167",
+    "contest": "Shenyang 2023",
+    "name": "Intro: Dawn of a New Era",
+    "tags": "A — graph, combinatorics",
+    "difficulty": "1.4%",
+    "teamsSolved": "8",
+    "status": ""
+  },
+  {
+    "id": "257",
+    "contest": "Chengdu 2025",
+    "name": "Heuristic Knapsack",
+    "tags": "",
+    "difficulty": "1.2%",
+    "teamsSolved": "11",
+    "status": ""
+  },
+  {
+    "id": "3",
+    "contest": "Shenyang 2024",
+    "name": "Crisis Event: Meteorite",
+    "tags": "dp, intervals, dp_ranges, monotonic_queue, sliding_window",
+    "difficulty": "1.2%",
+    "teamsSolved": "7",
+    "status": ""
+  },
+  {
+    "id": "12",
+    "contest": "Shenyang 2024",
+    "name": "The Grand Contest",
+    "tags": "prefix_sums, binary_search, rmq, data_structures",
+    "difficulty": "1.2%",
+    "teamsSolved": "7",
+    "status": ""
+  },
+  {
+    "id": "214",
+    "contest": "Yokohama 2024",
+    "name": "Mixing Solutions",
+    "tags": "J: convex-optimization, geometry, constructive",
+    "difficulty": "1.2%",
+    "teamsSolved": "1",
+    "status": ""
+  },
+  {
+    "id": "115",
+    "contest": "Hong Kong 2024",
+    "name": "General Symmetry",
+    "tags": "[a, bitset, binary_search, dp, symmetry, sliding_window, implementation]",
+    "difficulty": "1.2%",
+    "teamsSolved": "4",
+    "status": ""
+  },
+  {
+    "id": "123",
+    "contest": "Hong Kong 2024",
+    "name": "Ma Meilleure Ennemie",
+    "tags": "[i, number_theory, mobius, inclusion_exclusion, factorization, pollard_rho, pohlig_hellman]",
+    "difficulty": "1.2%",
+    "teamsSolved": "4",
+    "status": ""
+  },
+  {
+    "id": "36",
+    "contest": "Shanghai 2024",
+    "name": "Knights of Night",
+    "tags": "graphs, matching, flow, greedy, pruning",
+    "difficulty": "1.1%",
+    "teamsSolved": "7",
+    "status": ""
+  },
+  {
+    "id": "163",
+    "contest": "Nanjing 2023",
+    "name": "Suffix Structure",
+    "tags": "E — [graphs, dual_graph, min_cut, max_flow, min_cost_flow, network_flow, graph_transformation]",
+    "difficulty": "1.0%",
+    "teamsSolved": "7",
+    "status": ""
+  },
+  {
+    "id": "11",
+    "contest": "Shenyang 2024",
+    "name": "Fragile Pinball",
+    "tags": "geometry, brute_force, enumeration, reflection_trick, computational_geometry",
+    "difficulty": "0.8%",
+    "teamsSolved": "5",
+    "status": ""
+  },
+  {
+    "id": "148",
+    "contest": "Nanjing 2024",
+    "name": "Border Jump 2",
+    "tags": "[H, strings, palindromes, suffix_automaton, occurrence_queries, segment_tree, data_structures, dp]",
+    "difficulty": "0.8%",
+    "teamsSolved": "6",
+    "status": ""
+  },
+  {
+    "id": "40",
+    "contest": "SWERC 2021",
+    "name": "Rule 110",
+    "tags": "cellular_automaton, automaton, bitmask, matrix_exponentiation, exponentiation",
+    "difficulty": "0.7%",
+    "teamsSolved": "4",
+    "status": ""
+  },
+  {
+    "id": "180",
+    "contest": "Hefei 2023",
+    "name": "SQRT Problem",
+    "tags": "A — number_theory, modular_arithmetic, lattices, math, constructive",
+    "difficulty": "0.7%",
+    "teamsSolved": "4",
+    "status": ""
+  },
+  {
+    "id": "144",
+    "contest": "Nanjing 2024",
+    "name": "Toe-Tac-Tics",
+    "tags": "[D, game_theory, sprague_grundy, nimber, impartial_games, combinatorics, math]",
+    "difficulty": "0.5%",
+    "teamsSolved": "4",
+    "status": ""
+  },
+  {
+    "id": "79",
+    "contest": "Hangzhou 2024",
+    "name": "Catch the Star",
+    "tags": "computational_geometry, geometry, halfplane_intersection, implementation, rational",
+    "difficulty": "0.5%",
+    "teamsSolved": "3",
+    "status": ""
+  },
+  {
+    "id": "255",
+    "contest": "Chengdu 2025",
+    "name": "Following Arrows",
+    "tags": "",
+    "difficulty": "0.5%",
+    "teamsSolved": "4",
+    "status": ""
+  },
+  {
+    "id": "155",
+    "contest": "Nanjing 2023",
+    "name": "Intersection over Union",
+    "tags": "F — [graph, dag, topo_sort, dependency, construction, implementation, data_structures]",
+    "difficulty": "0.4%",
+    "teamsSolved": "3",
+    "status": ""
+  },
+  {
+    "id": "72",
+    "contest": "Hangzhou 2023",
+    "name": "Dreamy Putata",
+    "tags": "[i, math, linear_algebra, gaussian_elimination, segment_tree, expected_value]",
+    "difficulty": "0.4%",
+    "teamsSolved": "3",
+    "status": ""
+  },
+  {
+    "id": "201",
+    "contest": "Jinan 2023",
+    "name": "Computational Intelligence",
+    "tags": "J — geometry, analytic-integration, numeric-integration, calculus, computational-geometry, floating-point, math",
+    "difficulty": "0.3%",
+    "teamsSolved": "2",
+    "status": ""
+  },
+  {
+    "id": "127",
+    "contest": "Hong Kong 2024",
+    "name": "Godzilla",
+    "tags": "[m, graph, bicircular_matroid, kernelization, 2d_rmq, dfs, optimization]",
+    "difficulty": "0.3%",
+    "teamsSolved": "1",
+    "status": ""
+  },
+  {
+    "id": "135",
+    "contest": "Chengdu 2024",
+    "name": "Friendship is Magic",
+    "tags": "[H, math, combinatorics, digit_partitioning, counting, analytic_summation]",
+    "difficulty": "0.3%",
+    "teamsSolved": "2",
+    "status": ""
+  },
+  {
+    "id": "75",
+    "contest": "Hangzhou 2023",
+    "name": "Master of Both V",
+    "tags": "[l, geometry, data_structures, dynamic, convex_hull, angle_sort]",
+    "difficulty": "0.1%",
+    "teamsSolved": "1",
+    "status": ""
+  },
+  {
+    "id": "152",
+    "contest": "Nanjing 2024",
+    "name": "P⊕Q=R",
+    "tags": "[L, bitwise, xor, constructive, permutation_construction, recursion, number_theory (bits)]",
+    "difficulty": "0.1%",
+    "teamsSolved": "1",
+    "status": ""
+  },
+  {
+    "id": "183",
+    "contest": "Hefei 2023",
+    "name": "Balanced Array",
+    "tags": "D — strings, hashing, two_pointers, binary_search, string_algorithms",
+    "difficulty": "0.0%",
+    "teamsSolved": "0.2898032200357782",
+    "status": ""
+  },
+  {
+    "id": "26",
+    "contest": "Shanghai 2024",
+    "name": "Ancient Maps, Hidden Danger",
+    "tags": "computational_geometry, polygon_union, sweep, angular_sort, geometry",
+    "difficulty": "0.0%",
+    "teamsSolved": "",
+    "status": ""
+  },
+  {
+    "id": "100",
+    "contest": "Kunming 2024",
+    "name": "Key Recovery",
+    "tags": "[k, crypto, linear_algebra, xor, brute_force, probabilistic, bitmask]",
+    "difficulty": "0.0%",
+    "teamsSolved": "",
+    "status": ""
+  },
+  {
+    "id": "109",
+    "contest": "WF 2024",
+    "name": "Kindergarten",
+    "tags": "[g, functional_graph, cycle_detection, topological_sort, recursion, dfs_order, data_structures]",
+    "difficulty": "0.0%",
+    "teamsSolved": "",
+    "status": ""
+  },
+  {
+    "id": "140",
+    "contest": "Chengdu 2024",
+    "name": "Two Convex Holes",
+    "tags": "[M, computational_geometry, polygon_intersection, area_integration, affine_transform]",
+    "difficulty": "0.0%",
+    "teamsSolved": "",
+    "status": ""
+  },
+  {
+    "id": "178",
+    "contest": "Shenyang 2023",
+    "name": "Rook Detection",
+    "tags": "L — interactive, algorithms",
+    "difficulty": "0.0%",
+    "teamsSolved": "",
+    "status": ""
+  },
+  {
+    "id": "212",
+    "contest": "Yokohama 2024",
+    "name": "Remodeling the Dungeon 2",
+    "tags": "H: graph, bipartite-matching, maxflow, matroid",
+    "difficulty": "0.0%",
+    "teamsSolved": "",
+    "status": ""
+  }
+]

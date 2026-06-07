@@ -1,0 +1,201 @@
+:root { --gap: 10px; }
+
+body {
+  font-family: system-ui, Arial, Helvetica, sans-serif;
+  margin: 18px;
+  color: #111;
+}
+
+/* ---------- Desktop / base layout (unchanged visually) ---------- */
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 12px auto;
+  /* keep desktop appearance */
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 800px;
+}
+
+th, td {
+  border: 1px solid #e6e6e6;
+  padding: 8px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+th { background: #f7f7f7; }
+
+.difficulty {
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  color: #000;
+  display: inline-block;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Status colors */
+.status-solved { background: #c8f7c5; }
+.status-unsolved { background: #ffd7d7; }
+.status-nosub { background: #f0f0f0; }
+
+/* make status cell feel like whole-cell color on desktop too */
+td.status-solved,
+td.status-unsolved,
+td.status-nosub {
+  padding: 0; /* we'll let inner element provide padding */
+}
+td.status-solved > span,
+td.status-unsolved > span,
+td.status-nosub > span {
+  display: block;
+  padding: 8px;
+  min-width: 120px;
+  text-align: center;
+}
+
+/* inputs/buttons */
+input[type=search] { padding: 6px; }
+.btn { padding: 6px 10px; border-radius: 6px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+.btn.primary { background: #0366d6; color: #fff; border-color: #0366d6; }
+.inline-select { width: 140px; padding: 4px; }
+
+.muted { color: #666; font-size: 0.95rem; }
+.stats { display:flex; gap:12px; align-items:center; }
+.small { font-size:0.9rem; padding:4px 6px; }
+a.link-small { font-size:0.9rem; margin-left:6px; color:#0366d6; }
+
+/* Hide 4th column when tags-hidden class is present (desktop behavior preserved) */
+#problemsTable.tags-hidden th:nth-child(4),
+#problemsTable.tags-hidden td:nth-child(4) {
+  display: none;
+}
+
+/* Google / user area helpers */
+#gsi-container { margin-left: 12px; display:inline-block; }
+#userArea { display:inline-flex; gap:8px; align-items:center; margin-left:12px; }
+
+/* ---------- Responsive: large tablet to small desktop ----------
+   Slight adjustments but keep the desktop look. */
+@media (max-width: 1024px) {
+  /* reduce min table width a little */
+  table { min-width: 720px; }
+}
+
+/* ---------- Mobile-friendly: transform table into cards ----------
+   On narrow screens we switch to card rows that are easy to read/tap.
+   Visual style stays similar: same colors, badges, spacing. */
+@media (max-width: 768px) {
+  body { margin: 12px; }
+
+  /* header: stack but keep similar spacing */
+  .top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  /* controls: stack vertically but keep spacing */
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin: 12px 0;
+  }
+  .controls label { display: flex; flex-direction: column; gap: 6px; }
+  .inline-select,
+  input[type="search"],
+  .btn {
+    width: 100%;
+    font-size: 16px; /* prevents iOS zoom */
+    min-height: 44px;
+    box-sizing: border-box;
+  }
+
+  /* make table compact but we will hide headers and show cards */
+  table { min-width: 100%; border: none; }
+  thead { display: none; }         /* hide header row */
+  tbody { display: block; }
+
+  /* each row becomes a card */
+  tbody tr {
+    display: block;
+    margin-bottom: 12px;
+    border: 1px solid #eee;
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+  }
+
+  /* each cell becomes a label/value pair row inside the card */
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    padding: 6px 0;
+    font-size: 15px;
+  }
+
+  /* add labels using nth-child pseudo content (keeps original column meaning) */
+  tbody td:nth-child(1)::before { content: "ID"; font-weight:600; margin-right:8px; color:#333; }
+  tbody td:nth-child(2)::before { content: "Contest"; font-weight:600; margin-right:8px; color:#333; }
+  tbody td:nth-child(3)::before { content: "Problem"; font-weight:600; margin-right:8px; color:#333; }
+  tbody td:nth-child(4)::before { content: "Tags"; font-weight:600; margin-right:8px; color:#333; }
+  tbody td:nth-child(5)::before { content: "Difficulty"; font-weight:600; margin-right:8px; color:#333; }
+  tbody td:nth-child(6)::before { content: "Status"; font-weight:600; margin-right:8px; color:#333; }
+
+  /* Keep left label and right value separated */
+  tbody td::before {
+    display: inline-block;
+    min-width: 90px;
+    white-space: nowrap;
+  }
+
+  /* Problem name: allow wrapping and bigger space */
+  tbody td:nth-child(3) { gap: 12px; }
+  tbody td:nth-child(3) a { max-width: 60%; display:inline-block; word-break: break-word; }
+
+  /* Status: make whole status cell appear as colored block */
+  td.status-solved,
+  td.status-unsolved,
+  td.status-nosub {
+    padding: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  td.status-solved > span,
+  td.status-unsolved > span,
+  td.status-nosub > span {
+    display: block;
+    padding: 8px;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Difficulty badge sizing on mobile */
+  .difficulty { padding: 4px 8px; font-size: 14px; }
+
+  /* small visual tweak for tags (they can be long) */
+  tbody td:nth-child(4) {
+    max-width: 40%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
