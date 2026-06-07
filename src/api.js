@@ -45,12 +45,12 @@ export const api = {
     return request("/api/status");
   },
   async setStatus(problemId, status) {
-    return request(`/api/status?id=${encodeURIComponent(problemId)}`, {
+    return request(`/api/status/${encodeURIComponent(problemId)}`, {
       method: "PUT",
       body: JSON.stringify({ status }),
     });
   },
   async clearStatus(problemId) {
-    return request(`/api/status?id=${encodeURIComponent(problemId)}`, { method: "DELETE" });
+    return request(`/api/status/${encodeURIComponent(problemId)}`, { method: "DELETE" });
   },
 };

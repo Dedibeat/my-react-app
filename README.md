@@ -1,19 +1,10 @@
-# React + Vite
+# Problemset App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal/small-community problem tracker. React frontend + FastAPI backend with Turso (libSQL) storage and JWT auth.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Live app:** https://my-react-app-mu-ecru.vercel.app
+- **API host:** Render (`https://my-react-app-33zw.onrender.com`)
+- **Frontend host:** Vercel (proxies `/api/*` → Render)
 
 ## Local development
 
@@ -22,31 +13,54 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 npm install
-# Terminal 1: API on :8000
-LIBSQL_URL=local.db JWT_SECRET=dev-secret uvicorn api.index:app --reload --port 8000
-# Terminal 2: Vite on :5173 (proxies /api -> :8000)
+# Terminal 1 — API on :8000
+LIBSQL_URL=local.db JWT_SECRET=dev-secret uvicorn src.server:app --reload --port 8000
+# Terminal 2 — Vite on :5173 (proxies /api -> :8000)
 npm run dev
 ```
 
-## Deploying to Vercel
+Schema (`users`, `problem_status`) is created automatically on the first request.
 
-1. **Create a Turso database** (libSQL, SQLite-compatible):
-   ```bash
-   brew install tursodatabase/tap/turso     # or download from https://turso.tech
-   turso db create problemset
-   turso db show problemset --url           # -> LIBSQL_URL
-   turso db tokens create problemset         # -> LIBSQL_AUTH_TOKEN
-   ```
+## Deploying
 
-2. **Deploy**:
-   ```bash
-   npx vercel link                          # link to a Vercel project (create one if needed)
-   npx vercel env add LIBSQL_URL production
-   npx vercel env add LIBSQL_AUTH_TOKEN production
-   npx vercel env add JWT_SECRET production  # any long random string
-   npx vercel --prod
-   ```
+### 1. Create a Turso database
 
-   Or push to a Git repo connected to Vercel for auto-deploy.
+```bash
+brew install tursodatabase/tap/turso     # or download from https://turso.tech
+turso db create problemset
+turso db show problemset --url           # -> LIBSQL_URL
+turso db tokens create problemset         # -> LIBSQL_AUTH_TOKEN
+```
 
-After deploy, the schema (`users`, `problem_status`) is created automatically on the first request via `executescript` in `api/db.py`.
+### 2. Deploy the API to Render
+
+1. New + → Web Service → connect the `my-react-app` repo
+2. Language: **Python 3**
+3. Build Command: `pip install -r requirements.txt`
+4. Start Command: `uvicorn src.server:app --host 0.0.0.0 --port $PORT`
+5. Environment variables:
+   - `LIBSQL_URL`
+   - `LIBSQL_AUTH_TOKEN`
+   - `JWT_SECRET` (any long random string; `openssl rand -hex 32`)
+   - `CORS_ORIGINS` = `https://my-react-app-mu-ecru.vercel.app`
+6. Deploy. Copy the service URL (e.g. `https://my-react-app-33zw.onrender.com`).
+
+### 3. Deploy the frontend to Vercel
+
+`vercel.json` already contains the `/api/*` rewrite pointing to Render. Update the destination URL if your Render domain differs, then:
+
+```bash
+npx vercel --prod
+```
+
+Vercel will run `npm run build` and serve `dist/`. The rewrite makes `/api/*` requests on the Vercel origin transparently forward to Render.
+
+## Endpoints
+
+- `GET  /api/health` — liveness
+- `POST /api/auth/signup` — `{username, password}` → `{token, user}`
+- `POST /api/auth/login` — `{username, password}` → `{token, user}`
+- `GET  /api/auth/me` — current user (Bearer token)
+- `GET  /api/status` — `{problemId: status, ...}` (Bearer token)
+- `PUT  /api/status/{problemId}` — `{status}` (Bearer token)
+- `DELETE /api/status/{problemId}` — (Bearer token)

@@ -1,5 +1,8 @@
 {
   "framework": null,
   "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "https://my-react-app-33zw.onrender.com/api/$1" }
+  ]
 }
