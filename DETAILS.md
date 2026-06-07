@@ -433,3 +433,18 @@ Unchanged from the backend-fix session:
 ### Lint status
 
 `npm run lint` is clean for all new code. The 2 remaining errors are pre-existing in `App.jsx` (`react-hooks/set-state-in-effect`) and `api.js` (`no-empty` try/catch), both unrelated to this session's work and not in the user's request.
+
+## Vercel redeploy (deploy check)
+
+Vercel production was lagging the repo. The previous production deployment (`my-react-jxsoulzmp-…`, 2026-06-07 16:56 +08) was built before the last four commits. Its bundle (`index-BUYBs1Rb.js`) only contained `difficulty_desc` / `difficulty_asc`, while the source on `master` (HEAD = `d885808`) and the local dist already had the new `solve_rate_desc` default plus `Solve Rate ↓ / ↑` options. GitHub auto-deploy was not firing on push (no new production deployment appeared between the last `vercel ls` "4h ago" entry and the manual redeploy below).
+
+Action taken: ran `vercel --prod --yes` from the repo root.
+
+- Build: `npm run build` (Vite) — clean, `dist/assets/index-uggMWM-l.js` (205 kB), `index-DyN98pTy.css` (3.8 kB).
+- New production deployment: `my-react-eik31gtmp-dedibeats-projects.vercel.app` (id `dpl_DtRfTRwiuG3QkceVbrPc4JXXZkuF`).
+- Aliased to the canonical domain: https://my-react-app-mu-ecru.vercel.app.
+- Verified: `curl https://my-react-app-mu-ecru.vercel.app/` now serves `index-uggMWM-l.js`, and that bundle contains all four sort keys (`difficulty_desc`, `difficulty_asc`, `solve_rate_desc`, `solve_rate_asc`).
+
+What was NOT done:
+- `git push` was skipped — the local working tree is already in sync with `origin/master`, and the GitHub→Vercel webhook is what is not firing. Pushing again would not change anything. The canonical production URL is now in sync with `master` via the manual `vercel --prod` above.
+- The `AGENTS.md` simplification in the working tree (replacing the legacy rules preamble with `First read DETAILS.md`) is left uncommitted — it is the user's pending edit, not part of this deploy task.
