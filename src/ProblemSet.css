@@ -73,6 +73,8 @@ input[type=search] { padding: 6px; }
 .btn.primary { background: #0366d6; color: #fff; border-color: #0366d6; }
 .inline-select { width: 140px; padding: 4px; }
 
+#searchInput { min-width: 220px; padding: 6px; margin-right: 4px; }
+
 .muted { color: #666; font-size: 0.95rem; }
 .stats { display:flex; gap:12px; align-items:center; }
 .small { font-size:0.9rem; padding:4px 6px; }

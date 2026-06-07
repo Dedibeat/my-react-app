@@ -34,3 +34,4 @@ local.db-shm
 .env
 .env.local
 .vercel
+search.json
