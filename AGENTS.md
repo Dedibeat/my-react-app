@@ -1,7 +1,12 @@
 Goal: Implement simple problemset app for personal and small community use.
 
-Some of the 
+Some of the the things are already implemented. Cahnging them is not nessisary.
 
+main dataset is tagged.json.
+problems.json is dummy data used in implementing. 
+
+Final goal is to deploy it online. To do that i'm thinking vercel app. Keep it in mind.
+documentation: https://vercel.com/docs
 
 When coding follow the below rules:
 
