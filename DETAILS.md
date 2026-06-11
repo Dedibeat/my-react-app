@@ -518,3 +518,94 @@ will start succeeding.
 - The `has_pages: true` flag on the repo confirms GitHub Pages is on (the old
   read-time `Mon, 25 Aug 2025` cache was just edge propagation; a re-curl
   seconds later showed the new content).
+
+---
+
+## Importance rating (rating script + system prompt, data not yet rated)
+
+This session added a CLI in the **llm-integration** repo for rating every
+Asia Pacific problem in `data/tagged.json` on Dr Mostafa Saad's p1–p5
+importance scale. The actual LLM run was started as a smoke test, then
+aborted by user request; **the dataset was reverted** to its prior state
+and no `importance*` fields are present in `data/tagged.json` or
+`public/tagged.json`. The tooling is in place; re-running it will write
+the ratings.
+
+### Files added (in `/home/dedibeat/CompetitiveProgramming/llm-integration/`)
+
+- `importance_prompt.md` — system prompt for the rater. Owns the rank
+  legend (P5 = must-solve / unique idea, P1 = boring / repeated), the
+  rules, and a calibration-traps section. Does **not** inline the few-
+  shot examples; those are read from `mostafa_sheet/promth.txt` at
+  runtime so the user-curated examples stay canonical.
+- `rate_importance.py` — the CLI. Reuses `main.py`'s LLM plumbing by
+  direct import: `_call_api`, `clean_text`, `extract_editorial_snippet`,
+  `save_output`, `_as_contests`, `MAX_RETRIES`, `SAVE_EVERY`, `MODEL`.
+  Region filter (`Asia Pacific` by default) is applied at the contest
+  level; resume is keyed on `(contest_id, problem_id)` with
+  `llm_importance_status == "success"`. Output is in-place by default;
+  a one-shot `data/tagged.json.bak-pre-importance` is created at the
+  start and removed on successful end.
+- `tests/test_rate_importance.py` — 18 mock-only tests covering
+  prompt file, few-shots loader, validation, retry behavior, region
+  filter, and resume. All pass. The full suite is 163 passed + 3
+  pre-existing errors (unrelated `test.json` is gitignored).
+
+### New per-problem fields (not yet present, will be added on run)
+
+- `importance` — `"p1" | "p2" | "p3" | "p4" | "p5" | "unknown"`
+- `importance_confidence` — float in [0, 1], capped at 0.6 without
+  editorial, 0.95 with
+- `importance_rationale` — 1-2 sentence reason
+- `importance_evidence` — list of specific observations
+- `importance_model` — `deepseek-v4-flash` (the `MODEL` constant in
+  `main.py`)
+- `llm_importance_status` — `"success" | "failed"` (resume key)
+
+The `importance_*` prefix is intentional to avoid collision with the
+existing `confidence` / `rationale` / `evidence` fields written by
+`main.tag_problem`. The two systems can coexist on the same problem.
+
+### Scope choices (and why)
+
+- **Region = Asia Pacific, 324 problems.** Hard-coded as the
+  `--region` default. The other 1344 problems stay untouched. Other
+  regions are opt-in via `--region "Asia East Continent"` etc.
+- **No contest metadata in the user message.** The user prompt gets
+  statement + editorial only — no contest name, year, region, solve
+  rate, or average score. Brand-bias avoidance was a deliberate
+  choice; documented in the prompt's RULES section.
+- **OI few-shots, ICPC targets.** The few-shots are Mostafa's 40 OI
+  problem blocks (curated for the mostafa-sheet rating task) and the
+  targets are ICPC Asia Pacific problems. The mismatch is documented
+  in the prompt's calibration-traps section ("Difficulty ≠ importance",
+  "Standard combinations are P1–P2", etc.) so the model is reminded to
+  judge the **idea**, not the contest. Expect the resulting ratings to
+  skew toward the middle (p2–p3) more than mostafa would assign; this
+  is a known limitation of using OI few-shots for ICPC targets.
+- **No UI changes.** `ProblemSet.jsx` is not updated. The ratings
+  are data only; a follow-up session can add an "Importance" column
+  and sort/filter, but that's a separate task.
+
+### How to run the full batch
+
+```bash
+cd /home/dedibeat/CompetitiveProgramming/llm-integration
+.venv/bin/python rate_importance.py --workers 8
+```
+
+- 324 problems × 1 call each, with 8 concurrent workers and ~10s/problem,
+  should take ~7-10 minutes.
+- Re-runs are cheap: any (contest_id, problem_id) already in
+  `data/tagged.json` with `llm_importance_status == "success"` is
+  skipped and the cached result is re-applied to the in-memory problem.
+  The output is checkpointed every 10 newly rated problems.
+- `--dry-run` lists what would be rated without calling the API.
+- `--problem A` / `--limit N` for small batches; `--region ""` to
+  disable the region filter and rate all 1668 problems.
+
+### `.gitignore` addition
+
+`data/tagged.json.bak-pre-importance` and
+`public/tagged.json.bak-pre-importance` are added to `.gitignore` so
+the run-script backup doesn't get committed.

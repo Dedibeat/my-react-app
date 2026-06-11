@@ -35,3 +35,6 @@ local.db-shm
 .env.local
 .vercel
 search.json
+# Rating-script backup
+data/tagged.json.bak-pre-importance
+public/tagged.json.bak-pre-importance
