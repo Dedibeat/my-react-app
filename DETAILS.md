@@ -465,12 +465,15 @@ my-react-app/
 
 ### Deploy
 
-Unchanged from the backend-fix session:
-- Vercel (static SPA + edge rewrite) serves the React app.
-- Vercel rewrite forwards `/api/*` → Render.
-- Render runs `uvicorn src.server:app --host 0.0.0.0 --port $PORT`.
-- Render env: `LIBSQL_URL`, `LIBSQL_AUTH_TOKEN` (or `TURSO_URL`/`TURSO_TOKEN`), `JWT_SECRET`, `CORS_ORIGINS`.
-- `git push origin master` triggers both Vercel (frontend) and Render (API) auto-deploy.
+Two deploy targets, both auto-update on `git push origin master`:
+
+- **Vercel** (primary) — serves the React SPA. `vercel.json` rewrites `/api/*` → Render. `npm run build` is the default; Vercel uses absolute asset URLs in `dist/index.html`.
+- **GitHub Pages** at https://dedibeat.github.io — secondary, full mirror. Built by `.github/workflows/deploy-gh-pages.yml` on every push to `master`, using `peaceiris/actions-gh-pages@v4` to push `dist/` into the `main` branch of `Dedibeat/dedibeat.github.io`. The Pages build uses `npm run build:gh` which sets Vite's `--base=./` so the emitted `index.html` references `./assets/...` instead of `/assets/...`; the SPA then works regardless of the subpath. `dist/.nojekyll` is touched so Pages doesn't try to run the deploy through Jekyll. `dist/tagged.json.bak-pre-importance` is stripped before the push so the rating-script backup never leaks to the live site.
+- The Render API is unchanged: `uvicorn src.server:app --host 0.0.0.0 --port $PORT`, env: `LIBSQL_URL`, `LIBSQL_AUTH_TOKEN` (or `TURSO_URL`/`TURSO_TOKEN`), `JWT_SECRET`, `CORS_ORIGINS`. CORS origin for the Pages site (`https://dedibeat.github.io`) needs to be in `CORS_ORIGINS` on Render if you want to log in there — the Vercel origin `https://my-react-app-mu-ecru.vercel.app` is the one currently in env.
+
+### Required secret
+
+The Pages workflow uses `secrets.GH_PAGES_DEPLOY_TOKEN`, a PAT (classic or fine-grained) with `contents: write` on `Dedibeat/dedibeat.github.io`. Add it at `https://github.com/Dedibeat/my-react-app/settings/secrets/actions` (Repo → Settings → Secrets and variables → Actions → New repository secret). The `GITHUB_TOKEN` that comes for free with Actions doesn't work here because the destination repo is different from the source repo (cross-repo pushes need a PAT).
 
 ### What is still dead code / untracked
 
