@@ -294,16 +294,29 @@ Replaced the "Search" text in the search button with a 16×16 inline SVG magnify
 - New **Difficulty** column to the right, populated from `difficulty_estimate`. New `DifficultyLabel` component renders each value as a pill with a fixed hue (green→yellow→orange→red, all 85% lightness). `very_hard` displays as "very hard" for readability. Missing values render as a muted `—`.
 - Mobile `::before` label list updated to match the new column order: `Tags / Solve Rate / Difficulty / Status`.
 
-### 4. Sort logic rewrite
+### 5. Importance replaces Difficulty (this session, follow-up)
 
-- The previous `difficulty_desc` / `difficulty_asc` values were misnomers — they sorted by solve rate. They now mean what the label says.
-- New `DIFFICULTY_RANK = { easy: 1, medium: 2, hard: 3, very_hard: 4 }`. Problems with no `difficulty_estimate` map to `Infinity`, so they sort to the bottom in both directions.
-- `Difficulty ↓ / ↑` primary sort = rank, secondary sort = solve rate in the same direction. So within `very_hard`, the lowest-solve-rate ones come first under `↓`; within `easy`, the highest-solve-rate ones come first under `↓`.
-- Added `Solve Rate ↓` and `Solve Rate ↑` options to the dropdown (the user asked for "sort by solve rate"; added both directions for symmetry with the other columns).
-- Dropdown order: `Difficulty ↓ / Difficulty ↑ / Solve Rate ↓ / Solve Rate ↑ / ID ↑`.
-- Default selection changed to `solve_rate_desc` (easiest problems first by solve rate).
+The previous-session "Difficulty" column was the LLM's `difficulty_estimate` (easy/medium/hard/very_hard). Once the Asia Pacific subset was rated on Mostafa's P1–P5 importance scale (320 of 1668 problems have an `importance` field, see commit `8594cb0`), the column and the sort got replaced. `difficulty_estimate` is no longer used in the UI.
 
-### 5. What was NOT touched
+- `flattenContests` now keeps `importance` (default `''`) and `importanceConfidence` (float 0–1) per problem. The old `difficultyEstimate` field is dropped.
+- New `ImportanceLabel` component renders the column:
+  - Rated (P1–P5): pill with a fixed hue (P5 red, P4 orange, P3 yellow, P2 greenish, P1 neutral gray) and an uppercase label `P5` … `P1`.
+  - Unrated (no field): muted italic `*?` with `title="not yet rated"`.
+  - `unknown` from the model: muted italic `*?` with `title="model said unknown"` — same visual as unrated by design (both are "I don't know"), distinguished only by tooltip.
+  - Tooltip on rated cells shows `confidence NN%` when `importance_confidence > 0`.
+- New `.importance` CSS class (replaces the old `.difficulty` styling for the column). The Solve-Rate column still uses `.difficulty` (kept untouched).
+- New "Importance:" filter dropdown in the controls bar, between "Quick filter" and "Sort by:". Options:
+  - `All` (default)
+  - `Rated (P1–P5)` — has any of p1..p5 (i.e. not `''` and not `unknown`)
+  - `P1` / `P2` / `P3` / `P4` / `P5` — exact bucket
+  - `Unknown` — `importance === 'unknown'`
+  - `Not rated` — `importance === ''`
+  The filter sits inside the same `useMemo([problems, filter, sort, region, importance, searchAst])`, so it stacks with region/quick-filter/search/sort.
+- Sort dropdown: `Difficulty ↓` / `Difficulty ↑` removed and replaced with `Importance ↓` / `Importance ↑`. New `IMPORTANCE_RANK = { p1: 1, p2: 2, p3: 3, p4: 4, p5: 5 }`. Same tiebreaker as before — solve rate in the same direction. Unrated/unknown sort to the bottom in both directions.
+- Mobile `::before` label list updated: `nth-child(6)` is now "Importance" (was "Difficulty"); `nth-child(7)` "Status" unchanged.
+- Default selection is now `importance_desc` (most-important problems first).
+
+### 6. What was NOT touched
 
 - `src/search.js` and the boolean search AST are unchanged.
 - `data/tagged.json` and `public/tagged.json` are unchanged in this session.

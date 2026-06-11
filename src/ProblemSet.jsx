@@ -23,7 +23,8 @@ function flattenContests(contests) {
         tags,
         tagList,
         extraTagSet,
-        difficultyEstimate: p.difficulty_estimate || '',
+        importance: p.importance || '',
+        importanceConfidence: typeof p.importance_confidence === 'number' ? p.importance_confidence : 0,
         difficulty: (p.total_number_of_participant > 0
           ? (p.problem_solved_in_contest / p.total_number_of_participant) * 100
           : 0),
@@ -52,6 +53,7 @@ function Controls(props) {
     filter, setFilter,
     sort, setSort,
     region, setRegion, regions,
+    importance, setImportance,
     searchInput, setSearchInput, onCommitSearch,
   } = props;
   return (
@@ -72,6 +74,26 @@ function Controls(props) {
       </label>
 
       <label>
+        Importance:
+        <select
+          id="importanceSelect"
+          className="inline-select"
+          value={importance}
+          onChange={(e) => setImportance(e.target.value)}
+        >
+          <option value="all">All</option>
+          <option value="rated">Rated (P1–P5)</option>
+          <option value="p5">P5</option>
+          <option value="p4">P4</option>
+          <option value="p3">P3</option>
+          <option value="p2">P2</option>
+          <option value="p1">P1</option>
+          <option value="unknown">Unknown</option>
+          <option value="unrated">Not rated</option>
+        </select>
+      </label>
+
+      <label>
         Sort by:
         <select
           id="sortSelect"
@@ -79,8 +101,8 @@ function Controls(props) {
           value={sort}
           onChange={(e) => setSort(e.target.value)}
         >
-          <option value="difficulty_desc">Difficulty ↓</option>
-          <option value="difficulty_asc">Difficulty ↑</option>
+          <option value="importance_desc">Importance ↓</option>
+          <option value="importance_asc">Importance ↑</option>
           <option value="solve_rate_desc">Solve Rate ↓</option>
           <option value="solve_rate_asc">Solve Rate ↑</option>
           <option value="id_asc">ID ↑</option>
@@ -156,18 +178,27 @@ function DifficultyBadge({ percent }) {
   );
 }
 
-const DIFFICULTY_COLOR = {
-  easy: 'hsl(120, 70%, 85%)',
-  medium: 'hsl(60, 70%, 85%)',
-  hard: 'hsl(30, 70%, 85%)',
-  very_hard: 'hsl(0, 70%, 85%)',
+const IMPORTANCE_RANK = { p1: 1, p2: 2, p3: 3, p4: 4, p5: 5 };
+
+const IMPORTANCE_COLOR = {
+  p5: 'hsl(0, 75%, 85%)',
+  p4: 'hsl(25, 75%, 85%)',
+  p3: 'hsl(50, 75%, 85%)',
+  p2: 'hsl(85, 60%, 88%)',
+  p1: 'hsl(0, 0%, 92%)',
 };
 
-function DifficultyLabel({ value }) {
-  if (!value) return <span className="difficulty muted-difficulty">—</span>;
-  const bg = DIFFICULTY_COLOR[value] || 'hsl(0, 0%, 92%)';
-  const label = value === 'very_hard' ? 'very hard' : value;
-  return <span className="difficulty" style={{ background: bg }}>{label}</span>;
+function ImportanceLabel({ value, confidence }) {
+  if (!value) {
+    return <span className="importance importance-muted" title="not yet rated">*?</span>;
+  }
+  if (value === 'unknown') {
+    return <span className="importance importance-unknown" title="model said unknown">*?</span>;
+  }
+  const bg = IMPORTANCE_COLOR[value] || 'hsl(0, 0%, 92%)';
+  const label = value.toUpperCase();
+  const tip = confidence > 0 ? `confidence ${(confidence * 100).toFixed(0)}%` : undefined;
+  return <span className="importance" style={{ background: bg }} title={tip}>{label}</span>;
 }
 
 const getStatusClass = (status) => {
@@ -226,7 +257,7 @@ function ProblemsTable({ showTag, problems, updateStatus }) {
             <th>Problem</th>
             <th>Tags</th>
             <th>Solve Rate</th>
-            <th>Difficulty</th>
+            <th>Importance</th>
             <th style={{ width: 180 }}>Status (click to edit)</th>
           </tr>
         </thead>
@@ -251,7 +282,7 @@ function ProblemsTable({ showTag, problems, updateStatus }) {
                 </div>
               </td>
               <td><DifficultyBadge percent={p.difficulty} /></td>
-              <td><DifficultyLabel value={p.difficultyEstimate} /></td>
+              <td><ImportanceLabel value={p.importance} confidence={p.importanceConfidence} /></td>
               <td className={getStatusClass(p.status)}>
                 <StatusEditor
                   value={p.status}
@@ -273,6 +304,7 @@ export default function ProblemSet() {
   const [searchInput, setSearchInput] = useState("");
   const [committedSearch, setCommittedSearch] = useState("");
   const [region, setRegion] = useState("all");
+  const [importance, setImportance] = useState("all");
   const [problems, setProblems] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [saveError, setSaveError] = useState("");
@@ -328,6 +360,14 @@ export default function ProblemSet() {
       list = list.filter((p) => p.region === region);
     }
 
+    if (importance === "rated") {
+      list = list.filter((p) => p.importance && p.importance !== 'unknown' && p.importance !== 'unrated');
+    } else if (importance === "unrated") {
+      list = list.filter((p) => !p.importance);
+    } else if (importance !== "all") {
+      list = list.filter((p) => p.importance === importance);
+    }
+
     if (filter === "solved") {
       list = list.filter((p) => p.status === "AC");
     } else if (filter === "unsolved") {
@@ -341,19 +381,18 @@ export default function ProblemSet() {
       list = list.filter((p) => evalSearchAst(searchAst, hay(p)));
     }
 
-    const DIFFICULTY_RANK = { easy: 1, medium: 2, hard: 3, very_hard: 4 };
-    const diffRank = (p) => (p.difficultyEstimate in DIFFICULTY_RANK ? DIFFICULTY_RANK[p.difficultyEstimate] : Infinity);
     const solveRate = (p) => Number(p.difficulty) || 0;
+    const impRank = (p) => (p.importance in IMPORTANCE_RANK ? IMPORTANCE_RANK[p.importance] : Infinity);
 
     const sorted = list.slice();
-    if (sort === "difficulty_desc") {
+    if (sort === "importance_desc") {
       sorted.sort((a, b) => {
-        const d = diffRank(b) - diffRank(a);
+        const d = impRank(b) - impRank(a);
         return d !== 0 ? d : solveRate(b) - solveRate(a);
       });
-    } else if (sort === "difficulty_asc") {
+    } else if (sort === "importance_asc") {
       sorted.sort((a, b) => {
-        const d = diffRank(a) - diffRank(b);
+        const d = impRank(a) - impRank(b);
         return d !== 0 ? d : solveRate(a) - solveRate(b);
       });
     } else if (sort === "solve_rate_desc") {
@@ -364,7 +403,7 @@ export default function ProblemSet() {
       sorted.sort((a, b) => Number(a.id) - Number(b.id));
     }
     return sorted;
-  }, [problems, filter, sort, region, searchAst]);
+  }, [problems, filter, sort, region, importance, searchAst]);
 
   return (
     <>
@@ -377,6 +416,8 @@ export default function ProblemSet() {
         setFilter={setFilter}
         sort={sort}
         setSort={setSort}
+        importance={importance}
+        setImportance={setImportance}
         searchInput={searchInput}
         setSearchInput={setSearchInput}
         onCommitSearch={() => setCommittedSearch(searchInput)}

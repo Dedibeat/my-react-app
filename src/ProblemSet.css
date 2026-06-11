@@ -47,6 +47,25 @@ th { background: #f7f7f7; }
   border: 1px solid rgba(0,0,0,0.06);
 }
 
+.importance {
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  color: #000;
+  display: inline-block;
+  border: 1px solid rgba(0,0,0,0.08);
+  min-width: 30px;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.importance-muted,
+.importance-unknown {
+  background: #f0f0f0;
+  color: #888;
+  font-style: italic;
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;
@@ -188,7 +207,7 @@ a.link-small { font-size:0.9rem; margin-left:6px; color:#0366d6; }
   tbody td:nth-child(3)::before { content: "Problem"; font-weight:600; margin-right:8px; color:#333; }
   tbody td:nth-child(4)::before { content: "Tags"; font-weight:600; margin-right:8px; color:#333; }
   tbody td:nth-child(5)::before { content: "Solve Rate"; font-weight:600; margin-right:8px; color:#333; }
-  tbody td:nth-child(6)::before { content: "Difficulty"; font-weight:600; margin-right:8px; color:#333; }
+  tbody td:nth-child(6)::before { content: "Importance"; font-weight:600; margin-right:8px; color:#333; }
   tbody td:nth-child(7)::before { content: "Status"; font-weight:600; margin-right:8px; color:#333; }
 
   /* Keep left label and right value separated */
