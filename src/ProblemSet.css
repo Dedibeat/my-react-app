@@ -122,6 +122,27 @@ th { background: #f7f7f7; }
   color: #111;
   white-space: nowrap;
 }
+.importance-range-reset {
+  font-size: 0.78rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #666;
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.importance-range-reset:hover:not(:disabled) {
+  border-color: #c4c4c4;
+  color: #333;
+}
+
+.importance-range-reset:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 
 .importance-range-slider {
   position: relative;

@@ -310,6 +310,15 @@ The previous-session "Difficulty" column was the LLM's `difficulty_estimate` (ea
 - Mobile `::before` label list updated: `nth-child(6)` is now "Importance" (was "Difficulty"); `nth-child(7)` "Status" unchanged.
 - Default selection is now `importance_desc` (most-important problems first).
 
+### 5e. Stuck-at-P5-P5 fix: elastic thumbs + reset button (this session, follow-up)
+
+The widget from section 5d had a deadlock: once both thumbs were dragged to P5, both range inputs were pinned at value=5 and clicking the max thumb anywhere in the track could only produce value=5, so the min thumb couldn't be grabbed separately and the max thumb couldn't be pulled below 5. The only escape was the `+unrated` toggle, which doesn't move the thumbs.
+
+Two changes:
+
+- **Elastic onChange.** If the min thumb is dragged past the current max (or the max thumb below the current min), both ends move along: min drag to 4 while max is at 5 → range becomes `(5, 4)`…wait, that's the same; the actual implementation is `setImportanceRange({ min: importanceRange.max, max: v })` so the new range is `(oldMax, v)`. Similarly for max. This makes a single drag in either direction always change the visible band, even from a single-point start.
+- **Reset button.** New pill `reset` between the "Importance" label and the slider, disabled when the filter is already at the default state (`{min:1, max:5}` and `includeUnrated=false`). Clicking it snaps both thumbs to the ends and turns the unrated toggle off. Same chrome as the `+unrated` pill so it doesn't add visual weight.
+
 ### 5d. Controls bar: aligned, uniform height, importance widget is one slim row (this session, follow-up)
 
 The widget from section 5c sat in a tall stacked card and made the controls bar wrap awkwardly; the surrounding selects/input/button were also each their own visual island. This pass flattens the importance widget to a single row and gives every control the same chrome (height, padding, border, background) so the bar reads as a single horizontal strip.

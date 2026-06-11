@@ -76,6 +76,15 @@ function Controls(props) {
       <div className="importance-range">
         <div className="importance-range-head">
           <span className="importance-range-label">Importance</span>
+          <button
+            type="button"
+            className="importance-range-reset"
+            onClick={() => { setImportanceRange({ min: 1, max: 5 }); setIncludeUnrated(false); }}
+            title="Reset to all ratings, unrated excluded"
+            disabled={importanceRange.min === 1 && importanceRange.max === 5 && !includeUnrated}
+          >
+            reset
+          </button>
           <div className="importance-range-slider">
             <div
               className="importance-range-band"
@@ -93,8 +102,13 @@ function Controls(props) {
               className="importance-range-thumb importance-range-thumb-min"
               aria-label="Minimum importance"
               onChange={(e) => {
-                const v = Math.min(Number(e.target.value), importanceRange.max);
-                setImportanceRange({ ...importanceRange, min: v });
+                const v = Number(e.target.value);
+                if (v > importanceRange.max) {
+                  // Pushed past current max: drag both ends along.
+                  setImportanceRange({ min: importanceRange.max, max: v });
+                } else {
+                  setImportanceRange({ ...importanceRange, min: v });
+                }
               }}
             />
             <input
@@ -106,8 +120,13 @@ function Controls(props) {
               className="importance-range-thumb importance-range-thumb-max"
               aria-label="Maximum importance"
               onChange={(e) => {
-                const v = Math.max(Number(e.target.value), importanceRange.min);
-                setImportanceRange({ ...importanceRange, max: v });
+                const v = Number(e.target.value);
+                if (v < importanceRange.min) {
+                  // Pulled below current min: drag both ends along.
+                  setImportanceRange({ min: v, max: importanceRange.min });
+                } else {
+                  setImportanceRange({ ...importanceRange, max: v });
+                }
               }}
             />
           </div>
