@@ -74,38 +74,54 @@ function Controls(props) {
       </label>
 
       <div className="importance-range">
-        <span className="importance-range-label">Importance:&nbsp;P{importanceRange.min}–P{importanceRange.max}</span>
-        <div className="importance-range-row">
-          <label className="importance-range-half">
-            <span className="muted">min</span>
-            <input
-              type="range"
-              min={1}
-              max={5}
-              step={1}
-              value={importanceRange.min}
-              onChange={(e) => {
-                const v = Math.min(Number(e.target.value), importanceRange.max);
-                setImportanceRange({ ...importanceRange, min: v });
-              }}
+        <div className="importance-range-head">
+          <span className="importance-range-label">Importance</span>
+          <span className="importance-range-pill">
+            P{importanceRange.min}–P{importanceRange.max}
+          </span>
+        </div>
+        <div className="importance-range-slider">
+          <div
+            className="importance-range-band"
+            style={{
+              left: `${((importanceRange.min - 1) / 4) * 100}%`,
+              right: `${((5 - importanceRange.max) / 4) * 100}%`,
+            }}
+          />
+          {[1, 2, 3, 4, 5].map((n) => (
+            <span
+              key={n}
+              className={`importance-range-tick importance-tick-${n}`}
+              style={{ left: `${((n - 1) / 4) * 100}%` }}
+              title={`P${n}`}
             />
-            <span className="importance-range-value">P{importanceRange.min}</span>
-          </label>
-          <label className="importance-range-half">
-            <span className="muted">max</span>
-            <input
-              type="range"
-              min={1}
-              max={5}
-              step={1}
-              value={importanceRange.max}
-              onChange={(e) => {
-                const v = Math.max(Number(e.target.value), importanceRange.min);
-                setImportanceRange({ ...importanceRange, max: v });
-              }}
-            />
-            <span className="importance-range-value">P{importanceRange.max}</span>
-          </label>
+          ))}
+          <input
+            type="range"
+            min={1}
+            max={5}
+            step={1}
+            value={importanceRange.min}
+            className="importance-range-thumb importance-range-thumb-min"
+            aria-label="Minimum importance"
+            onChange={(e) => {
+              const v = Math.min(Number(e.target.value), importanceRange.max);
+              setImportanceRange({ ...importanceRange, min: v });
+            }}
+          />
+          <input
+            type="range"
+            min={1}
+            max={5}
+            step={1}
+            value={importanceRange.max}
+            className="importance-range-thumb importance-range-thumb-max"
+            aria-label="Maximum importance"
+            onChange={(e) => {
+              const v = Math.max(Number(e.target.value), importanceRange.min);
+              setImportanceRange({ ...importanceRange, max: v });
+            }}
+          />
         </div>
         <label className="importance-range-extra">
           <input

@@ -310,6 +310,17 @@ The previous-session "Difficulty" column was the LLM's `difficulty_estimate` (ea
 - Mobile `::before` label list updated: `nth-child(6)` is now "Importance" (was "Difficulty"); `nth-child(7)` "Status" unchanged.
 - Default selection is now `importance_desc` (most-important problems first).
 
+### 5c. Importance range: single merged slider, palette-matched (this session, follow-up)
+
+The dual-row range from section 5b (one `<input type="range">` for min, another for max, each with its own `min`/`max` label and `P{n}` value chip) was replaced with a single composite widget: a coloured "active band" track with two overlaid range thumbs. Visually it's one slider, behaviourally the user can drag either endpoint to clip the band.
+
+- Markup: a `<div class="importance-range-slider">` contains, in this order: a `.importance-range-band` (positioned `left`/`right` from `min`/`max`), five `.importance-range-tick` dots at P1..P5 coloured with the same hue family used by the `.importance` table cell (P1 gray, P2 greenish, P3 yellow, P4 orange, P5 red), and two `<input type="range">` elements stacked on top with `pointer-events: none` on the wrapper and `pointer-events: auto` on the thumb pseudo-element. The first range drives `min`, the second drives `max`, with the same `Math.min`/`Math.max` clamping as before.
+- The band itself is a horizontal gradient that goes P1→P5 with the same hues, so the track reads as a heat strip rather than a generic blue progress bar. The active subrange is highlighted by being inside the band; the inactive ends are still visible underneath the band's `left`/`right` inset.
+- Header now has two pieces on a flex row: a plain "Importance" label on the left, and a small pill `P{min}–P{max}` on the right (bluish, tabular-nums). No more `min` / `max` text labels next to each thumb.
+- The whole widget sits in a soft `#fafafa` card with a 1px `#ececec` border and 8px radius, so it visually separates from the neighbouring selects/search input.
+- Min/max thumb borders are two slightly different shades of blue (`#0366d6` for min, `#1a3a8a` for max) so they're distinguishable by colour, not just position. Focus ring is the standard 4px `rgba(3,102,214,0.25)` halo via `:focus-visible`.
+- The "include unknown / not rated" checkbox row is unchanged in behaviour, just restyled: smaller font (`0.85rem`), `user-select: none`, and the whole label is the click target.
+
 ### 5b. Importance filter is a range, not a select (this session, follow-up)
 
 The "Importance:" filter that the previous section introduced as a 9-option `<select>` got replaced with a dual-handle range widget, because picking P3 only to then also want P4 needs two clicks on a select but one drag on a range.
