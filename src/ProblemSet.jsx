@@ -76,61 +76,53 @@ function Controls(props) {
       <div className="importance-range">
         <div className="importance-range-head">
           <span className="importance-range-label">Importance</span>
+          <div className="importance-range-slider">
+            <div
+              className="importance-range-band"
+              style={{
+                left: `${((importanceRange.min - 1) / 4) * 100}%`,
+                right: `${((5 - importanceRange.max) / 4) * 100}%`,
+              }}
+            />
+            <input
+              type="range"
+              min={1}
+              max={5}
+              step={1}
+              value={importanceRange.min}
+              className="importance-range-thumb importance-range-thumb-min"
+              aria-label="Minimum importance"
+              onChange={(e) => {
+                const v = Math.min(Number(e.target.value), importanceRange.max);
+                setImportanceRange({ ...importanceRange, min: v });
+              }}
+            />
+            <input
+              type="range"
+              min={1}
+              max={5}
+              step={1}
+              value={importanceRange.max}
+              className="importance-range-thumb importance-range-thumb-max"
+              aria-label="Maximum importance"
+              onChange={(e) => {
+                const v = Math.max(Number(e.target.value), importanceRange.min);
+                setImportanceRange({ ...importanceRange, max: v });
+              }}
+            />
+          </div>
           <span className="importance-range-pill">
             P{importanceRange.min}–P{importanceRange.max}
           </span>
+          <button
+            type="button"
+            className={`importance-range-unrated ${includeUnrated ? 'on' : ''}`}
+            onClick={() => setIncludeUnrated(!includeUnrated)}
+            title="Toggle: also include unrated / unknown problems"
+          >
+            +unrated
+          </button>
         </div>
-        <div className="importance-range-slider">
-          <div
-            className="importance-range-band"
-            style={{
-              left: `${((importanceRange.min - 1) / 4) * 100}%`,
-              right: `${((5 - importanceRange.max) / 4) * 100}%`,
-            }}
-          />
-          {[1, 2, 3, 4, 5].map((n) => (
-            <span
-              key={n}
-              className={`importance-range-tick importance-tick-${n}`}
-              style={{ left: `${((n - 1) / 4) * 100}%` }}
-              title={`P${n}`}
-            />
-          ))}
-          <input
-            type="range"
-            min={1}
-            max={5}
-            step={1}
-            value={importanceRange.min}
-            className="importance-range-thumb importance-range-thumb-min"
-            aria-label="Minimum importance"
-            onChange={(e) => {
-              const v = Math.min(Number(e.target.value), importanceRange.max);
-              setImportanceRange({ ...importanceRange, min: v });
-            }}
-          />
-          <input
-            type="range"
-            min={1}
-            max={5}
-            step={1}
-            value={importanceRange.max}
-            className="importance-range-thumb importance-range-thumb-max"
-            aria-label="Maximum importance"
-            onChange={(e) => {
-              const v = Math.max(Number(e.target.value), importanceRange.min);
-              setImportanceRange({ ...importanceRange, max: v });
-            }}
-          />
-        </div>
-        <label className="importance-range-extra">
-          <input
-            type="checkbox"
-            checked={includeUnrated}
-            onChange={(e) => setIncludeUnrated(e.target.checked)}
-          />
-          include unknown / not rated
-        </label>
       </div>
 
       <label>

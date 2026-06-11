@@ -310,6 +310,14 @@ The previous-session "Difficulty" column was the LLM's `difficulty_estimate` (ea
 - Mobile `::before` label list updated: `nth-child(6)` is now "Importance" (was "Difficulty"); `nth-child(7)` "Status" unchanged.
 - Default selection is now `importance_desc` (most-important problems first).
 
+### 5d. Controls bar: aligned, uniform height, importance widget is one slim row (this session, follow-up)
+
+The widget from section 5c sat in a tall stacked card and made the controls bar wrap awkwardly; the surrounding selects/input/button were also each their own visual island. This pass flattens the importance widget to a single row and gives every control the same chrome (height, padding, border, background) so the bar reads as a single horizontal strip.
+
+- `.importance-range` is now a single flex row, 32px tall, with label / slider / `P{min}–P{max}` pill / `+unrated` toggle. No more two-row layout, no more standalone checkbox row. The "+unrated" toggle is a small pill button that flips state on click (replaces the previous `<input type="checkbox">`); when active, it gets an amber-tinted background so it's visibly on.
+- Slider height shrunk from 28px to 18px; thumbs from 18px to 14px. Focus ring shrunk from 4px to 3px to match. Tick dots are gone (the band gradient now does that job).
+- `.controls` items: every direct-child `<label>` and the "Show tags" button get the same `#fafafa` background, `1px #ececec` border, `8px` radius, `32px` height, and 10px horizontal padding. The `<select>` and `<input type="search">` inside them get a 22px height, 1px `#d8d8d8` border, and white background so the field visually sits inside its label "pill". This matches the importance widget's chrome and aligns all baselines.
+
 ### 5c. Importance range: single merged slider, palette-matched (this session, follow-up)
 
 The dual-row range from section 5b (one `<input type="range">` for min, another for max, each with its own `min`/`max` label and `P{n}` value chip) was replaced with a single composite widget: a coloured "active band" track with two overlaid range thumbs. Visually it's one slider, behaviourally the user can drag either endpoint to clip the band.
