@@ -305,16 +305,22 @@ The previous-session "Difficulty" column was the LLM's `difficulty_estimate` (ea
   - `unknown` from the model: muted italic `*?` with `title="model said unknown"` — same visual as unrated by design (both are "I don't know"), distinguished only by tooltip.
   - Tooltip on rated cells shows `confidence NN%` when `importance_confidence > 0`.
 - New `.importance` CSS class (replaces the old `.difficulty` styling for the column). The Solve-Rate column still uses `.difficulty` (kept untouched).
-- New "Importance:" filter dropdown in the controls bar, between "Quick filter" and "Sort by:". Options:
-  - `All` (default)
-  - `Rated (P1–P5)` — has any of p1..p5 (i.e. not `''` and not `unknown`)
-  - `P1` / `P2` / `P3` / `P4` / `P5` — exact bucket
-  - `Unknown` — `importance === 'unknown'`
-  - `Not rated` — `importance === ''`
-  The filter sits inside the same `useMemo([problems, filter, sort, region, importance, searchAst])`, so it stacks with region/quick-filter/search/sort.
+- "Importance:" filter in the controls bar, between "Quick filter" and "Sort by:". Originally a `<select>` with discrete buckets (All / Rated / P1…P5 / Unknown / Not rated); later in this session replaced with a dual-handle range + checkbox (see section 5b). The current filter sits inside `useMemo([…, importanceRange, includeUnrated, …])` and stacks with region/quick-filter/search/sort.
 - Sort dropdown: `Difficulty ↓` / `Difficulty ↑` removed and replaced with `Importance ↓` / `Importance ↑`. New `IMPORTANCE_RANK = { p1: 1, p2: 2, p3: 3, p4: 4, p5: 5 }`. Same tiebreaker as before — solve rate in the same direction. Unrated/unknown sort to the bottom in both directions.
 - Mobile `::before` label list updated: `nth-child(6)` is now "Importance" (was "Difficulty"); `nth-child(7)` "Status" unchanged.
 - Default selection is now `importance_desc` (most-important problems first).
+
+### 5b. Importance filter is a range, not a select (this session, follow-up)
+
+The "Importance:" filter that the previous section introduced as a 9-option `<select>` got replaced with a dual-handle range widget, because picking P3 only to then also want P4 needs two clicks on a select but one drag on a range.
+
+- Two native `<input type="range" min=1 max=5 step=1>` controls for min and max, with a live `P{min}–P{max}` label above. The min thumb is clamped ≤ max; the max thumb is clamped ≥ min (no JS range library, just `Math.min`/`Math.max` in the onChange handler).
+- A single `<input type="checkbox">` next to the sliders: "include unknown / not rated". Off by default — unrated/unknown problems are excluded unless the box is ticked. The rationale is that 1348/1668 problems are still unrated; if the box were on by default, the filter would essentially be a no-op for the typical case.
+- Filter state in `ProblemSet`: `importanceRange = { min: 1, max: 5 }`, `includeUnrated = false`. The previous single `importance` string state is gone.
+- The new filter predicate is one line of arithmetic on `IMPORTANCE_RANK[p.importance]`:
+  - If the problem's rank is null (unrated OR `unknown`), keep it iff `includeUnrated` is true.
+  - Otherwise keep it iff `rank >= importanceRange.min && rank <= importanceRange.max`.
+- CSS: new `.importance-range*` classes. The two sliders sit on a single flex row inside the existing `.controls` flex container; the "include unknown" checkbox is a third row. Min-width 220px so the two slider halves don't get squashed on desktop.
 
 ### 6. What was NOT touched
 

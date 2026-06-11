@@ -53,7 +53,7 @@ function Controls(props) {
     filter, setFilter,
     sort, setSort,
     region, setRegion, regions,
-    importance, setImportance,
+    importanceRange, setImportanceRange, includeUnrated, setIncludeUnrated,
     searchInput, setSearchInput, onCommitSearch,
   } = props;
   return (
@@ -73,25 +73,49 @@ function Controls(props) {
         </select>
       </label>
 
-      <label>
-        Importance:
-        <select
-          id="importanceSelect"
-          className="inline-select"
-          value={importance}
-          onChange={(e) => setImportance(e.target.value)}
-        >
-          <option value="all">All</option>
-          <option value="rated">Rated (P1–P5)</option>
-          <option value="p5">P5</option>
-          <option value="p4">P4</option>
-          <option value="p3">P3</option>
-          <option value="p2">P2</option>
-          <option value="p1">P1</option>
-          <option value="unknown">Unknown</option>
-          <option value="unrated">Not rated</option>
-        </select>
-      </label>
+      <div className="importance-range">
+        <span className="importance-range-label">Importance:&nbsp;P{importanceRange.min}–P{importanceRange.max}</span>
+        <div className="importance-range-row">
+          <label className="importance-range-half">
+            <span className="muted">min</span>
+            <input
+              type="range"
+              min={1}
+              max={5}
+              step={1}
+              value={importanceRange.min}
+              onChange={(e) => {
+                const v = Math.min(Number(e.target.value), importanceRange.max);
+                setImportanceRange({ ...importanceRange, min: v });
+              }}
+            />
+            <span className="importance-range-value">P{importanceRange.min}</span>
+          </label>
+          <label className="importance-range-half">
+            <span className="muted">max</span>
+            <input
+              type="range"
+              min={1}
+              max={5}
+              step={1}
+              value={importanceRange.max}
+              onChange={(e) => {
+                const v = Math.max(Number(e.target.value), importanceRange.min);
+                setImportanceRange({ ...importanceRange, max: v });
+              }}
+            />
+            <span className="importance-range-value">P{importanceRange.max}</span>
+          </label>
+        </div>
+        <label className="importance-range-extra">
+          <input
+            type="checkbox"
+            checked={includeUnrated}
+            onChange={(e) => setIncludeUnrated(e.target.checked)}
+          />
+          include unknown / not rated
+        </label>
+      </div>
 
       <label>
         Sort by:
@@ -304,7 +328,8 @@ export default function ProblemSet() {
   const [searchInput, setSearchInput] = useState("");
   const [committedSearch, setCommittedSearch] = useState("");
   const [region, setRegion] = useState("all");
-  const [importance, setImportance] = useState("all");
+  const [importanceRange, setImportanceRange] = useState({ min: 1, max: 5 });
+  const [includeUnrated, setIncludeUnrated] = useState(false);
   const [problems, setProblems] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [saveError, setSaveError] = useState("");
@@ -360,13 +385,11 @@ export default function ProblemSet() {
       list = list.filter((p) => p.region === region);
     }
 
-    if (importance === "rated") {
-      list = list.filter((p) => p.importance && p.importance !== 'unknown' && p.importance !== 'unrated');
-    } else if (importance === "unrated") {
-      list = list.filter((p) => !p.importance);
-    } else if (importance !== "all") {
-      list = list.filter((p) => p.importance === importance);
-    }
+    list = list.filter((p) => {
+      const rank = p.importance in IMPORTANCE_RANK ? IMPORTANCE_RANK[p.importance] : null;
+      if (rank === null) return includeUnrated;
+      return rank >= importanceRange.min && rank <= importanceRange.max;
+    });
 
     if (filter === "solved") {
       list = list.filter((p) => p.status === "AC");
@@ -403,7 +426,7 @@ export default function ProblemSet() {
       sorted.sort((a, b) => Number(a.id) - Number(b.id));
     }
     return sorted;
-  }, [problems, filter, sort, region, importance, searchAst]);
+  }, [problems, filter, sort, region, importanceRange, includeUnrated, searchAst]);
 
   return (
     <>
@@ -416,8 +439,10 @@ export default function ProblemSet() {
         setFilter={setFilter}
         sort={sort}
         setSort={setSort}
-        importance={importance}
-        setImportance={setImportance}
+        importanceRange={importanceRange}
+        setImportanceRange={setImportanceRange}
+        includeUnrated={includeUnrated}
+        setIncludeUnrated={setIncludeUnrated}
         searchInput={searchInput}
         setSearchInput={setSearchInput}
         onCommitSearch={() => setCommittedSearch(searchInput)}
