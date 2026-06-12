@@ -2,39 +2,8 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import './ProblemSet.css';
 import { api } from './api.js';
 import { parseSearch, evalSearchAst } from './search.js';
-
-function flattenContests(contests) {
-  const out = [];
-  for (const c of contests) {
-    for (const p of c.problems || []) {
-      const primaryTags = p.primary_tags || [];
-      const secondaryTags = p.secondary_tags || [];
-      const extraTags = p.extra_tags || [];
-      const tagList = [...primaryTags, ...secondaryTags, ...extraTags];
-      const tags = tagList.join(', ');
-      const extraTagSet = new Set(extraTags);
-      out.push({
-        id: String(p.problem_id),
-        contest: c.contest_name + ' ' + c.year,
-        region: c.region,
-        year: c.year,
-        searchKey: `${c.region || ''} ${c.contest_name || ''} ${c.year || ''}`,
-        name: p.problem_name,
-        tags,
-        tagList,
-        extraTagSet,
-        importance: p.importance || '',
-        importanceConfidence: typeof p.importance_confidence === 'number' ? p.importance_confidence : 0,
-        difficulty: (p.total_number_of_participant > 0
-          ? (p.problem_solved_in_contest / p.total_number_of_participant) * 100
-          : 0),
-        url: p.problem_url,
-        teamsSolved: p.problem_solved_in_contest,
-      });
-    }
-  }
-  return out;
-}
+import FeedbackModal from './FeedbackModal.jsx';
+import { IMPORTANCE_COLOR, getStatusClass } from './problemMeta.js';
 
 function ProgressSummary({ solved, total, visibleCount, loaded }) {
   const pct = total > 0 ? (solved / total) * 100 : 0;
@@ -240,14 +209,6 @@ function DifficultyBadge({ percent }) {
 
 const IMPORTANCE_RANK = { p1: 1, p2: 2, p3: 3, p4: 4, p5: 5 };
 
-const IMPORTANCE_COLOR = {
-  p5: 'hsl(0, 75%, 85%)',
-  p4: 'hsl(25, 75%, 85%)',
-  p3: 'hsl(50, 75%, 85%)',
-  p2: 'hsl(85, 60%, 88%)',
-  p1: 'hsl(0, 0%, 92%)',
-};
-
 function ImportanceLabel({ value, confidence }) {
   if (!value) {
     return <span className="importance importance-muted" title="not yet rated">*?</span>;
@@ -260,12 +221,6 @@ function ImportanceLabel({ value, confidence }) {
   const tip = confidence > 0 ? `confidence ${(confidence * 100).toFixed(0)}%` : undefined;
   return <span className="importance" style={{ background: bg }} title={tip}>{label}</span>;
 }
-
-const getStatusClass = (status) => {
-  if (status === "AC") return "status-solved";
-  if (status === "No submission" || status === "") return "";
-  return "status-unsolved";
-};
 
 function ConfettiBurst() {
   return (
@@ -312,7 +267,34 @@ function StatusEditor({ value, onChange, celebrating }) {
   );
 }
 
-function ProblemsTable({ showTag, problems, updateStatus, justSolved }) {
+function FeedbackButton({ hasFeedback, onClick }) {
+  return (
+    <button
+      type="button"
+      className={`feedback-btn ${hasFeedback ? 'has-feedback' : ''}`}
+      onClick={onClick}
+      aria-pressed={hasFeedback}
+      title={hasFeedback ? 'Edit your feedback' : 'Give feedback'}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill={hasFeedback ? 'currentColor' : 'none'}
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      </svg>
+    </button>
+  );
+}
+
+function ProblemsTable({ showTag, problems, updateStatus, justSolved, feedback, onOpenFeedback }) {
   return (
     <div className="table-card">
       <table id="problemsTable" className={showTag ? "" : "tags-hidden"} aria-describedby="summary">
@@ -325,12 +307,13 @@ function ProblemsTable({ showTag, problems, updateStatus, justSolved }) {
             <th>Solve Rate</th>
             <th>Importance</th>
             <th style={{ width: 180 }} title="Click a cell to edit">Status</th>
+            <th style={{ width: 44 }} aria-label="Feedback" />
           </tr>
         </thead>
         <tbody>
           {problems.length === 0 && (
             <tr className="empty-row">
-              <td colSpan={7}>No problems match your filters.</td>
+              <td colSpan={8}>No problems match your filters.</td>
             </tr>
           )}
           {problems.map((p) => (
@@ -361,6 +344,12 @@ function ProblemsTable({ showTag, problems, updateStatus, justSolved }) {
                   celebrating={justSolved === p.id}
                 />
               </td>
+              <td className="cell-feedback">
+                <FeedbackButton
+                  hasFeedback={Boolean(feedback[p.id])}
+                  onClick={() => onOpenFeedback(p)}
+                />
+              </td>
             </tr>
           ))}
         </tbody>
@@ -369,7 +358,7 @@ function ProblemsTable({ showTag, problems, updateStatus, justSolved }) {
   );
 }
 
-export default function ProblemSet() {
+export default function ProblemSet({ problems, setProblems, loaded }) {
   const [showTag, setShowTag] = useState(false);
   const [filter, setFilter] = useState("all");
   const [sort, setSort] = useState("solve_rate_desc");
@@ -378,8 +367,8 @@ export default function ProblemSet() {
   const [region, setRegion] = useState("all");
   const [importanceRange, setImportanceRange] = useState({ min: 1, max: 5 });
   const [includeUnrated, setIncludeUnrated] = useState(false);
-  const [problems, setProblems] = useState([]);
-  const [loaded, setLoaded] = useState(false);
+  const [feedback, setFeedback] = useState({});
+  const [feedbackFor, setFeedbackFor] = useState(null);
   const [toast, setToast] = useState(null);
   const [justSolved, setJustSolved] = useState(null);
   const toastTimer = useRef(null);
@@ -387,20 +376,9 @@ export default function ProblemSet() {
 
   useEffect(() => {
     let cancelled = false;
-    async function load() {
-      const [dataset, statusMap] = await Promise.all([
-        fetch("/tagged.json").then((r) => r.json()),
-        api.getStatus().catch(() => ({})),
-      ]);
-      if (cancelled) return;
-      const flat = flattenContests(dataset);
-      for (const p of flat) {
-        p.status = statusMap[p.id] || "";
-      }
-      setProblems(flat);
-      setLoaded(true);
-    }
-    load();
+    api.getFeedback()
+      .then((map) => { if (!cancelled) setFeedback(map); })
+      .catch(() => {});
     return () => { cancelled = true; };
   }, []);
 
@@ -411,8 +389,12 @@ export default function ProblemSet() {
   }
 
   async function updateStatus(id, newStatus) {
-    const previous = problems.find((p) => p.id === id)?.status || "";
-    setProblems((cur) => cur.map((p) => (p.id === id ? { ...p, status: newStatus } : p)));
+    const prev = problems.find((p) => p.id === id);
+    const previous = prev?.status || "";
+    const previousAt = prev?.statusUpdatedAt || null;
+    setProblems((cur) => cur.map((p) => (
+      p.id === id ? { ...p, status: newStatus, statusUpdatedAt: new Date().toISOString() } : p
+    )));
     if (newStatus === "AC" && previous !== "AC") {
       setJustSolved(id);
       clearTimeout(solvedTimer.current);
@@ -423,10 +405,32 @@ export default function ProblemSet() {
       if (newStatus) await api.setStatus(id, newStatus);
       else await api.clearStatus(id);
     } catch (err) {
-      setProblems((cur) => cur.map((p) => (p.id === id ? { ...p, status: previous } : p)));
+      setProblems((cur) => cur.map((p) => (
+        p.id === id ? { ...p, status: previous, statusUpdatedAt: previousAt } : p
+      )));
       setJustSolved(null);
       showToast(`Save failed: ${err.message}`, "error");
     }
+  }
+
+  async function submitFeedback(category, comment) {
+    const id = feedbackFor.id;
+    await api.setFeedback(id, category, comment);
+    setFeedback((cur) => ({ ...cur, [id]: { category, comment } }));
+    setFeedbackFor(null);
+    showToast("Thanks for the feedback!", "success");
+  }
+
+  async function deleteFeedback() {
+    const id = feedbackFor.id;
+    await api.deleteFeedback(id);
+    setFeedback((cur) => {
+      const next = { ...cur };
+      delete next[id];
+      return next;
+    });
+    setFeedbackFor(null);
+    showToast("Feedback removed", "success");
   }
 
   const solvedCount = useMemo(
@@ -528,11 +532,23 @@ export default function ProblemSet() {
           problems={visible}
           updateStatus={updateStatus}
           justSolved={justSolved}
+          feedback={feedback}
+          onOpenFeedback={setFeedbackFor}
         />
       ) : (
         <div className="loading-state">
           <span className="spinner" /> Loading problems…
         </div>
+      )}
+      {feedbackFor && (
+        <FeedbackModal
+          problem={feedbackFor}
+          existing={feedback[feedbackFor.id] || null}
+          onSubmit={submitFeedback}
+          onDelete={deleteFeedback}
+          onError={(err) => showToast(`Save failed: ${err.message}`, "error")}
+          onClose={() => setFeedbackFor(null)}
+        />
       )}
       {toast && <div className={`toast toast-${toast.kind}`} role="status">{toast.msg}</div>}
     </>

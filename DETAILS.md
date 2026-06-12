@@ -601,6 +601,39 @@ will start succeeding.
 
 ---
 
+## User profile + per-problem feedback (2026-06-12 session)
+
+Two new features, designed for aesthetics/UX consistency with the design-token redesign: a read-only **profile stats dashboard** and a **per-problem feedback** flow (structured category + optional comment, one per user per problem, editable/deletable by its author). Navigation got `react-router-dom` (HashRouter) with routes `/` and `/profile`.
+
+### Backend
+
+- **`src/db.py`**: new `problem_feedback` table appended to SCHEMA — `(user_id, problem_id, category, comment, updated_at, PK(user_id, problem_id), FK user_id CASCADE)` + `idx_feedback_user`. Safe for existing DBs (all statements are `IF NOT EXISTS`; applied on next process start). Note the table already exists on the prod Turso DB — it was created during this session's endpoint verification, which (unintentionally) ran against prod because `TURSO_URL`/`TURSO_TOKEN` were set in the shell. Side effect: a leftover test user `fbtester` with one `problem_status` row exists in prod (cleanup delete was not authorized this session; remove manually if you care).
+- **New `src/feedback.py`** (mounted in `server.py`), modeled on `status.py`:
+  - `GET /api/feedback` → `{"<pid>": {"category", "comment"}}` for the current user
+  - `PUT /api/feedback/{problem_id}` — upsert; 400 unless category ∈ {wrong-tags, wrong-importance, broken-link, great-problem, other} and comment ≤ 500 chars
+  - `DELETE /api/feedback/{problem_id}`
+- **`src/auth.py`**: `created_at` now returned from `/me`, `login`, and `signup` (added to `UserOut`, the `get_current_user` SELECT, and both response dicts), so the frontend `user` object is uniformly shaped. Used for "Joined {Month Year}" on the profile.
+- **`src/status.py`**: `GET /api/status` response shape changed from `{pid: status}` to `{pid: {status, updated_at}}` (timestamps were already maintained by the upsert; the profile's recent-activity feed needs them). PUT/DELETE unchanged. The only consumer was the load effect that moved to `App.jsx`, updated in the same commit — **deploy backend and frontend together**.
+
+### Frontend
+
+- **Routing (`App.jsx`)**: `HashRouter` (not BrowserRouter — GH Pages has no 404 fallback and vercel.json has no SPA catch-all, so `/profile` would 404 on refresh on both hosts; hash URLs cost nothing here). Brand → `/`, user chip → `/profile` (chip is now a `Link` with accent hover affordance), `*` → redirect `/`. Auth gate untouched.
+- **Data lift (`App.jsx`)**: `problems`/`loaded` state and the `tagged.json` + `getStatus` fetch moved from `ProblemSet` to `App` (effect keyed on `user`, reset on logout), because `ProblemSet` unmounts on `/profile` and would refetch the 11 MB dataset on every navigation. `flattenContests` moved along. Each problem now carries `statusUpdatedAt`; `updateStatus` stamps it optimistically (ISO string) and rolls back both fields on API error. `ProblemSet` receives `problems`/`setProblems`/`loaded` as props; filters/toasts/confetti unchanged.
+- **New `src/problemMeta.js`**: `IMPORTANCE_COLOR` + `getStatusClass` moved out of `ProblemSet.jsx` so `Profile.jsx` can import them (the react-refresh lint rule forbids non-component exports from component files).
+- **New `src/Profile.jsx` + `Profile.css`**: centered 760px stack of cards — identity (56px avatar, username, joined date), overall progress (same recipe as the table's progress card), by-importance P5→P1 rows (importance pill + mini accent track + n/m), by-status tiles (green/red/amber soft tints, `auto-fit` grid), recent activity (8 latest status changes: compact status pill + problem link + relative time; `parseTs` handles both SQLite UTC strings and ISO stamps). All stats are one `useMemo` over `problems` — no extra API calls.
+- **Feedback UI**: 8th table column (44px, icon-only speech-bubble button; muted → accent on hover; filled bubble + accent-soft background when feedback exists, `aria-pressed`). **New `src/FeedbackModal.jsx` + css**: overlay + card mirroring the auth card (16px radius, slide-up entrance), single-select category chips (radiogroup), optional textarea with live char count (red near 500), Send disabled without a category, Delete (red ghost) only when editing existing feedback. Esc / backdrop-mousedown close (blocked while sending), basic Tab focus trap, first chip focused on open. Success reuses the toast system ("Thanks for the feedback!" / "Feedback removed"); errors keep the modal open + red toast. `ProblemSet` loads the user's feedback map once via `GET /api/feedback`.
+- **`src/api.js`**: `getFeedback` / `setFeedback` / `deleteFeedback`.
+- **CSS ripples**: `empty-row` colSpan 7→8; mobile card layout `td:nth-child(8)::before "Feedback"` + 40px tap target; `.activity-pill` overrides the mobile `.status-pill { width: 100% }` rule.
+- **New dependency**: `react-router-dom` (v7). `puppeteer-core` again installed `--no-save` for verification only.
+
+### Verification
+
+- Backend: curl against local sqlite (`env -u TURSO_URL -u TURSO_TOKEN LIBSQL_URL=...`) — me/login/signup include `created_at`, status GET new shape, feedback PUT valid/invalid category (200/400), >500-char comment (400), GET round-trip, DELETE, 401 unauth. (Beware: with `TURSO_URL` exported in the shell, `LIBSQL_URL` is ignored — see prod note above.)
+- Frontend: 22-check headless-Chrome script (puppeteer-core, system Chrome) against local uvicorn + Vite (**`VITE_API_BASE=http://127.0.0.1:8000` is required** — since the GH Pages migration, api.js defaults to the Render URL, so a dev-server page otherwise talks to prod and gets CORS-blocked). All pass: signup → 8-column table → AC celebration intact post-lift (toast/confetti/progress bump) → feedback send/prefill/delete/Esc → `#/profile` (joined date, bars, tiles, "just now" activity) → hard refresh on `#/profile` OK → mobile 390px (labeled feedback cell, modal, profile).
+- `npm run build` and `build:gh` clean; `npm run lint` shows only the pre-existing `api.js` `no-empty` error.
+
+---
+
 ## Importance rating (rating script + system prompt, data not yet rated)
 
 This session added a CLI in the **llm-integration** repo for rating every

@@ -1,7 +1,42 @@
 import { useState, useEffect } from 'react';
+import { HashRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import './App.css';
 import ProblemSet from './ProblemSet.jsx';
+import Profile from './Profile.jsx';
 import { api, getToken, setToken } from './api.js';
+
+function flattenContests(contests) {
+  const out = [];
+  for (const c of contests) {
+    for (const p of c.problems || []) {
+      const primaryTags = p.primary_tags || [];
+      const secondaryTags = p.secondary_tags || [];
+      const extraTags = p.extra_tags || [];
+      const tagList = [...primaryTags, ...secondaryTags, ...extraTags];
+      const tags = tagList.join(', ');
+      const extraTagSet = new Set(extraTags);
+      out.push({
+        id: String(p.problem_id),
+        contest: c.contest_name + ' ' + c.year,
+        region: c.region,
+        year: c.year,
+        searchKey: `${c.region || ''} ${c.contest_name || ''} ${c.year || ''}`,
+        name: p.problem_name,
+        tags,
+        tagList,
+        extraTagSet,
+        importance: p.importance || '',
+        importanceConfidence: typeof p.importance_confidence === 'number' ? p.importance_confidence : 0,
+        difficulty: (p.total_number_of_participant > 0
+          ? (p.problem_solved_in_contest / p.total_number_of_participant) * 100
+          : 0),
+        url: p.problem_url,
+        teamsSolved: p.problem_solved_in_contest,
+      });
+    }
+  }
+  return out;
+}
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -11,6 +46,8 @@ export default function App() {
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [problems, setProblems] = useState([]);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     if (!getToken()) { setAuthLoading(false); return; }
@@ -19,6 +56,28 @@ export default function App() {
       .catch(() => setToken(""))
       .finally(() => setAuthLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (!user) { setProblems([]); setLoaded(false); return; }
+    let cancelled = false;
+    async function load() {
+      const [dataset, statusMap] = await Promise.all([
+        fetch("/tagged.json").then((r) => r.json()),
+        api.getStatus().catch(() => ({})),
+      ]);
+      if (cancelled) return;
+      const flat = flattenContests(dataset);
+      for (const p of flat) {
+        const s = statusMap[p.id];
+        p.status = s?.status || "";
+        p.statusUpdatedAt = s?.updated_at || null;
+      }
+      setProblems(flat);
+      setLoaded(true);
+    }
+    load();
+    return () => { cancelled = true; };
+  }, [user]);
 
   async function submit(e) {
     e.preventDefault();
@@ -98,21 +157,33 @@ export default function App() {
   }
 
   return (
-    <div className="app-shell">
-      <header className="app-header">
-        <div className="brand">
-          <span className="brand-mark">✓</span>
-          <h1>Live Problem Set</h1>
-        </div>
-        <div className="user-area">
-          <span className="user-chip">
-            <span className="user-avatar">{user.username.charAt(0)}</span>
-            {user.username}
-          </span>
-          <button className="btn" onClick={logout}>Log out</button>
-        </div>
-      </header>
-      <ProblemSet />
-    </div>
+    <HashRouter>
+      <div className="app-shell">
+        <header className="app-header">
+          <Link to="/" className="brand">
+            <span className="brand-mark">✓</span>
+            <h1>Live Problem Set</h1>
+          </Link>
+          <div className="user-area">
+            <Link to="/profile" className="user-chip" title="Your profile">
+              <span className="user-avatar">{user.username.charAt(0)}</span>
+              {user.username}
+            </Link>
+            <button className="btn" onClick={logout}>Log out</button>
+          </div>
+        </header>
+        <Routes>
+          <Route
+            path="/"
+            element={<ProblemSet problems={problems} setProblems={setProblems} loaded={loaded} />}
+          />
+          <Route
+            path="/profile"
+            element={<Profile user={user} problems={problems} loaded={loaded} />}
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
+    </HashRouter>
   );
 }

@@ -22,6 +22,18 @@ CREATE TABLE IF NOT EXISTS problem_status (
 );
 
 CREATE INDEX IF NOT EXISTS idx_status_user ON problem_status(user_id);
+
+CREATE TABLE IF NOT EXISTS problem_feedback (
+  user_id INTEGER NOT NULL,
+  problem_id INTEGER NOT NULL,
+  category TEXT NOT NULL,
+  comment TEXT NOT NULL DEFAULT '',
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (user_id, problem_id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_feedback_user ON problem_feedback(user_id);
 """
 
 

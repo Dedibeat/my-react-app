@@ -17,10 +17,13 @@ class StatusBody(BaseModel):
 def list_status(user: dict = Depends(get_current_user)):
     cur = get_conn().cursor()
     cur.execute(
-        "SELECT problem_id, status FROM problem_status WHERE user_id = ?",
+        "SELECT problem_id, status, updated_at FROM problem_status WHERE user_id = ?",
         (user["id"],),
     )
-    return {str(pid): status for pid, status in cur.fetchall()}
+    return {
+        str(pid): {"status": status, "updated_at": ts}
+        for pid, status, ts in cur.fetchall()
+    }
 
 
 @router.put("/{problem_id}")

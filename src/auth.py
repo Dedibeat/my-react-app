@@ -23,6 +23,7 @@ class Credentials(BaseModel):
 class UserOut(BaseModel):
     id: int
     username: str
+    created_at: str
 
 
 def _make_token(user_id: int) -> str:
@@ -43,11 +44,11 @@ def get_current_user(authorization: str | None = Header(None)) -> dict:
         raise HTTPException(401, "Invalid token")
     user_id = int(payload["sub"])
     cur = get_conn().cursor()
-    cur.execute("SELECT id, username FROM users WHERE id = ?", (user_id,))
+    cur.execute("SELECT id, username, created_at FROM users WHERE id = ?", (user_id,))
     row = cur.fetchone()
     if not row:
         raise HTTPException(401, "User not found")
-    return {"id": row[0], "username": row[1]}
+    return {"id": row[0], "username": row[1], "created_at": row[2]}
 
 
 @router.post("/signup")
@@ -68,22 +69,27 @@ def signup(body: Credentials):
             raise HTTPException(409, "Username already taken")
         raise
     user_id = cur.lastrowid
+    cur.execute("SELECT created_at FROM users WHERE id = ?", (user_id,))
+    created_at = cur.fetchone()[0]
     return {
         "token": _make_token(user_id),
-        "user": {"id": user_id, "username": body.username},
+        "user": {"id": user_id, "username": body.username, "created_at": created_at},
     }
 
 
 @router.post("/login")
 def login(body: Credentials):
     cur = get_conn().cursor()
-    cur.execute("SELECT id, password_hash FROM users WHERE username = ?", (body.username,))
+    cur.execute(
+        "SELECT id, password_hash, created_at FROM users WHERE username = ?",
+        (body.username,),
+    )
     row = cur.fetchone()
     if not row or not bcrypt.checkpw(body.password.encode(), row[1].encode()):
         raise HTTPException(401, "Invalid credentials")
     return {
         "token": _make_token(row[0]),
-        "user": {"id": row[0], "username": body.username},
+        "user": {"id": row[0], "username": body.username, "created_at": row[2]},
     }
 
 

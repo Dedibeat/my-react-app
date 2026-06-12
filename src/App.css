@@ -92,6 +92,7 @@
 
 .brand { display: flex; align-items: center; gap: 10px; }
 .brand h1 { margin: 0; font-size: 1.35rem; letter-spacing: -0.02em; }
+a.brand { text-decoration: none; color: inherit; }
 
 .brand-mark {
   width: 34px;
@@ -118,6 +119,15 @@
   border-radius: 999px;
   font-weight: 600;
   font-size: 0.9rem;
+}
+a.user-chip {
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+a.user-chip:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
 }
 
 .user-avatar {

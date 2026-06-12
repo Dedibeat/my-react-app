@@ -57,4 +57,16 @@ export const api = {
   async clearStatus(problemId) {
     return request(`/api/status/${encodeURIComponent(problemId)}`, { method: "DELETE" });
   },
+  async getFeedback() {
+    return request("/api/feedback");
+  },
+  async setFeedback(problemId, category, comment) {
+    return request(`/api/feedback/${encodeURIComponent(problemId)}`, {
+      method: "PUT",
+      body: JSON.stringify({ category, comment }),
+    });
+  },
+  async deleteFeedback(problemId) {
+    return request(`/api/feedback/${encodeURIComponent(problemId)}`, { method: "DELETE" });
+  },
 };
