@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import './ProblemSet.css';
 import { api } from './api.js';
 import { parseSearch, evalSearchAst } from './search.js';
@@ -36,12 +36,21 @@ function flattenContests(contests) {
   return out;
 }
 
-function Top({ total, loaded }) {
+function ProgressSummary({ solved, total, visibleCount, loaded }) {
+  const pct = total > 0 ? (solved / total) * 100 : 0;
   return (
-    <div className="top" style={{ marginTop: 12 }}>
-      <div />
-      <div className="stats muted" id="summary">
-        {loaded ? `${total} problems` : 'Loading…'}
+    <div className="progress-card">
+      <div className="progress-info">
+        <span className="progress-count">
+          <b>{solved}</b> / {total} solved
+          <span className="progress-pct">{pct.toFixed(1)}%</span>
+        </span>
+        <span className="muted" id="summary">
+          {loaded ? `${visibleCount} shown` : 'Loading…'}
+        </span>
+      </div>
+      <div className="progress-track">
+        <div className="progress-fill" style={{ width: `${pct}%` }} />
       </div>
     </div>
   );
@@ -258,7 +267,15 @@ const getStatusClass = (status) => {
   return "status-unsolved";
 };
 
-function StatusEditor({ value, onChange }) {
+function ConfettiBurst() {
+  return (
+    <span className="confetti" aria-hidden="true">
+      {Array.from({ length: 10 }, (_, i) => <i key={i} />)}
+    </span>
+  );
+}
+
+function StatusEditor({ value, onChange, celebrating }) {
   const statuses = ["AC", "WA", "TL", "RE", "NI", "No submission"];
   const [editing, setEditing] = useState(false);
 
@@ -267,7 +284,7 @@ function StatusEditor({ value, onChange }) {
     return (
       <select
         autoFocus
-        className="inline-select"
+        className="status-select"
         value={current}
         onChange={(e) => {
           const next = e.target.value === "No submission" ? "" : e.target.value;
@@ -283,23 +300,21 @@ function StatusEditor({ value, onChange }) {
     );
   }
   return (
-    <span
+    <button
+      type="button"
+      className={`status-pill ${getStatusClass(value)} ${value ? '' : 'status-empty'} ${celebrating ? 'pop' : ''}`}
       onClick={() => setEditing(true)}
-      className={value ? "" : "muted"}
-      style={{
-        display: "grid",
-        justifyItems: "center",
-        minWidth: 120,
-        padding: 8,
-        cursor: "pointer",
-      }}
-    >{value || "—"}</span>
+      title="Click to edit"
+    >
+      {value === "AC" ? "✓ AC" : (value || "Set status")}
+      {celebrating && <ConfettiBurst />}
+    </button>
   );
 }
 
-function ProblemsTable({ showTag, problems, updateStatus }) {
+function ProblemsTable({ showTag, problems, updateStatus, justSolved }) {
   return (
-    <div style={{ overflow: "auto" }}>
+    <div className="table-card">
       <table id="problemsTable" className={showTag ? "" : "tags-hidden"} aria-describedby="summary">
         <thead>
           <tr>
@@ -309,16 +324,21 @@ function ProblemsTable({ showTag, problems, updateStatus }) {
             <th>Tags</th>
             <th>Solve Rate</th>
             <th>Importance</th>
-            <th style={{ width: 180 }}>Status (click to edit)</th>
+            <th style={{ width: 180 }} title="Click a cell to edit">Status</th>
           </tr>
         </thead>
         <tbody>
+          {problems.length === 0 && (
+            <tr className="empty-row">
+              <td colSpan={7}>No problems match your filters.</td>
+            </tr>
+          )}
           {problems.map((p) => (
-            <tr key={p.id}>
-              <td>{p.id}</td>
+            <tr key={p.id} className={p.status === "AC" ? "row-solved" : ""}>
+              <td className="cell-id">{p.id}</td>
               <td>{p.contest}</td>
               <td>
-                <a href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>
+                <a className="problem-link" href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>
               </td>
               <td>
                 <div className="tags">
@@ -334,10 +354,11 @@ function ProblemsTable({ showTag, problems, updateStatus }) {
               </td>
               <td><DifficultyBadge percent={p.difficulty} /></td>
               <td><ImportanceLabel value={p.importance} confidence={p.importanceConfidence} /></td>
-              <td className={getStatusClass(p.status)}>
+              <td className="cell-status">
                 <StatusEditor
                   value={p.status}
                   onChange={(newStatus) => updateStatus(p.id, newStatus)}
+                  celebrating={justSolved === p.id}
                 />
               </td>
             </tr>
@@ -359,7 +380,10 @@ export default function ProblemSet() {
   const [includeUnrated, setIncludeUnrated] = useState(false);
   const [problems, setProblems] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const [saveError, setSaveError] = useState("");
+  const [toast, setToast] = useState(null);
+  const [justSolved, setJustSolved] = useState(null);
+  const toastTimer = useRef(null);
+  const solvedTimer = useRef(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -380,18 +404,35 @@ export default function ProblemSet() {
     return () => { cancelled = true; };
   }, []);
 
+  function showToast(msg, kind) {
+    setToast({ msg, kind });
+    clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(null), 3000);
+  }
+
   async function updateStatus(id, newStatus) {
     const previous = problems.find((p) => p.id === id)?.status || "";
     setProblems((cur) => cur.map((p) => (p.id === id ? { ...p, status: newStatus } : p)));
-    setSaveError("");
+    if (newStatus === "AC" && previous !== "AC") {
+      setJustSolved(id);
+      clearTimeout(solvedTimer.current);
+      solvedTimer.current = setTimeout(() => setJustSolved(null), 900);
+      showToast("Solved! Nice work 🎉", "success");
+    }
     try {
       if (newStatus) await api.setStatus(id, newStatus);
       else await api.clearStatus(id);
     } catch (err) {
       setProblems((cur) => cur.map((p) => (p.id === id ? { ...p, status: previous } : p)));
-      setSaveError(err.message);
+      setJustSolved(null);
+      showToast(`Save failed: ${err.message}`, "error");
     }
   }
+
+  const solvedCount = useMemo(
+    () => problems.reduce((n, p) => n + (p.status === "AC" ? 1 : 0), 0),
+    [problems],
+  );
 
   const regions = useMemo(() => {
     const set = new Set();
@@ -457,8 +498,12 @@ export default function ProblemSet() {
 
   return (
     <>
-      <Top total={visible.length} loaded={loaded} />
-      {saveError && <div style={{ color: "crimson", margin: "8px 0" }}>Save failed: {saveError}</div>}
+      <ProgressSummary
+        solved={solvedCount}
+        total={problems.length}
+        visibleCount={visible.length}
+        loaded={loaded}
+      />
       <Controls
         showTag={showTag}
         setShowTag={setShowTag}
@@ -477,7 +522,19 @@ export default function ProblemSet() {
         setRegion={setRegion}
         regions={regions}
       />
-      <ProblemsTable showTag={showTag} problems={visible} updateStatus={updateStatus} />
+      {loaded ? (
+        <ProblemsTable
+          showTag={showTag}
+          problems={visible}
+          updateStatus={updateStatus}
+          justSolved={justSolved}
+        />
+      ) : (
+        <div className="loading-state">
+          <span className="spinner" /> Loading problems…
+        </div>
+      )}
+      {toast && <div className={`toast toast-${toast.kind}`} role="status">{toast.msg}</div>}
     </>
   );
 }

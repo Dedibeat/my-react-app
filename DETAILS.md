@@ -363,7 +363,37 @@ The "Importance:" filter that the previous section introduced as a 9-option `<se
 
 ---
 
-## Codebase overview
+## UI redesign (2026-06-12 session)
+
+Full visual remake of the frontend, requested as "aesthetic, user friendly experience and feedback, rewarding to solve problems". UI/styles only — zero changes to filtering/sorting/search logic, the API layer, the backend, or the data. No new runtime dependencies; everything is hand-rolled CSS on a small token system.
+
+### Design system (`src/index.css`, was fully commented out before)
+
+CSS custom properties on `:root`: light theme, `#f4f5fb` page background, white surfaces, indigo accent (`--accent: #4f46e5`), green/red soft tints for solved/failed, shared radii and shadows. Global styles for inputs/selects/buttons (consistent borders, accent focus ring), shared `.btn` / `.btn-primary` / `.spinner` / `.muted` helpers. The stray `body` rule that used to live in `ProblemSet.css` moved here.
+
+### Login / signup (`src/App.jsx` + new `src/App.css`)
+
+- Centered card on the page background with brand mark + "Live Problem Set" wordmark, contextual title ("Welcome back" / "Create your account") and subtitle.
+- Labeled fields instead of bare placeholder inputs; error shown in a red alert box instead of plain crimson text.
+- New `submitting` state: the primary button disables and reads "Logging in…" / "Signing up…" while the request is in flight (the only behavior addition in App.jsx).
+- Auth bootstrap shows a centered spinner instead of a "Loading…" `<h2>`.
+- Signed-in chrome: `.app-shell` (max-width 1320px, centered) with a header — brand on the left, user chip with avatar initial + Log out on the right.
+
+### Problem set (`src/ProblemSet.jsx` + `src/ProblemSet.css` rewrite)
+
+- **Progress card** (replaces the old `Top` count-only component): "N / total solved" with a percentage pill and an animated gradient progress bar, plus the "X shown" filtered count (keeps `id="summary"` for the table's `aria-describedby`). This is the "rewarding" anchor — the bar visibly moves when you mark an AC.
+- **Solve celebration:** marking a problem AC (optimistically, before the server confirms) pops the status pill (`status-pop` keyframe), fires a 10-particle CSS confetti burst from the pill, and shows a "Solved! Nice work 🎉" toast. Driven by a `justSolved` id cleared after 900ms; rolled back with the optimistic update on API error.
+- **Toasts** (fixed, bottom-center, auto-dismiss 3s) replace the persistent crimson "Save failed" div; errors show as a red toast, solves as a green one.
+- **Status cell** is now a real `<button>` pill: empty = dashed "Set status" ghost (visible affordance, accent on hover), AC = green "✓ AC", WA/TL/RE/NI = red. The click-to-edit `<select>` behavior is unchanged. Solved rows additionally get a green row tint via `.row-solved`.
+- **Table** sits in a white card; horizontal borders only, uppercase muted column headers, row hover highlight, muted tabular-nums ID column, styled problem links. Header "Status (click to edit)" shortened to "Status" with a tooltip. New empty state row ("No problems match your filters.") when filters produce zero rows, and a spinner "Loading problems…" card while the dataset loads.
+- **Controls bar** kept exactly the same controls/structure (quick filter, importance range widget, sort, search + button, region, show/hide tags) but restyled onto the token system so it reads as one card of uniform pills. The importance slider/reset/+unrated chrome is recolored to match (accent thumbs, accent range pill).
+- Mobile (≤768px) card layout preserved and adapted: same `::before` column labels (now small-caps muted), stacked controls with 44px touch targets, full-width status pill, solved cards get a green border.
+- `index.html` title changed from "my-react-app" to "Live Problem Set".
+
+### Verification
+
+- `npm run build` clean; `npm run lint` shows only the 1 pre-existing `api.js` `no-empty` error (the old `App.jsx` `set-state-in-effect` error is gone with the rewrite).
+- Visually verified end-to-end with headless Chrome (`puppeteer-core`, installed `--no-save`, driving system Chrome) against local uvicorn (`local.db`) + Vite dev: signed up a fresh user through the new form, screenshotted login, table, the AC celebration mid-flight (confetti + toast + progress bump 0→1 visible), and the 390px mobile layout. All rendered as designed.
 
 ### Repo layout
 

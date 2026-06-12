@@ -10,6 +10,7 @@ export default function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (!getToken()) { setAuthLoading(false); return; }
@@ -22,6 +23,7 @@ export default function App() {
   async function submit(e) {
     e.preventDefault();
     setAuthError("");
+    setSubmitting(true);
     try {
       const fn = mode === "login" ? api.login : api.signup;
       const { token, user: u } = await fn(username, password);
@@ -30,6 +32,8 @@ export default function App() {
       setPassword("");
     } catch (err) {
       setAuthError(err.message);
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -38,25 +42,52 @@ export default function App() {
     setUser(null);
   }
 
-  if (authLoading) return <div className="top"><h2 style={{ margin: 0 }}>Loading…</h2></div>;
+  if (authLoading) {
+    return (
+      <div className="auth-screen">
+        <span className="spinner spinner-lg" aria-label="Loading" />
+      </div>
+    );
+  }
 
   if (!user) {
     return (
-      <div className="top" style={{ maxWidth: 360 }}>
-        <h2 style={{ margin: 0 }}>{mode === "login" ? "Log in" : "Sign up"}</h2>
-        <form onSubmit={submit} style={{ display: "grid", gap: 8 }}>
-          <input
-            type="text" placeholder="username" value={username}
-            onChange={(e) => setUsername(e.target.value)} required minLength={3}
-          />
-          <input
-            type="password" placeholder="password" value={password}
-            onChange={(e) => setPassword(e.target.value)} required minLength={6}
-          />
-          {authError && <div style={{ color: "crimson" }}>{authError}</div>}
-          <button className="btn" type="submit">{mode === "login" ? "Log in" : "Sign up"}</button>
+      <div className="auth-screen">
+        <form className="auth-card" onSubmit={submit}>
+          <div className="auth-brand">
+            <span className="brand-mark">✓</span>
+            <span className="auth-brand-name">Live Problem Set</span>
+          </div>
+          <div>
+            <h1 className="auth-title">{mode === "login" ? "Welcome back" : "Create your account"}</h1>
+            <p className="auth-subtitle">
+              {mode === "login"
+                ? "Log in to keep tracking your progress."
+                : "Sign up to start tracking solved problems."}
+            </p>
+          </div>
+          <label className="field">
+            <span>Username</span>
+            <input
+              type="text" placeholder="your username" value={username}
+              onChange={(e) => setUsername(e.target.value)} required minLength={3}
+            />
+          </label>
+          <label className="field">
+            <span>Password</span>
+            <input
+              type="password" placeholder="••••••••" value={password}
+              onChange={(e) => setPassword(e.target.value)} required minLength={6}
+            />
+          </label>
+          {authError && <div className="auth-error">{authError}</div>}
+          <button className="btn btn-primary btn-block" type="submit" disabled={submitting}>
+            {submitting
+              ? (mode === "login" ? "Logging in…" : "Signing up…")
+              : (mode === "login" ? "Log in" : "Sign up")}
+          </button>
           <button
-            type="button" className="btn"
+            type="button" className="auth-switch"
             onClick={() => { setMode(mode === "login" ? "signup" : "login"); setAuthError(""); }}
           >
             {mode === "login" ? "Need an account? Sign up" : "Have an account? Log in"}
@@ -67,16 +98,21 @@ export default function App() {
   }
 
   return (
-    <>
-      <div className="top">
-        <h2 style={{ margin: 0 }}>Live Problem Set</h2>
-        <div>
-          <span className="muted">Signed in as <b>{user.username}</b></span>
-          {" "}
+    <div className="app-shell">
+      <header className="app-header">
+        <div className="brand">
+          <span className="brand-mark">✓</span>
+          <h1>Live Problem Set</h1>
+        </div>
+        <div className="user-area">
+          <span className="user-chip">
+            <span className="user-avatar">{user.username.charAt(0)}</span>
+            {user.username}
+          </span>
           <button className="btn" onClick={logout}>Log out</button>
         </div>
-      </div>
+      </header>
       <ProblemSet />
-    </>
+    </div>
   );
 }
