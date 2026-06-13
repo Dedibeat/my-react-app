@@ -722,3 +722,67 @@ cd /home/dedibeat/CompetitiveProgramming/llm-integration
 `data/tagged.json.bak-pre-importance` and
 `public/tagged.json.bak-pre-importance` are added to `.gitignore` so
 the run-script backup doesn't get committed.
+
+---
+
+## Activity heatmap (GitHub-style contribution calendar) — this session
+
+New **activity status** card at the top of the Profile page (after the identity
+card, before the overall-progress card): a GitHub-style contribution heatmap plus
+the six Codeforces-style stat readouts. **Frontend-only — zero backend/data/deploy
+changes.** All in `src/Profile.{jsx,css}`.
+
+### What it shows
+
+- **Heatmap**: weeks as columns × 7 weekday rows (Sun top; `Mon`/`Wed`/`Fri`
+  labels), cells colored by how many problems were marked **AC** that day, on the
+  GitHub green 5-step scale (`#ebedf0 → #216e39`). Month labels across the top, a
+  `Less → More` legend below, and a `title` tooltip per day (`N solved · Wed Jun 10 2026`).
+- **Year selector** (`<select>`, only rendered when >1 year exists): the current
+  year (default) shows a **rolling last-12-months** window; selecting a past year
+  shows that full calendar year (Jan 1–Dec 31). Header reads "N problems solved in
+  the last year" (rolling) or "… in YYYY". Year list = current year ∪ every year
+  that has AC activity, descending.
+- **Six stat blocks** (image #1 layout, global — independent of the selected year):
+  problems solved **all-time / last year / last month**, and longest day-streak
+  **max / last year / last month**.
+
+### How the data is derived (and the caveat)
+
+Built entirely from the `problems` array `App.jsx` already passes to `Profile`:
+each problem carries `status` and `statusUpdatedAt`. A `useMemo` buckets every
+`status === 'AC'` problem by the **local** calendar day of its `statusUpdatedAt`
+into a `dayKey → count` map; the grid, header count, and stats all read from it.
+
+**Caveat (accepted, per the simplicity rule):** `statusUpdatedAt` is the *last*
+status-change time, not an immutable solve log. So flipping an AC problem to WA
+later removes its contribution from history, and re-marking shifts its date. A
+truly accurate history would need a new `solve_events` table + a logging write on
+each AC + a GET endpoint — deliberately **not** done; the approximation is fine for
+a personal/small-community tracker.
+
+### Implementation notes
+
+- **DST-safe streaks/windows.** Day keys are `YYYY-MM-DD`; adjacency and window
+  thresholds compare `Date.parse(key)` (UTC midnight), so a consecutive day is
+  always exactly `86400000` ms regardless of local DST. `longestStreak` walks the
+  sorted keys; the last-year/last-month variants filter the key list first.
+- **Grid build.** Range start is snapped back to its Sunday; weeks are emitted
+  until the cursor passes `end`. Cells outside the range render as transparent
+  `.cal-pad` padding. Verified offline: 365-day calendar years, 366 for leap-year
+  2024, 53 columns, Sunday-aligned first column, `windowCount` excluding
+  out-of-range cells, and streak adjacency across month boundaries.
+- **CSS** appended to `Profile.css` (`.activity-*`, `.cal-*`). Fixed 11px cells /
+  3px gaps; month-label row is left-padded 30px to line up with the weekday-label
+  column; `.cal` scrolls horizontally on narrow screens; the stat grid drops from
+  3 to 2 columns at ≤768px.
+- `Profile.jsx` now imports `useState` (for the selected year). Local
+  `ActivityHeatmap` + `Stat` components live in the same file (not exported — keeps
+  the react-refresh lint rule happy).
+
+### Verification
+
+- `npm run build` clean; `npm run lint` shows only the pre-existing `api.js`
+  `no-empty` error.
+- Date logic checked with a standalone node script (streaks, grid sizing, leap
+  year, rolling vs calendar-year windows) — all expected values.
