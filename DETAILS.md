@@ -786,3 +786,43 @@ a personal/small-community tracker.
   `no-empty` error.
 - Date logic checked with a standalone node script (streaks, grid sizing, leap
   year, rolling vs calendar-year windows) — all expected values.
+
+---
+
+## Rating column replaces Solve Rate (this session)
+
+New dataset `data/problem_rating.json` (1579 entries) carries per-problem
+difficulty ratings. Each entry has both `difficulty` (~1206–3029, a custom
+scale) and `difficulty_cf` (800–4000, the Codeforces bounds). Per the user,
+the **`difficulty_cf`** field is used because it maps directly onto CF tiers.
+Frontend-only; backend/data-flow untouched (the file is served by Vite's
+`publicDir: 'data'`, copied into `dist/` on build).
+
+### Changes
+
+- **`src/App.jsx`**: `flattenContests` no longer computes the solve-rate
+  `difficulty` field; each problem now carries `rating` (default `null`). The
+  load effect fetches `/problem_rating.json` alongside `tagged.json`/status,
+  builds a `problem_id → difficulty_cf` map, and stamps `p.rating` (or `null`
+  when the problem isn't in the rating set — ~89 problems). The unused
+  `teamsSolved` field is left as-is (pre-existing, not touched).
+- **`src/ProblemSet.jsx`**:
+  - `DifficultyBadge` (green→red HSL on a 0–100 percent) replaced by
+    `RatingBadge` + `cfColor(rating)`, which colors the number with the
+    standard Codeforces tier palette (gray <1200, green <1400, cyan <1600,
+    blue <1900, purple <2100, orange <2400, red ≥2400). Missing rating renders
+    a muted `—`.
+  - Column header "Solve Rate" → "Rating"; cell renders `<RatingBadge>`.
+  - Sort options `solve_rate_desc/asc` → `rating_desc/asc`; the `solveRate`
+    comparator → `ratingOf` (`Number(p.rating) || 0`, so unrated sort to the
+    bottom on desc). Default sort changed `solve_rate_desc` → `rating_desc`.
+    Importance-sort tiebreaker now breaks ties by rating instead of solve rate.
+- **`src/ProblemSet.css`**: mobile `td:nth-child(5)::before` label
+  "Solve Rate" → "Rating"; new `.difficulty-muted` for the `—` placeholder.
+  The `.difficulty` badge keeps its chrome; `RatingBadge` sets the CF color via
+  inline `color`/`borderColor`.
+
+### Verification
+
+- `npm run build` clean; `dist/problem_rating.json` present (468 KB).
+- `npm run lint` shows only the pre-existing `api.js` `no-empty` error.

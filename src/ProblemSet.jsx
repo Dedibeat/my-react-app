@@ -132,8 +132,8 @@ function Controls(props) {
         >
           <option value="importance_desc">Importance ↓</option>
           <option value="importance_asc">Importance ↑</option>
-          <option value="solve_rate_desc">Solve Rate ↓</option>
-          <option value="solve_rate_asc">Solve Rate ↑</option>
+          <option value="rating_desc">Rating ↓</option>
+          <option value="rating_asc">Rating ↑</option>
           <option value="id_asc">ID ↑</option>
         </select>
       </label>
@@ -196,13 +196,23 @@ function Controls(props) {
   );
 }
 
-function DifficultyBadge({ percent }) {
-  const val = parseFloat(percent) || 0;
-  const norm = Math.max(0, Math.min(1, val / 100));
-  const hue = Math.round(norm * 120);
+// Codeforces rating color tiers
+function cfColor(rating) {
+  if (rating < 1200) return '#808080'; // gray
+  if (rating < 1400) return '#008000'; // green
+  if (rating < 1600) return '#03a89e'; // cyan
+  if (rating < 1900) return '#0000ff'; // blue
+  if (rating < 2100) return '#aa00aa'; // purple
+  if (rating < 2400) return '#ff8c00'; // orange
+  return '#ff0000'; // red
+}
+
+function RatingBadge({ rating }) {
+  if (rating == null) return <span className="difficulty difficulty-muted">—</span>;
+  const color = cfColor(rating);
   return (
-    <span className="difficulty" style={{ background: `hsl(${hue},70%,85%)` }}>
-      {typeof percent === 'number' ? percent.toFixed(2) : percent}
+    <span className="difficulty" style={{ color, borderColor: color }}>
+      {Math.round(rating)}
     </span>
   );
 }
@@ -304,7 +314,7 @@ function ProblemsTable({ showTag, problems, updateStatus, justSolved, feedback, 
             <th>Contest</th>
             <th>Problem</th>
             <th>Tags</th>
-            <th>Solve Rate</th>
+            <th>Rating</th>
             <th>Importance</th>
             <th style={{ width: 180 }} title="Click a cell to edit">Status</th>
             <th style={{ width: 44 }} aria-label="Feedback" />
@@ -335,7 +345,7 @@ function ProblemsTable({ showTag, problems, updateStatus, justSolved, feedback, 
                   })}
                 </div>
               </td>
-              <td><DifficultyBadge percent={p.difficulty} /></td>
+              <td><RatingBadge rating={p.rating} /></td>
               <td><ImportanceLabel value={p.importance} confidence={p.importanceConfidence} /></td>
               <td className="cell-status">
                 <StatusEditor
@@ -361,7 +371,7 @@ function ProblemsTable({ showTag, problems, updateStatus, justSolved, feedback, 
 export default function ProblemSet({ problems, setProblems, loaded }) {
   const [showTag, setShowTag] = useState(false);
   const [filter, setFilter] = useState("all");
-  const [sort, setSort] = useState("solve_rate_desc");
+  const [sort, setSort] = useState("rating_desc");
   const [searchInput, setSearchInput] = useState("");
   const [committedSearch, setCommittedSearch] = useState("");
   const [region, setRegion] = useState("all");
@@ -476,24 +486,24 @@ export default function ProblemSet({ problems, setProblems, loaded }) {
       list = list.filter((p) => evalSearchAst(searchAst, hay(p)));
     }
 
-    const solveRate = (p) => Number(p.difficulty) || 0;
+    const ratingOf = (p) => Number(p.rating) || 0;
     const impRank = (p) => (p.importance in IMPORTANCE_RANK ? IMPORTANCE_RANK[p.importance] : Infinity);
 
     const sorted = list.slice();
     if (sort === "importance_desc") {
       sorted.sort((a, b) => {
         const d = impRank(b) - impRank(a);
-        return d !== 0 ? d : solveRate(b) - solveRate(a);
+        return d !== 0 ? d : ratingOf(b) - ratingOf(a);
       });
     } else if (sort === "importance_asc") {
       sorted.sort((a, b) => {
         const d = impRank(a) - impRank(b);
-        return d !== 0 ? d : solveRate(a) - solveRate(b);
+        return d !== 0 ? d : ratingOf(a) - ratingOf(b);
       });
-    } else if (sort === "solve_rate_desc") {
-      sorted.sort((a, b) => solveRate(b) - solveRate(a));
-    } else if (sort === "solve_rate_asc") {
-      sorted.sort((a, b) => solveRate(a) - solveRate(b));
+    } else if (sort === "rating_desc") {
+      sorted.sort((a, b) => ratingOf(b) - ratingOf(a));
+    } else if (sort === "rating_asc") {
+      sorted.sort((a, b) => ratingOf(a) - ratingOf(b));
     } else if (sort === "id_asc") {
       sorted.sort((a, b) => Number(a.id) - Number(b.id));
     }

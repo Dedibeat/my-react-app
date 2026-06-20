@@ -365,6 +365,12 @@ tbody tr.row-solved:hover td { background: #ecf8f0; }
   font-size: 0.85rem;
 }
 
+.difficulty-muted {
+  font-weight: 400;
+  color: var(--muted, #999);
+  border-color: transparent;
+}
+
 .importance {
   font-weight: 700;
   padding: 2px 6px;
@@ -600,7 +606,7 @@ tbody tr.row-solved:hover td { background: #ecf8f0; }
   tbody td:nth-child(2)::before { content: "Contest"; }
   tbody td:nth-child(3)::before { content: "Problem"; }
   tbody td:nth-child(4)::before { content: "Tags"; }
-  tbody td:nth-child(5)::before { content: "Solve Rate"; }
+  tbody td:nth-child(5)::before { content: "Rating"; }
   tbody td:nth-child(6)::before { content: "Importance"; }
   tbody td:nth-child(7)::before { content: "Status"; }
   tbody td:nth-child(8)::before { content: "Feedback"; }

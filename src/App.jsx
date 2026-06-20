@@ -27,9 +27,7 @@ function flattenContests(contests) {
         extraTagSet,
         importance: p.importance || '',
         importanceConfidence: typeof p.importance_confidence === 'number' ? p.importance_confidence : 0,
-        difficulty: (p.total_number_of_participant > 0
-          ? (p.problem_solved_in_contest / p.total_number_of_participant) * 100
-          : 0),
+        rating: null,
         url: p.problem_url,
         teamsSolved: p.problem_solved_in_contest,
       });
@@ -61,16 +59,20 @@ export default function App() {
     if (!user) { setProblems([]); setLoaded(false); return; }
     let cancelled = false;
     async function load() {
-      const [dataset, statusMap] = await Promise.all([
+      const [dataset, ratings, statusMap] = await Promise.all([
         fetch("/tagged.json").then((r) => r.json()),
+        fetch("/problem_rating.json").then((r) => r.json()),
         api.getStatus().catch(() => ({})),
       ]);
       if (cancelled) return;
+      const ratingMap = {};
+      for (const r of ratings) ratingMap[String(r.problem_id)] = r.difficulty_cf;
       const flat = flattenContests(dataset);
       for (const p of flat) {
         const s = statusMap[p.id];
         p.status = s?.status || "";
         p.statusUpdatedAt = s?.updated_at || null;
+        p.rating = ratingMap[p.id] ?? null;
       }
       setProblems(flat);
       setLoaded(true);
