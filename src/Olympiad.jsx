@@ -78,7 +78,7 @@ function Controls(props) {
         Search:
         <input
           type="search"
-          placeholder="name, technique, hint  (and, or, not, ())"
+          placeholder="name, contest, technique  (and, or, not, ())"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           onKeyDown={(e) => { if (e.key === 'Enter') onCommitSearch(); }}
@@ -163,7 +163,7 @@ export default function Olympiad({ problems, setProblems, loaded }) {
     }
 
     if (searchAst) {
-      const hay = (p) => `${p.name} ${p.olyHay}`.toLowerCase();
+      const hay = (p) => `${p.name} ${p.searchKey} ${p.olyHay}`.toLowerCase();
       list = list.filter((p) => evalSearchAst(searchAst, hay(p)));
     }
 
