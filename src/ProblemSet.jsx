@@ -38,9 +38,9 @@ function Controls(props) {
           <button
             type="button"
             className="importance-range-reset"
-            onClick={() => { setImportanceRange({ min: 1, max: 5 }); setIncludeUnrated(false); }}
-            title="Reset to all ratings, unrated excluded"
-            disabled={importanceRange.min === 1 && importanceRange.max === 5 && !includeUnrated}
+            onClick={() => { setImportanceRange({ min: 1, max: 5 }); setIncludeUnrated(true); }}
+            title="Reset to all ratings, unrated included"
+            disabled={importanceRange.min === 1 && importanceRange.max === 5 && includeUnrated}
           >
             reset
           </button>
@@ -264,7 +264,7 @@ export default function ProblemSet({ problems, setProblems, loaded }) {
   const [committedSearch, setCommittedSearch] = useState("");
   const [region, setRegion] = useState("all");
   const [importanceRange, setImportanceRange] = useState({ min: 1, max: 5 });
-  const [includeUnrated, setIncludeUnrated] = useState(false);
+  const [includeUnrated, setIncludeUnrated] = useState(true);
 
   const {
     feedback, feedbackFor, setFeedbackFor,

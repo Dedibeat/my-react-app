@@ -895,3 +895,18 @@ carry ≥1 technique**. The page lists only those 125.
   fired confetti + toast and bumped progress 0→1, and the **main page reflected the same 1
   solved** (shared state); nav tabs switch with active styling; **zero JS console errors**,
   confirming the `ProblemSet` extraction didn't regress.
+
+---
+
+## +unrated default on (this session)
+
+The importance filter's `+unrated` toggle now defaults to **on** so unrated/unknown
+problems (the large majority — only ~320 of 1668 are rated) are visible by default
+instead of hidden. Three one-line changes in `src/ProblemSet.jsx`:
+
+- `useState(true)` for `includeUnrated` (was `false`).
+- The `reset` button now resets to `includeUnrated = true` and its tooltip reads
+  "unrated included".
+- The `reset` button's `disabled` (at-default) check flipped to `&& includeUnrated`.
+
+`npm run build` clean.
