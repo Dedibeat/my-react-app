@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { HashRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Link, NavLink, Navigate } from 'react-router-dom';
 import './App.css';
 import ProblemSet from './ProblemSet.jsx';
+import Olympiad from './Olympiad.jsx';
 import Profile from './Profile.jsx';
 import { api, getToken, setToken } from './api.js';
 
@@ -15,6 +16,16 @@ function flattenContests(contests) {
       const tagList = [...primaryTags, ...secondaryTags, ...extraTags];
       const tags = tagList.join(', ');
       const extraTagSet = new Set(extraTags);
+
+      const oly = p.olympiad_techniques || null;
+      const olyTechniques = [];
+      if (oly && !oly.no_match) {
+        for (const t of oly.primary || []) olyTechniques.push({ id: t.id, evidence: t.evidence || '', secondary: false });
+        for (const t of oly.secondary || []) olyTechniques.push({ id: t.id, evidence: t.evidence || '', secondary: true });
+      }
+      const practiceHint = olyTechniques.length > 0 ? (oly.practice_hint || '') : '';
+      const olyHay = `${olyTechniques.map((t) => t.id).join(' ')} ${practiceHint}`;
+
       out.push({
         id: String(p.problem_id),
         contest: c.contest_name + ' ' + c.year,
@@ -27,6 +38,9 @@ function flattenContests(contests) {
         extraTagSet,
         importance: p.importance || '',
         importanceConfidence: typeof p.importance_confidence === 'number' ? p.importance_confidence : 0,
+        olyTechniques,
+        practiceHint,
+        olyHay,
         rating: null,
         url: p.problem_url,
         teamsSolved: p.problem_solved_in_contest,
@@ -166,6 +180,10 @@ export default function App() {
             <span className="brand-mark">✓</span>
             <h1>Live Problem Set</h1>
           </Link>
+          <nav className="app-nav">
+            <NavLink to="/" end className="nav-tab">Problem Set</NavLink>
+            <NavLink to="/olympiad" className="nav-tab">Olympiad</NavLink>
+          </nav>
           <div className="user-area">
             <Link to="/profile" className="user-chip" title="Your profile">
               <span className="user-avatar">{user.username.charAt(0)}</span>
@@ -178,6 +196,10 @@ export default function App() {
           <Route
             path="/"
             element={<ProblemSet problems={problems} setProblems={setProblems} loaded={loaded} />}
+          />
+          <Route
+            path="/olympiad"
+            element={<Olympiad problems={problems} setProblems={setProblems} loaded={loaded} />}
           />
           <Route
             path="/profile"

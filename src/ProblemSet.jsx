@@ -1,29 +1,10 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useMemo } from 'react';
 import './ProblemSet.css';
-import { api } from './api.js';
 import { parseSearch, evalSearchAst } from './search.js';
 import FeedbackModal from './FeedbackModal.jsx';
-import { IMPORTANCE_COLOR, getStatusClass } from './problemMeta.js';
-
-function ProgressSummary({ solved, total, visibleCount, loaded }) {
-  const pct = total > 0 ? (solved / total) * 100 : 0;
-  return (
-    <div className="progress-card">
-      <div className="progress-info">
-        <span className="progress-count">
-          <b>{solved}</b> / {total} solved
-          <span className="progress-pct">{pct.toFixed(1)}%</span>
-        </span>
-        <span className="muted" id="summary">
-          {loaded ? `${visibleCount} shown` : 'Loading…'}
-        </span>
-      </div>
-      <div className="progress-track">
-        <div className="progress-fill" style={{ width: `${pct}%` }} />
-      </div>
-    </div>
-  );
-}
+import { IMPORTANCE_COLOR } from './problemMeta.js';
+import { ProgressSummary, RatingBadge, StatusEditor, FeedbackButton } from './problemUI.jsx';
+import { useProblemActions } from './useProblemActions.js';
 
 function Controls(props) {
   const {
@@ -196,27 +177,6 @@ function Controls(props) {
   );
 }
 
-// Codeforces rating color tiers
-function cfColor(rating) {
-  if (rating < 1200) return '#808080'; // gray
-  if (rating < 1400) return '#008000'; // green
-  if (rating < 1600) return '#03a89e'; // cyan
-  if (rating < 1900) return '#0000ff'; // blue
-  if (rating < 2100) return '#aa00aa'; // purple
-  if (rating < 2400) return '#ff8c00'; // orange
-  return '#ff0000'; // red
-}
-
-function RatingBadge({ rating }) {
-  if (rating == null) return <span className="difficulty difficulty-muted">—</span>;
-  const color = cfColor(rating);
-  return (
-    <span className="difficulty" style={{ color, borderColor: color }}>
-      {Math.round(rating)}
-    </span>
-  );
-}
-
 const IMPORTANCE_RANK = { p1: 1, p2: 2, p3: 3, p4: 4, p5: 5 };
 
 function ImportanceLabel({ value, confidence }) {
@@ -230,78 +190,6 @@ function ImportanceLabel({ value, confidence }) {
   const label = value.toUpperCase();
   const tip = confidence > 0 ? `confidence ${(confidence * 100).toFixed(0)}%` : undefined;
   return <span className="importance" style={{ background: bg }} title={tip}>{label}</span>;
-}
-
-function ConfettiBurst() {
-  return (
-    <span className="confetti" aria-hidden="true">
-      {Array.from({ length: 10 }, (_, i) => <i key={i} />)}
-    </span>
-  );
-}
-
-function StatusEditor({ value, onChange, celebrating }) {
-  const statuses = ["AC", "WA", "TL", "RE", "NI", "No submission"];
-  const [editing, setEditing] = useState(false);
-
-  if (editing) {
-    const current = value || "No submission";
-    return (
-      <select
-        autoFocus
-        className="status-select"
-        value={current}
-        onChange={(e) => {
-          const next = e.target.value === "No submission" ? "" : e.target.value;
-          onChange(next);
-          setEditing(false);
-        }}
-        onBlur={() => setEditing(false)}
-      >
-        {statuses.map((s) => (
-          <option key={s} value={s}>{s}</option>
-        ))}
-      </select>
-    );
-  }
-  return (
-    <button
-      type="button"
-      className={`status-pill ${getStatusClass(value)} ${value ? '' : 'status-empty'} ${celebrating ? 'pop' : ''}`}
-      onClick={() => setEditing(true)}
-      title="Click to edit"
-    >
-      {value === "AC" ? "✓ AC" : (value || "Set status")}
-      {celebrating && <ConfettiBurst />}
-    </button>
-  );
-}
-
-function FeedbackButton({ hasFeedback, onClick }) {
-  return (
-    <button
-      type="button"
-      className={`feedback-btn ${hasFeedback ? 'has-feedback' : ''}`}
-      onClick={onClick}
-      aria-pressed={hasFeedback}
-      title={hasFeedback ? 'Edit your feedback' : 'Give feedback'}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill={hasFeedback ? 'currentColor' : 'none'}
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-      </svg>
-    </button>
-  );
 }
 
 function ProblemsTable({ showTag, problems, updateStatus, justSolved, feedback, onOpenFeedback }) {
@@ -377,71 +265,12 @@ export default function ProblemSet({ problems, setProblems, loaded }) {
   const [region, setRegion] = useState("all");
   const [importanceRange, setImportanceRange] = useState({ min: 1, max: 5 });
   const [includeUnrated, setIncludeUnrated] = useState(false);
-  const [feedback, setFeedback] = useState({});
-  const [feedbackFor, setFeedbackFor] = useState(null);
-  const [toast, setToast] = useState(null);
-  const [justSolved, setJustSolved] = useState(null);
-  const toastTimer = useRef(null);
-  const solvedTimer = useRef(null);
 
-  useEffect(() => {
-    let cancelled = false;
-    api.getFeedback()
-      .then((map) => { if (!cancelled) setFeedback(map); })
-      .catch(() => {});
-    return () => { cancelled = true; };
-  }, []);
-
-  function showToast(msg, kind) {
-    setToast({ msg, kind });
-    clearTimeout(toastTimer.current);
-    toastTimer.current = setTimeout(() => setToast(null), 3000);
-  }
-
-  async function updateStatus(id, newStatus) {
-    const prev = problems.find((p) => p.id === id);
-    const previous = prev?.status || "";
-    const previousAt = prev?.statusUpdatedAt || null;
-    setProblems((cur) => cur.map((p) => (
-      p.id === id ? { ...p, status: newStatus, statusUpdatedAt: new Date().toISOString() } : p
-    )));
-    if (newStatus === "AC" && previous !== "AC") {
-      setJustSolved(id);
-      clearTimeout(solvedTimer.current);
-      solvedTimer.current = setTimeout(() => setJustSolved(null), 900);
-      showToast("Solved! Nice work 🎉", "success");
-    }
-    try {
-      if (newStatus) await api.setStatus(id, newStatus);
-      else await api.clearStatus(id);
-    } catch (err) {
-      setProblems((cur) => cur.map((p) => (
-        p.id === id ? { ...p, status: previous, statusUpdatedAt: previousAt } : p
-      )));
-      setJustSolved(null);
-      showToast(`Save failed: ${err.message}`, "error");
-    }
-  }
-
-  async function submitFeedback(category, comment) {
-    const id = feedbackFor.id;
-    await api.setFeedback(id, category, comment);
-    setFeedback((cur) => ({ ...cur, [id]: { category, comment } }));
-    setFeedbackFor(null);
-    showToast("Thanks for the feedback!", "success");
-  }
-
-  async function deleteFeedback() {
-    const id = feedbackFor.id;
-    await api.deleteFeedback(id);
-    setFeedback((cur) => {
-      const next = { ...cur };
-      delete next[id];
-      return next;
-    });
-    setFeedbackFor(null);
-    showToast("Feedback removed", "success");
-  }
+  const {
+    feedback, feedbackFor, setFeedbackFor,
+    toast, justSolved,
+    updateStatus, submitFeedback, deleteFeedback, showToast,
+  } = useProblemActions(problems, setProblems);
 
   const solvedCount = useMemo(
     () => problems.reduce((n, p) => n + (p.status === "AC" ? 1 : 0), 0),

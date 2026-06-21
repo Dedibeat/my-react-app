@@ -1,0 +1,39 @@
+/* Olympiad page — technique pills + practice hint.
+   Shares table/controls/status styling with ProblemSet.css. */
+
+.oly-tag {
+  border-color: rgba(0, 0, 0, 0.08);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.oly-tag-secondary {
+  opacity: 0.7;
+  font-weight: 500;
+}
+
+.cell-hint {
+  width: 44px;
+  text-align: center;
+}
+
+.oly-hint {
+  cursor: help;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Mobile: relabel this table's cards (ProblemSet.css labels assume its own columns). */
+@media (max-width: 768px) {
+  #problemsTable.oly-table tbody td:nth-child(1)::before { content: "ID"; }
+  #problemsTable.oly-table tbody td:nth-child(2)::before { content: "Contest"; }
+  #problemsTable.oly-table tbody td:nth-child(3)::before { content: "Problem"; }
+  #problemsTable.oly-table tbody td:nth-child(4)::before { content: "Techniques"; }
+  #problemsTable.oly-table tbody td:nth-child(5)::before { content: "Hint"; }
+  #problemsTable.oly-table tbody td:nth-child(6)::before { content: "Rating"; }
+  #problemsTable.oly-table tbody td:nth-child(7)::before { content: "Status"; }
+  #problemsTable.oly-table tbody td:nth-child(8)::before { content: "Feedback"; }
+
+  /* Hide the empty hint cell on mobile when there is no hint. */
+  #problemsTable.oly-table .cell-hint:empty { display: none; }
+}

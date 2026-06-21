@@ -107,6 +107,20 @@ a.brand { text-decoration: none; color: inherit; }
   flex: none;
 }
 
+.app-nav { display: flex; align-items: center; gap: 4px; }
+
+.nav-tab {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 7px 14px;
+  border-radius: 999px;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-tab:hover { color: var(--text); background: var(--surface-2); }
+.nav-tab.active { color: var(--accent); background: var(--accent-soft, rgba(79, 70, 229, 0.1)); }
+
 .user-area { display: flex; align-items: center; gap: 10px; }
 
 .user-chip {

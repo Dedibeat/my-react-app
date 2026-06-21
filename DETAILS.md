@@ -826,3 +826,72 @@ Frontend-only; backend/data-flow untouched (the file is served by Vite's
 
 - `npm run build` clean; `dist/problem_rating.json` present (468 KB).
 - `npm run lint` shows only the pre-existing `api.js` `no-empty` error.
+
+---
+
+## Olympiad Combinatorics page (new `#/olympiad` route) — this session
+
+`data/tagged.json` was reprocessed by an LLM pass that added Olympiad-Combinatorics
+technique mappings per problem. This session surfaces them as a dedicated page styled
+like the main problem set. Frontend-only — no backend/data/deploy changes (the new
+fields were already written into `tagged.json` by the upstream tagging run).
+
+### New data fields read by the UI
+
+Per problem in `tagged.json`:
+- `olympiad_techniques` — `{ primary: [...], secondary: [...], practice_hint, no_match }`,
+  where each `primary`/`secondary` entry is `{ id, confidence, evidence }` and `id` is a
+  technique code like `ALGO-GREEDY-EXTREME` (the prefix before the first `-` is the
+  category: `ALGO`, `PROC`, `GRPH`, `GAME`, `CNT`, `EXST`, `EXTR`, `PROB`).
+- `olympiad_model`, `llm_olympiad_status` — provenance, **discarded** by the UI (same as
+  the existing `model`/`confidence` fields).
+
+Coverage at time of writing: 1668 problems total, 412 processed, 287 `no_match`, **125
+carry ≥1 technique**. The page lists only those 125.
+
+### Changes
+
+- **`src/App.jsx` — `flattenContests`**: each problem now carries `olyTechniques`
+  (`[{ id, evidence, secondary }]`, empty unless `no_match` is false and there is ≥1
+  technique), `practiceHint` (the `practice_hint` string when techniques exist), and
+  `olyHay` (lowercased ids + hint, for the page's search).
+- **Shared-logic extraction** (so the new page reuses the main page's interactions instead
+  of duplicating them):
+  - **`src/problemUI.jsx`** (new) — the presentational components moved out of
+    `ProblemSet.jsx`: `ProgressSummary`, `RatingBadge` (+ internal `cfColor`),
+    `StatusEditor`, `FeedbackButton`, `ConfettiBurst`. All exports are components, so the
+    `react-refresh/only-export-components` rule is satisfied.
+  - **`src/useProblemActions.js`** (new) — a `useProblemActions(problems, setProblems)`
+    hook holding the status-update / AC-celebration / feedback-CRUD / toast logic and the
+    `getFeedback` load effect (lifted verbatim from `ProblemSet.jsx`).
+  - **`src/ProblemSet.jsx`** now imports both and dropped the moved definitions/inline
+    logic. Behavior is unchanged (verified below).
+- **`src/problemMeta.js`**: added `TECHNIQUE_CATEGORY` (category-prefix → pastel HSL color,
+  same family as `IMPORTANCE_COLOR`) and a `techniqueCategory(id)` helper.
+- **`src/Olympiad.jsx` + `src/Olympiad.css`** (new): the page. Filters to the ~125
+  problems with techniques; reuses `useProblemActions` + the `problemUI.jsx` components +
+  `FeedbackModal` + the boolean search from `search.js`. Controls bar: Quick filter,
+  **Category** select, **Technique** select (narrowed to the chosen category), Sort
+  (Technique A–Z default / Rating ↓↑ / ID ↑), Search (hay = name + `olyHay`). Table
+  columns: ID, Contest, Problem, **Techniques** (one pill per id, colored by category,
+  `title`=evidence; secondary pills lighter), **Practice hint** (💡 with `title`=hint),
+  Rating, Status, Feedback. `ProgressSummary` is scoped to the Olympiad subset; because
+  status writes go through the shared `problems` state, progress stays in sync with the
+  main page. The table carries an `oly-table` class so `Olympiad.css` can re-label the
+  mobile card `::before` headers (the `ProblemSet.css` labels assume its own column order).
+- **`src/App.jsx` — routing/nav**: added `<Route path="/olympiad" …>` and a header
+  `NavLink` tab nav ("Problem Set" / "Olympiad"); new `.app-nav`/`.nav-tab` styles in
+  `App.css`.
+
+### Verification
+
+- `npm run build` clean; `npm run lint` shows only the pre-existing `api.js` `no-empty`
+  error (no new `react-refresh` warnings from the extraction).
+- Headless-Chrome run (puppeteer-core, system Chrome) against local uvicorn
+  (`LIBSQL_URL=…local.db`, `CORS_ORIGINS` including the dev origin) + Vite with
+  `VITE_API_BASE` pointed at it: signed up a fresh user, confirmed Olympiad lists **125**
+  rows with **168** category-colored technique pills (evidence tooltips) and **125** 💡
+  hints; category options `ALGO…PROC`; filtering to `ALGO` → 74 rows; marking a problem AC
+  fired confetti + toast and bumped progress 0→1, and the **main page reflected the same 1
+  solved** (shared state); nav tabs switch with active styling; **zero JS console errors**,
+  confirming the `ProblemSet` extraction didn't regress.
