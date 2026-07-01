@@ -1115,6 +1115,63 @@ still persists in `localStorage["pset.cfHandle"]`.
   filter / Tag / Rating / Search (no Sort); rating inputs were `type=number`; rows sorted
   newest-first; and the Profile **Codeforces** card showed the pre-filled handle + "Sync now".
 
+---
+
+## CF column swap + note/feedback rework with admin view (this session)
+
+### Codeforces columns: Tags before Rating
+
+Swapped so the CF table reads **Code · Problem · Tags · Rating · Status · Feedback** (matches
+the ICPC page's Tags→Rating order). Because Tags is now column 3 (not 4), the hide-tags toggle
+uses a CF-specific class `cf-tags-hidden` targeting `nth-child(3)` in `Codeforces.css` — the
+shared `ProblemSet.css .tags-hidden` rule targets column 4 and would otherwise hide Rating.
+Mobile `::before` labels updated to (3) Tags / (4) Rating.
+
+### Feedback → "Note & feedback" (personal note + optional flag), admin can view all
+
+Reframed feedback as a personal note that doubles as feedback, plus an admin all-notes view.
+
+**Backend:**
+- `auth.py`: admin is configured via the `ADMIN_USERNAMES` env var (comma-separated,
+  case-insensitive). `_is_admin(username)` feeds a new `is_admin` field on `/me`, `/login`,
+  `/signup`, and the `get_current_user` dict.
+- `feedback.py`: **category is now optional** — `PUT` accepts an empty category as long as the
+  comment is non-empty (400 only if both are empty); the comment-length cap is unchanged. New
+  **`GET /api/feedback/all/{problem_id}`** (admin-only, 403 otherwise) returns every user's
+  note for that problem (`username, category, comment, updated_at`, joined on `users`).
+- `FeedbackBody.category` default is `""`.
+
+**Frontend:**
+- `api.js`: `getAllFeedback(problemId)`.
+- `FeedbackModal.jsx`: title "Note & feedback"; a note-first layout ("Your note (private to
+  you)" textarea) with the category chips demoted to an optional "Flag" group (chips now
+  toggle off on re-click; Save is enabled when a note OR a flag is present; button reads
+  "Save"). When `isAdmin`, it loads `getAllFeedback(problem.id)` and renders an "All notes (N)"
+  list of every user's note below the editor. `+ .fb-all*` CSS.
+- `isAdmin` is threaded App → ProblemSet / Olympiad / Codeforces → FeedbackModal (from
+  `user.is_admin`).
+
+**Note on "viewing previous feedback":** the existing prefill path was actually working — the
+per-user feedback map is loaded once on mount (`useProblemActions`) and the modal prefills from
+it. (A confusing repro earlier was a test artifact: navigating to the same `#/hash` doesn't
+remount the SPA, so the map wasn't re-fetched after an out-of-band edit; a real reload prefills
+correctly.)
+
+### Deploy note
+
+Backend change — Render needs a redeploy **and** an `ADMIN_USERNAMES` env var (e.g. `Dedibeat`)
+for the admin view to work on the live site.
+
+### Verification
+
+- `npm run build` clean; `npm run lint` shows only the pre-existing `api.js` error.
+- Backend curls: non-admin `GET /all/{pid}` → 403; note-only `PUT` (no category) → 200;
+  empty note + empty category → 400; `is_admin` false for a non-listed user.
+- In the user's Chrome as admin `Dedi` (`ADMIN_USERNAMES=Dedi`): the CF table showed
+  Tags-then-Rating; opening feedback on `2240A` showed the "Note & feedback" modal prefilled
+  with the existing note + "Other" flag, and an "All notes (2)" section listing both `dedilocal`
+  (note only, no flag) and `Dedi` (Other).
+
 ### Verification
 
 - `npm run build` clean; `npm run lint` shows only the pre-existing `api.js` error.

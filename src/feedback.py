@@ -11,7 +11,7 @@ MAX_COMMENT_LEN = 500
 
 
 class FeedbackBody(BaseModel):
-    category: str
+    category: str = ""
     comment: str = ""
 
 
@@ -25,14 +25,35 @@ def list_feedback(user: dict = Depends(get_current_user)):
     return {str(pid): {"category": cat, "comment": com} for pid, cat, com in cur.fetchall()}
 
 
+@router.get("/all/{problem_id}")
+def list_all_feedback(problem_id: int, user: dict = Depends(get_current_user)):
+    if not user.get("is_admin"):
+        raise HTTPException(403, "Admin only")
+    cur = get_conn().cursor()
+    cur.execute(
+        """SELECT u.username, f.category, f.comment, f.updated_at
+           FROM problem_feedback f JOIN users u ON u.id = f.user_id
+           WHERE f.problem_id = ?
+           ORDER BY f.updated_at DESC""",
+        (problem_id,),
+    )
+    return [
+        {"username": un, "category": cat, "comment": com, "updated_at": ts}
+        for un, cat, com, ts in cur.fetchall()
+    ]
+
+
 @router.put("/{problem_id}")
 def upsert_feedback(
     problem_id: int,
     body: FeedbackBody,
     user: dict = Depends(get_current_user),
 ):
-    if body.category not in ALLOWED_CATEGORIES:
+    # Category is optional (a plain note is fine), but there must be some content.
+    if body.category and body.category not in ALLOWED_CATEGORIES:
         raise HTTPException(400, f"Invalid category: {body.category!r}")
+    if not body.category and not body.comment.strip():
+        raise HTTPException(400, "Note or category required")
     if len(body.comment) > MAX_COMMENT_LEN:
         raise HTTPException(400, f"Comment too long (max {MAX_COMMENT_LEN} chars)")
     conn = get_conn()

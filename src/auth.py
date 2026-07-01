@@ -14,6 +14,14 @@ JWT_SECRET = os.environ.get("JWT_SECRET", "dev-secret-change-me")
 JWT_ALG = "HS256"
 JWT_TTL_DAYS = 30
 
+ADMIN_USERNAMES = {
+    u.strip().lower() for u in os.environ.get("ADMIN_USERNAMES", "").split(",") if u.strip()
+}
+
+
+def _is_admin(username: str) -> bool:
+    return username.lower() in ADMIN_USERNAMES
+
 
 class Credentials(BaseModel):
     username: str
@@ -24,6 +32,7 @@ class UserOut(BaseModel):
     id: int
     username: str
     created_at: str
+    is_admin: bool = False
 
 
 def _make_token(user_id: int) -> str:
@@ -48,7 +57,7 @@ def get_current_user(authorization: str | None = Header(None)) -> dict:
     row = cur.fetchone()
     if not row:
         raise HTTPException(401, "User not found")
-    return {"id": row[0], "username": row[1], "created_at": row[2]}
+    return {"id": row[0], "username": row[1], "created_at": row[2], "is_admin": _is_admin(row[1])}
 
 
 @router.post("/signup")
@@ -73,7 +82,8 @@ def signup(body: Credentials):
     created_at = cur.fetchone()[0]
     return {
         "token": _make_token(user_id),
-        "user": {"id": user_id, "username": body.username, "created_at": created_at},
+        "user": {"id": user_id, "username": body.username, "created_at": created_at,
+                 "is_admin": _is_admin(body.username)},
     }
 
 
@@ -89,7 +99,8 @@ def login(body: Credentials):
         raise HTTPException(401, "Invalid credentials")
     return {
         "token": _make_token(row[0]),
-        "user": {"id": row[0], "username": body.username, "created_at": row[2]},
+        "user": {"id": row[0], "username": body.username, "created_at": row[2],
+                 "is_admin": _is_admin(body.username)},
     }
 
 

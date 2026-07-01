@@ -97,7 +97,7 @@ function Controls(props) {
   );
 }
 
-export default function Olympiad({ problems, setProblems, loaded }) {
+export default function Olympiad({ problems, setProblems, loaded, isAdmin }) {
   const [filter, setFilter] = useState("all");
   const [category, setCategory] = useState("all");
   const [technique, setTechnique] = useState("all");
@@ -268,6 +268,7 @@ export default function Olympiad({ problems, setProblems, loaded }) {
         <FeedbackModal
           problem={feedbackFor}
           existing={feedback[feedbackFor.id] || null}
+          isAdmin={isAdmin}
           onSubmit={submitFeedback}
           onDelete={deleteFeedback}
           onError={(err) => showToast(`Save failed: ${err.message}`, "error")}

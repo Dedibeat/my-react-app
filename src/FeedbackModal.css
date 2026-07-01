@@ -100,3 +100,49 @@
   .modal-actions .btn { min-height: 44px; }
   .chip { min-height: 38px; }
 }
+
+/* Admin: all users' notes on this problem */
+.fb-all {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border, #e5e7eb);
+}
+.fb-all-title {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+}
+.fb-all-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+.fb-all-item {
+  padding: 8px 10px;
+  background: var(--surface-2, #f7f7fb);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 8px;
+}
+.fb-all-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.fb-all-user { font-weight: 600; font-size: 0.85rem; }
+.fb-all-cat {
+  font-size: 0.72rem;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--accent-soft, #eef);
+  color: var(--accent, #4f46e5);
+}
+.fb-all-comment {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

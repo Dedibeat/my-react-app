@@ -252,15 +252,15 @@ export default function App() {
         <Routes>
           <Route
             path="/"
-            element={<ProblemSet problems={problems} setProblems={setProblems} loaded={loaded} />}
+            element={<ProblemSet problems={problems} setProblems={setProblems} loaded={loaded} isAdmin={user.is_admin} />}
           />
           <Route
             path="/olympiad"
-            element={<Olympiad problems={problems} setProblems={setProblems} loaded={loaded} />}
+            element={<Olympiad problems={problems} setProblems={setProblems} loaded={loaded} isAdmin={user.is_admin} />}
           />
           <Route
             path="/codeforces"
-            element={<Codeforces cfProblems={cfProblems} setCfProblems={setCfProblems} loaded={loaded} />}
+            element={<Codeforces cfProblems={cfProblems} setCfProblems={setCfProblems} loaded={loaded} isAdmin={user.is_admin} />}
           />
           <Route
             path="/profile"

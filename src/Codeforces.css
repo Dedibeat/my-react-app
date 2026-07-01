@@ -17,12 +17,19 @@
   width: 68px;
 }
 
+/* Hide-tags toggle: Tags is the 3rd column here (own class so the shared
+   ProblemSet.css .tags-hidden rule, which targets column 4, doesn't hit Rating). */
+#problemsTable.cf-table.cf-tags-hidden th:nth-child(3),
+#problemsTable.cf-table.cf-tags-hidden td:nth-child(3) {
+  display: none;
+}
+
 /* Mobile: relabel this table's cards (ProblemSet.css labels assume its own columns). */
 @media (max-width: 768px) {
   #problemsTable.cf-table tbody td:nth-child(1)::before { content: "Code"; }
   #problemsTable.cf-table tbody td:nth-child(2)::before { content: "Problem"; }
-  #problemsTable.cf-table tbody td:nth-child(3)::before { content: "Rating"; }
-  #problemsTable.cf-table tbody td:nth-child(4)::before { content: "Tags"; }
+  #problemsTable.cf-table tbody td:nth-child(3)::before { content: "Tags"; }
+  #problemsTable.cf-table tbody td:nth-child(4)::before { content: "Rating"; }
   #problemsTable.cf-table tbody td:nth-child(5)::before { content: "Status"; }
   #problemsTable.cf-table tbody td:nth-child(6)::before { content: "Feedback"; }
 }

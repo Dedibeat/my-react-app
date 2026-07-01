@@ -88,7 +88,7 @@ function Controls(props) {
   );
 }
 
-export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
+export default function Codeforces({ cfProblems, setCfProblems, loaded, isAdmin }) {
   const [showTag, setShowTag] = useState(true);
   const [filter, setFilter] = useState("all");
   const [tag, setTag] = useState("all");
@@ -192,13 +192,13 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
               Showing first {RENDER_CAP} of {visible.length} — refine filters or search to narrow the list.
             </div>
           )}
-          <table id="problemsTable" className={`cf-table ${showTag ? "" : "tags-hidden"}`} aria-describedby="summary">
+          <table id="problemsTable" className={`cf-table ${showTag ? "" : "cf-tags-hidden"}`} aria-describedby="summary">
             <thead>
               <tr>
                 <th style={{ width: 80 }}>Code</th>
                 <th>Problem</th>
-                <th>Rating</th>
                 <th>Tags</th>
+                <th>Rating</th>
                 <th style={{ width: 180 }} title="Click a cell to edit">Status</th>
                 <th style={{ width: 44 }} aria-label="Feedback" />
               </tr>
@@ -215,7 +215,6 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
                   <td>
                     <a className="problem-link" href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>
                   </td>
-                  <td><RatingBadge rating={p.rating} /></td>
                   <td>
                     <div className="tags">
                       {p.tagList.map((t, i) => (
@@ -223,6 +222,7 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
                       ))}
                     </div>
                   </td>
+                  <td><RatingBadge rating={p.rating} /></td>
                   <td className="cell-status">
                     <StatusEditor
                       value={p.status}
@@ -250,6 +250,7 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
         <FeedbackModal
           problem={feedbackFor}
           existing={feedback[feedbackFor.id] || null}
+          isAdmin={isAdmin}
           onSubmit={submitFeedback}
           onDelete={deleteFeedback}
           onError={(err) => showToast(`Save failed: ${err.message}`, "error")}

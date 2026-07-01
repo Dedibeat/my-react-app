@@ -256,7 +256,7 @@ function ProblemsTable({ showTag, problems, updateStatus, justSolved, feedback, 
   );
 }
 
-export default function ProblemSet({ problems, setProblems, loaded }) {
+export default function ProblemSet({ problems, setProblems, loaded, isAdmin }) {
   const [showTag, setShowTag] = useState(false);
   const [filter, setFilter] = useState("all");
   const [sort, setSort] = useState("rating_desc");
@@ -383,6 +383,7 @@ export default function ProblemSet({ problems, setProblems, loaded }) {
         <FeedbackModal
           problem={feedbackFor}
           existing={feedback[feedbackFor.id] || null}
+          isAdmin={isAdmin}
           onSubmit={submitFeedback}
           onDelete={deleteFeedback}
           onError={(err) => showToast(`Save failed: ${err.message}`, "error")}

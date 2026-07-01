@@ -60,6 +60,9 @@ export const api = {
   async getFeedback() {
     return request("/api/feedback");
   },
+  async getAllFeedback(problemId) {
+    return request(`/api/feedback/all/${encodeURIComponent(problemId)}`);
+  },
   async setFeedback(problemId, category, comment) {
     return request(`/api/feedback/${encodeURIComponent(problemId)}`, {
       method: "PUT",
