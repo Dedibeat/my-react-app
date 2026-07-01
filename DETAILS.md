@@ -910,3 +910,89 @@ instead of hidden. Three one-line changes in `src/ProblemSet.jsx`:
 - The `reset` button's `disabled` (at-default) check flipped to `&& includeUnrated`.
 
 `npm run build` clean.
+
+---
+
+## Codeforces page (new `#/codeforces` route) — this session
+
+A third section alongside ICPC (`/`) and Olympiad (`/olympiad`): the full **rated**
+Codeforces problemset, with the same per-problem features (rating, native tags, status
+tracking, feedback). Data comes from a static file the same way ICPC/Olympiad data does —
+a small pull script generates `data/codeforces.json` from the CF API, and Vite serves it
+via `publicDir: 'data'`. No live browser fetch of the CF API (avoids CORS and re-loading
+~11k problems on every visit).
+
+### Scope decisions (asked the user)
+
+- **Rated problems only, re-runnable to sync with CF.** The pull script fetches the live
+  `problemset.problems` API each run and regenerates the file, so re-running it tracks the
+  current CF problemset. At time of writing: 10,993 rated problems (the API returns 11,276
+  total; 283 unrated are dropped).
+- **Render cap of 500 rows.** The table renders only the first 500 of the
+  filtered/sorted list (`RENDER_CAP` in `Codeforces.jsx`), with a
+  `.table-note` line "Showing first N of M — refine filters…" when the filtered set is
+  larger. Dependency-free; keeps the page snappy at 11k problems without a windowing
+  library. The progress card's "N shown" still reflects the full filtered count.
+
+### Problem-id mapping (backend untouched)
+
+Status/feedback are keyed on an **integer** `problem_id` (DB columns in `db.py`, `int` path
+params in `status.py`/`feedback.py`). CF problems are identified by `contestId + index`
+(e.g. `1234A`), so each is mapped to a **stable integer**:
+
+    id = contestId * 100000 + index_int(index)
+
+`index_int` packs the letter+digit index into a value < 100000 (`A → 100`, `C2 → 302`,
+`D10 → 410`), so the map is **injective** (contestId and index are recoverable) and every id
+lands **far above the ICPC id range (~6k–15k)** — the smallest CF id is 100100. That means
+CF and ICPC share the backend's integer key with **zero collisions and no backend change**.
+Chose this over switching the DB column to TEXT because that would be a risky migration on
+the live Turso DB (existing integer-typed rows wouldn't compare cleanly against new string
+keys) and would violate the surgical-changes rule. Verified end-to-end: marking CF `750H`
+AC persisted under id `75000800` via the unmodified `PUT /api/status/{problem_id}`.
+
+### Files added
+
+- **`scripts/pull_codeforces.py`** (stdlib only, style matches `db.py`): fetches the CF API,
+  keeps rated problems, writes `data/codeforces.json` as a compact array of
+  `{ id, code, name, rating, tags, url }`. `code` is the human CF shorthand (`750H`); `url`
+  is the `problemset/problem/{contestId}/{index}` link. Re-run with
+  `python3 scripts/pull_codeforces.py` to sync.
+- **`data/codeforces.json`** (~1.9 MB, 10,993 problems). Served at `/codeforces.json`.
+- **`src/Codeforces.jsx`**: the page, a lean mirror of `ProblemSet.jsx`. Reuses
+  `useProblemActions` (status/AC-celebration/feedback/toasts), the `problemUI.jsx`
+  components (`ProgressSummary`, `RatingBadge` + its CF-tier `cfColor`, `StatusEditor`,
+  `FeedbackButton`), `FeedbackModal`, and the boolean search from `search.js`. Controls:
+  Quick filter, **Tag** select (built from the union of CF tags), Sort (Rating ↓ default /
+  Rating ↑ / Code ↑), Search (hay = name + code + tags), Show/Hide tags. Columns: **Code,
+  Problem, Rating, Tags, Status, Feedback** — Tags is deliberately the 4th column so the
+  existing `.tags-hidden th/td:nth-child(4)` rule works unchanged.
+- **`src/Codeforces.css`**: `.table-note` styling + mobile `::before` card labels scoped to
+  `#problemsTable.cf-table` (same override pattern Olympiad uses, since `ProblemSet.css`'s
+  labels assume its own column order).
+
+### Files changed
+
+- **`src/App.jsx`**: new `cfProblems`/`setCfProblems` state (reset on logout); the load
+  effect fetches `/codeforces.json` alongside `tagged.json`/`problem_rating.json`/status and
+  builds the flat CF list (applying the same `statusMap` so CF statuses hydrate on load);
+  a `Codeforces` NavLink tab and a `/codeforces` route. `contest` is set to `Codeforces
+  {code}` on each CF problem so `FeedbackModal`'s `name · contest` subtitle renders.
+
+### Not done (out of scope)
+
+- The **Profile** page aggregates only the ICPC `problems` array, so CF solves don't appear
+  in its stats/heatmap. Left as-is — wiring CF into the profile wasn't requested.
+- No `public/codeforces.json` mirror (Vite serves `data/`, and `problem_rating.json`
+  already lives only in `data/`).
+
+### Verification
+
+- `npm run build` clean; `dist/codeforces.json` present (1.9 MB). `npm run lint` shows only
+  the pre-existing `api.js` `no-empty` error.
+- Headless Chrome (puppeteer-core, system Chrome) against local uvicorn (`verify.db`
+  sqlite) + Vite with `VITE_API_BASE` pointed at it: signed up, opened the **Codeforces**
+  tab → 500 rows rendered with the "Showing first 500 of 10993" note and "10993 shown"
+  summary; first row (Rating ↓ default) `750H` / 3500 / 4 tags; marking it AC fired confetti
+  + "Solved!" toast + progress 0→1; **zero console errors**; and `GET /api/status` confirmed
+  the AC persisted under integer id `75000800`.

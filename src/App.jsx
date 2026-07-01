@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route, Link, NavLink, Navigate } from 'react-router
 import './App.css';
 import ProblemSet from './ProblemSet.jsx';
 import Olympiad from './Olympiad.jsx';
+import Codeforces from './Codeforces.jsx';
 import Profile from './Profile.jsx';
 import { api, getToken, setToken } from './api.js';
 
@@ -59,6 +60,7 @@ export default function App() {
   const [authError, setAuthError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [problems, setProblems] = useState([]);
+  const [cfProblems, setCfProblems] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -70,12 +72,13 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (!user) { setProblems([]); setLoaded(false); return; }
+    if (!user) { setProblems([]); setCfProblems([]); setLoaded(false); return; }
     let cancelled = false;
     async function load() {
-      const [dataset, ratings, statusMap] = await Promise.all([
+      const [dataset, ratings, cf, statusMap] = await Promise.all([
         fetch("/tagged.json").then((r) => r.json()),
         fetch("/problem_rating.json").then((r) => r.json()),
+        fetch("/codeforces.json").then((r) => r.json()),
         api.getStatus().catch(() => ({})),
       ]);
       if (cancelled) return;
@@ -88,7 +91,23 @@ export default function App() {
         p.statusUpdatedAt = s?.updated_at || null;
         p.rating = ratingMap[p.id] ?? null;
       }
+      const cfFlat = cf.map((p) => {
+        const s = statusMap[String(p.id)];
+        return {
+          id: String(p.id),
+          code: p.code,
+          contest: `Codeforces ${p.code}`,
+          name: p.name,
+          rating: p.rating,
+          tags: p.tags.join(', '),
+          tagList: p.tags,
+          url: p.url,
+          status: s?.status || "",
+          statusUpdatedAt: s?.updated_at || null,
+        };
+      });
       setProblems(flat);
+      setCfProblems(cfFlat);
       setLoaded(true);
     }
     load();
@@ -183,6 +202,7 @@ export default function App() {
           <nav className="app-nav">
             <NavLink to="/" end className="nav-tab">Problem Set</NavLink>
             <NavLink to="/olympiad" className="nav-tab">Olympiad</NavLink>
+            <NavLink to="/codeforces" className="nav-tab">Codeforces</NavLink>
           </nav>
           <div className="user-area">
             <Link to="/profile" className="user-chip" title="Your profile">
@@ -200,6 +220,10 @@ export default function App() {
           <Route
             path="/olympiad"
             element={<Olympiad problems={problems} setProblems={setProblems} loaded={loaded} />}
+          />
+          <Route
+            path="/codeforces"
+            element={<Codeforces cfProblems={cfProblems} setCfProblems={setCfProblems} loaded={loaded} />}
           />
           <Route
             path="/profile"

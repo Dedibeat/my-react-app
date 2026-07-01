@@ -1,0 +1,19 @@
+/* Codeforces page — native CF tags + rating.
+   Shares table/controls/status styling with ProblemSet.css. */
+
+.table-note {
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  color: var(--muted, #6b7280);
+  border-bottom: 1px solid var(--border, #e5e7eb);
+}
+
+/* Mobile: relabel this table's cards (ProblemSet.css labels assume its own columns). */
+@media (max-width: 768px) {
+  #problemsTable.cf-table tbody td:nth-child(1)::before { content: "Code"; }
+  #problemsTable.cf-table tbody td:nth-child(2)::before { content: "Problem"; }
+  #problemsTable.cf-table tbody td:nth-child(3)::before { content: "Rating"; }
+  #problemsTable.cf-table tbody td:nth-child(4)::before { content: "Tags"; }
+  #problemsTable.cf-table tbody td:nth-child(5)::before { content: "Status"; }
+  #problemsTable.cf-table tbody td:nth-child(6)::before { content: "Feedback"; }
+}
