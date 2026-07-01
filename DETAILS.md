@@ -1051,6 +1051,24 @@ the public CF handle — no CF password/credentials.
 `cf-sync` is a **backend** change — it must be redeployed to Render for the live site to
 have the endpoint. Frontend-only hosts (GH Pages / Vercel) just need the rebuilt bundle.
 
+---
+
+## Codeforces rating filter (this session)
+
+A **Rating: [min] – [max]** filter on the Codeforces page — two `<select>`s (matching the
+app's other select-based controls; simpler than the ICPC importance dual-slider). Frontend
+only, all in `src/Codeforces.jsx` (+ a 4-line `.rating-filter` CSS rule).
+
+- `ratingOptions` is a `useMemo` over `cfProblems`: every 100-step from the dataset's min to
+  max rating (currently 800…3500). Both dropdowns start at "Any" (`null` = unbounded), so
+  the timing of the async data load doesn't matter.
+- Filter predicate in the existing `visible` memo: keep `p` iff
+  `(ratingMin == null || p.rating >= ratingMin) && (ratingMax == null || p.rating <= ratingMax)`.
+  Added `ratingMin`/`ratingMax` to the memo deps. Min/max are independent (picking min > max
+  just yields the empty-state row).
+- Verified in the user's Chrome: 1900–2100 → "1476 shown" (from 10993), every rendered row
+  within range.
+
 ### Verification
 
 - `npm run build` clean; `npm run lint` shows only the pre-existing `api.js` error.

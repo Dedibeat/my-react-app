@@ -14,6 +14,7 @@ function Controls(props) {
     showTag, setShowTag,
     filter, setFilter,
     tag, setTag, tags,
+    ratingMin, setRatingMin, ratingMax, setRatingMax, ratingOptions,
     sort, setSort,
     searchInput, setSearchInput, onCommitSearch,
     handle, setHandle, onSync, syncing,
@@ -53,6 +54,31 @@ function Controls(props) {
           <option value="all">All</option>
           {tags.map((t) => (
             <option key={t} value={t}>{t}</option>
+          ))}
+        </select>
+      </label>
+
+      <label className="rating-filter">
+        Rating:
+        <select
+          className="inline-select"
+          value={ratingMin ?? ""}
+          onChange={(e) => setRatingMin(e.target.value ? Number(e.target.value) : null)}
+        >
+          <option value="">Any</option>
+          {ratingOptions.map((r) => (
+            <option key={r} value={r}>{r}</option>
+          ))}
+        </select>
+        <span className="rating-dash">–</span>
+        <select
+          className="inline-select"
+          value={ratingMax ?? ""}
+          onChange={(e) => setRatingMax(e.target.value ? Number(e.target.value) : null)}
+        >
+          <option value="">Any</option>
+          {ratingOptions.map((r) => (
+            <option key={r} value={r}>{r}</option>
           ))}
         </select>
       </label>
@@ -97,6 +123,8 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
   const [showTag, setShowTag] = useState(true);
   const [filter, setFilter] = useState("all");
   const [tag, setTag] = useState("all");
+  const [ratingMin, setRatingMin] = useState(null);
+  const [ratingMax, setRatingMax] = useState(null);
   const [sort, setSort] = useState("rating_desc");
   const [searchInput, setSearchInput] = useState("");
   const [committedSearch, setCommittedSearch] = useState("");
@@ -142,6 +170,19 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
     return Array.from(set).sort();
   }, [cfProblems]);
 
+  // Rating dropdown options: every 100-step from the dataset's min to max rating.
+  const ratingOptions = useMemo(() => {
+    let lo = Infinity, hi = -Infinity;
+    for (const p of cfProblems) {
+      if (p.rating < lo) lo = p.rating;
+      if (p.rating > hi) hi = p.rating;
+    }
+    if (lo === Infinity) return [];
+    const opts = [];
+    for (let r = Math.floor(lo / 100) * 100; r <= hi; r += 100) opts.push(r);
+    return opts;
+  }, [cfProblems]);
+
   const searchAst = useMemo(() => {
     if (!committedSearch.trim()) return null;
     try { return parseSearch(committedSearch); }
@@ -153,6 +194,13 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
 
     if (tag !== "all") {
       list = list.filter((p) => p.tagList.includes(tag));
+    }
+
+    if (ratingMin != null) {
+      list = list.filter((p) => p.rating >= ratingMin);
+    }
+    if (ratingMax != null) {
+      list = list.filter((p) => p.rating <= ratingMax);
     }
 
     if (filter === "solved") {
@@ -177,7 +225,7 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
       sorted.sort((a, b) => Number(a.id) - Number(b.id));
     }
     return sorted;
-  }, [cfProblems, filter, tag, sort, searchAst]);
+  }, [cfProblems, filter, tag, ratingMin, ratingMax, sort, searchAst]);
 
   const capped = visible.slice(0, RENDER_CAP);
 
@@ -197,6 +245,11 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
         tag={tag}
         setTag={setTag}
         tags={tags}
+        ratingMin={ratingMin}
+        setRatingMin={setRatingMin}
+        ratingMax={ratingMax}
+        setRatingMax={setRatingMax}
+        ratingOptions={ratingOptions}
         sort={sort}
         setSort={setSort}
         searchInput={searchInput}

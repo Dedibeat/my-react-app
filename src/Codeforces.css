@@ -20,6 +20,11 @@
   min-width: 180px;
 }
 
+.rating-filter .rating-dash {
+  margin: 0 2px;
+  color: var(--muted, #6b7280);
+}
+
 /* Mobile: relabel this table's cards (ProblemSet.css labels assume its own columns). */
 @media (max-width: 768px) {
   #problemsTable.cf-table tbody td:nth-child(1)::before { content: "Code"; }
