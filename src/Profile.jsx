@@ -198,7 +198,7 @@ function relativeTime(date) {
   return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
-export default function Profile({ user, problems, loaded }) {
+export default function Profile({ user, problems, loaded, cfHandle, setCfHandle, onCfSync, cfSyncing, cfSyncMsg }) {
   const stats = useMemo(() => {
     const total = problems.length;
     let solved = 0;
@@ -243,6 +243,27 @@ export default function Profile({ user, problems, loaded }) {
             {joined ? `Joined ${joined}` : 'Member'} · {stats.solved} solved
           </p>
         </div>
+      </div>
+
+      <div className="profile-card cf-connect">
+        <h3 className="profile-card-title">Codeforces</h3>
+        <p className="muted">
+          Link your handle to import solved &amp; attempted problems. Syncs automatically on load.
+        </p>
+        <div className="cf-connect-row">
+          <input
+            type="text"
+            className="cf-handle-input"
+            placeholder="your handle"
+            value={cfHandle}
+            onChange={(e) => setCfHandle(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') onCfSync(); }}
+          />
+          <button type="button" className="btn btn-primary" onClick={onCfSync} disabled={cfSyncing}>
+            {cfSyncing ? 'Syncing…' : 'Sync now'}
+          </button>
+        </div>
+        {cfSyncMsg && <p className="muted cf-sync-msg">{cfSyncMsg}</p>}
       </div>
 
       <ActivityHeatmap problems={problems} />

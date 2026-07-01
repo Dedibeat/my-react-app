@@ -1069,6 +1069,52 @@ only, all in `src/Codeforces.jsx` (+ a 4-line `.rating-filter` CSS rule).
 - Verified in the user's Chrome: 1900–2100 → "1476 shown" (from 10993), every rendered row
   within range.
 
+---
+
+## Codeforces page: auto-sort, typable rating, handle→profile, auto-sync (this session)
+
+Four related changes to the Codeforces flow.
+
+### 1. Fixed newest-first sort, no sort options
+
+The Sort dropdown (and `sort` state) is removed from the CF page. The list is always sorted
+**newest-first** using `contestId` (= `id / 100000`) descending as the release-date proxy —
+`problemset.problems` carries no contest date, and CF assigns contestIds in increasing time
+order — with `index` ascending as the within-contest tiebreak (A before B). Verified: top
+rows `2240A, 2240B, 2239A, …`.
+
+### 2. Rating filter is typable
+
+The two rating `<select>`s became `<input type="number" step="100">` (min / max
+placeholders); the `ratingOptions` memo is gone. Empty = unbounded (`null`); the filter
+predicate is unchanged. New `.rating-input` CSS (68px); the now-unused `.cf-sync*` CSS was
+removed.
+
+### 3. CF handle + sync moved to the Profile page
+
+The handle input and sync button were removed from the CF controls bar and now live in a new
+**Codeforces** card on the Profile page (`src/Profile.jsx` + `.cf-connect*` CSS). The handle
+still persists in `localStorage["pset.cfHandle"]`.
+
+### 4. Automatic sync
+
+- **`src/App.jsx`**: a module-level `applyCfSync(handle, setCfProblems)` helper
+  (`api.cfSync` → re-read `GET /api/status` → re-apply to `cfProblems`). The dataset load
+  effect calls it automatically at the end when a handle is saved (errors swallowed). A
+  `runCfSync()` wrapper (with `cfSyncing`/`cfSyncMsg` state) backs the Profile "Sync now"
+  button for on-demand re-sync. `cfHandle`/`setCfHandle`/`onCfSync`/`cfSyncing`/`cfSyncMsg`
+  are passed to `Profile`.
+- Because sync is centralized in App and writes go through shared `cfProblems` state, both
+  the Codeforces table and (its own) progress update after any sync.
+
+### Verification
+
+- `npm run build` clean; `npm run lint` shows only the pre-existing `api.js` error.
+- In the user's Chrome (local uvicorn + Vite): reloading with `Dedibeat` saved auto-synced on
+  load — CF progress showed **700 / 10993** with no click; controls were just Quick
+  filter / Tag / Rating / Search (no Sort); rating inputs were `type=number`; rows sorted
+  newest-first; and the Profile **Codeforces** card showed the pre-filled handle + "Sync now".
+
 ### Verification
 
 - `npm run build` clean; `npm run lint` shows only the pre-existing `api.js` error.

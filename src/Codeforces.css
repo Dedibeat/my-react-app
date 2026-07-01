@@ -8,21 +8,13 @@
   border-bottom: 1px solid var(--border, #e5e7eb);
 }
 
-/* Codeforces submission sync — its own row at the top of the controls bar. */
-.cf-sync {
-  flex-basis: 100%;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.cf-sync-input {
-  min-width: 180px;
-}
-
 .rating-filter .rating-dash {
   margin: 0 2px;
   color: var(--muted, #6b7280);
+}
+
+.rating-input {
+  width: 68px;
 }
 
 /* Mobile: relabel this table's cards (ProblemSet.css labels assume its own columns). */

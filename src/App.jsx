@@ -51,6 +51,18 @@ function flattenContests(contests) {
   return out;
 }
 
+// Import the user's Codeforces solve/attempt history, then re-read statuses so
+// cfProblems reflects exactly what the backend wrote (it preserves existing AC/NI).
+async function applyCfSync(handle, setCfProblems) {
+  const { solved, attempted } = await api.cfSync(handle);
+  const fresh = await api.getStatus();
+  setCfProblems((cur) => cur.map((p) => {
+    const s = fresh[p.id];
+    return { ...p, status: s?.status || "", statusUpdatedAt: s?.updated_at || null };
+  }));
+  return { solved, attempted };
+}
+
 export default function App() {
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
@@ -62,6 +74,9 @@ export default function App() {
   const [problems, setProblems] = useState([]);
   const [cfProblems, setCfProblems] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [cfHandle, setCfHandle] = useState(() => localStorage.getItem("pset.cfHandle") || "");
+  const [cfSyncing, setCfSyncing] = useState(false);
+  const [cfSyncMsg, setCfSyncMsg] = useState("");
 
   useEffect(() => {
     if (!getToken()) { setAuthLoading(false); return; }
@@ -109,10 +124,32 @@ export default function App() {
       setProblems(flat);
       setCfProblems(cfFlat);
       setLoaded(true);
+
+      // Auto-sync Codeforces statuses on load if a handle is saved.
+      const savedHandle = localStorage.getItem("pset.cfHandle");
+      if (savedHandle) {
+        try { await applyCfSync(savedHandle, setCfProblems); } catch { /* ignore auto-sync errors */ }
+      }
     }
     load();
     return () => { cancelled = true; };
   }, [user]);
+
+  async function runCfSync() {
+    const h = cfHandle.trim();
+    if (!h) return;
+    localStorage.setItem("pset.cfHandle", h);
+    setCfSyncing(true);
+    setCfSyncMsg("");
+    try {
+      const { solved, attempted } = await applyCfSync(h, setCfProblems);
+      setCfSyncMsg(`Synced ${solved} solved, ${attempted} attempted`);
+    } catch (err) {
+      setCfSyncMsg(`Sync failed: ${err.message}`);
+    } finally {
+      setCfSyncing(false);
+    }
+  }
 
   async function submit(e) {
     e.preventDefault();
@@ -227,7 +264,18 @@ export default function App() {
           />
           <Route
             path="/profile"
-            element={<Profile user={user} problems={problems} loaded={loaded} />}
+            element={
+              <Profile
+                user={user}
+                problems={problems}
+                loaded={loaded}
+                cfHandle={cfHandle}
+                setCfHandle={setCfHandle}
+                onCfSync={runCfSync}
+                cfSyncing={cfSyncing}
+                cfSyncMsg={cfSyncMsg}
+              />
+            }
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

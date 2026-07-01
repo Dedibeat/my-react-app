@@ -2,7 +2,6 @@ import { useState, useMemo } from 'react';
 import './ProblemSet.css';
 import './Codeforces.css';
 import { parseSearch, evalSearchAst } from './search.js';
-import { api } from './api.js';
 import FeedbackModal from './FeedbackModal.jsx';
 import { ProgressSummary, RatingBadge, StatusEditor, FeedbackButton } from './problemUI.jsx';
 import { useProblemActions } from './useProblemActions.js';
@@ -14,30 +13,11 @@ function Controls(props) {
     showTag, setShowTag,
     filter, setFilter,
     tag, setTag, tags,
-    ratingMin, setRatingMin, ratingMax, setRatingMax, ratingOptions,
-    sort, setSort,
+    ratingMin, setRatingMin, ratingMax, setRatingMax,
     searchInput, setSearchInput, onCommitSearch,
-    handle, setHandle, onSync, syncing,
   } = props;
   return (
     <div className="controls">
-      <div className="cf-sync">
-        <label>
-          CF handle:
-          <input
-            type="text"
-            className="cf-sync-input"
-            placeholder="your handle"
-            value={handle}
-            onChange={(e) => setHandle(e.target.value)}
-            onKeyDown={(e) => { if (e.key === 'Enter') onSync(); }}
-          />
-        </label>
-        <button type="button" className="btn btn-primary" onClick={onSync} disabled={syncing}>
-          {syncing ? 'Syncing…' : 'Sync from Codeforces'}
-        </button>
-      </div>
-
       <label>
         Quick filter:
         <select className="inline-select" value={filter} onChange={(e) => setFilter(e.target.value)}>
@@ -60,36 +40,25 @@ function Controls(props) {
 
       <label className="rating-filter">
         Rating:
-        <select
-          className="inline-select"
+        <input
+          type="number"
+          className="rating-input"
+          placeholder="min"
+          min={0}
+          step={100}
           value={ratingMin ?? ""}
           onChange={(e) => setRatingMin(e.target.value ? Number(e.target.value) : null)}
-        >
-          <option value="">Any</option>
-          {ratingOptions.map((r) => (
-            <option key={r} value={r}>{r}</option>
-          ))}
-        </select>
+        />
         <span className="rating-dash">–</span>
-        <select
-          className="inline-select"
+        <input
+          type="number"
+          className="rating-input"
+          placeholder="max"
+          min={0}
+          step={100}
           value={ratingMax ?? ""}
           onChange={(e) => setRatingMax(e.target.value ? Number(e.target.value) : null)}
-        >
-          <option value="">Any</option>
-          {ratingOptions.map((r) => (
-            <option key={r} value={r}>{r}</option>
-          ))}
-        </select>
-      </label>
-
-      <label>
-        Sort by:
-        <select className="inline-select" value={sort} onChange={(e) => setSort(e.target.value)}>
-          <option value="rating_desc">Rating ↓</option>
-          <option value="rating_asc">Rating ↑</option>
-          <option value="code_asc">Code ↑</option>
-        </select>
+        />
       </label>
 
       <label>
@@ -125,39 +94,14 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
   const [tag, setTag] = useState("all");
   const [ratingMin, setRatingMin] = useState(null);
   const [ratingMax, setRatingMax] = useState(null);
-  const [sort, setSort] = useState("rating_desc");
   const [searchInput, setSearchInput] = useState("");
   const [committedSearch, setCommittedSearch] = useState("");
-  const [handle, setHandle] = useState(() => localStorage.getItem("pset.cfHandle") || "");
-  const [syncing, setSyncing] = useState(false);
 
   const {
     feedback, feedbackFor, setFeedbackFor,
     toast, justSolved,
     updateStatus, submitFeedback, deleteFeedback, showToast,
   } = useProblemActions(cfProblems, setCfProblems);
-
-  async function syncFromCodeforces() {
-    const h = handle.trim();
-    if (!h) return;
-    localStorage.setItem("pset.cfHandle", h);
-    setSyncing(true);
-    try {
-      const { solved, attempted } = await api.cfSync(h);
-      // Re-read statuses from the server so the table matches the DB exactly
-      // (the backend keeps existing AC/NI, so this reflects what was actually written).
-      const statusMap = await api.getStatus();
-      setCfProblems((cur) => cur.map((p) => {
-        const s = statusMap[p.id];
-        return { ...p, status: s?.status || "", statusUpdatedAt: s?.updated_at || null };
-      }));
-      showToast(`Synced from CF: ${solved} solved, ${attempted} attempted`, "success");
-    } catch (err) {
-      showToast(`Sync failed: ${err.message}`, "error");
-    } finally {
-      setSyncing(false);
-    }
-  }
 
   const solvedCount = useMemo(
     () => cfProblems.reduce((n, p) => n + (p.status === "AC" ? 1 : 0), 0),
@@ -168,19 +112,6 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
     const set = new Set();
     for (const p of cfProblems) for (const t of p.tagList) set.add(t);
     return Array.from(set).sort();
-  }, [cfProblems]);
-
-  // Rating dropdown options: every 100-step from the dataset's min to max rating.
-  const ratingOptions = useMemo(() => {
-    let lo = Infinity, hi = -Infinity;
-    for (const p of cfProblems) {
-      if (p.rating < lo) lo = p.rating;
-      if (p.rating > hi) hi = p.rating;
-    }
-    if (lo === Infinity) return [];
-    const opts = [];
-    for (let r = Math.floor(lo / 100) * 100; r <= hi; r += 100) opts.push(r);
-    return opts;
   }, [cfProblems]);
 
   const searchAst = useMemo(() => {
@@ -216,16 +147,17 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
       list = list.filter((p) => evalSearchAst(searchAst, hay(p)));
     }
 
+    // Always newest-first: contestId (= id / 100000) descending is the release-date
+    // proxy; within a contest, index ascending (A before B).
     const sorted = list.slice();
-    if (sort === "rating_desc") {
-      sorted.sort((a, b) => b.rating - a.rating);
-    } else if (sort === "rating_asc") {
-      sorted.sort((a, b) => a.rating - b.rating);
-    } else if (sort === "code_asc") {
-      sorted.sort((a, b) => Number(a.id) - Number(b.id));
-    }
+    sorted.sort((a, b) => {
+      const ca = Math.floor(Number(a.id) / 100000);
+      const cb = Math.floor(Number(b.id) / 100000);
+      if (cb !== ca) return cb - ca;
+      return (Number(a.id) % 100000) - (Number(b.id) % 100000);
+    });
     return sorted;
-  }, [cfProblems, filter, tag, ratingMin, ratingMax, sort, searchAst]);
+  }, [cfProblems, filter, tag, ratingMin, ratingMax, searchAst]);
 
   const capped = visible.slice(0, RENDER_CAP);
 
@@ -249,16 +181,9 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
         setRatingMin={setRatingMin}
         ratingMax={ratingMax}
         setRatingMax={setRatingMax}
-        ratingOptions={ratingOptions}
-        sort={sort}
-        setSort={setSort}
         searchInput={searchInput}
         setSearchInput={setSearchInput}
         onCommitSearch={() => setCommittedSearch(searchInput)}
-        handle={handle}
-        setHandle={setHandle}
-        onSync={syncFromCodeforces}
-        syncing={syncing}
       />
       {loaded ? (
         <div className="table-card">
