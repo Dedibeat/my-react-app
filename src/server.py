@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from src.auth import router as auth_router
+from src.cf_sync import router as cf_sync_router
 from src.db import get_conn
 from src.feedback import router as feedback_router
 from src.status import router as status_router
@@ -27,6 +28,7 @@ app.add_middleware(
 app.include_router(auth_router)
 app.include_router(status_router)
 app.include_router(feedback_router)
+app.include_router(cf_sync_router)
 
 
 @app.on_event("startup")

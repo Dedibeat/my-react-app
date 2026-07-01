@@ -69,4 +69,10 @@ export const api = {
   async deleteFeedback(problemId) {
     return request(`/api/feedback/${encodeURIComponent(problemId)}`, { method: "DELETE" });
   },
+  async cfSync(handle) {
+    return request("/api/cf-sync", {
+      method: "POST",
+      body: JSON.stringify({ handle }),
+    });
+  },
 };

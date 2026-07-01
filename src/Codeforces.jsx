@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import './ProblemSet.css';
 import './Codeforces.css';
 import { parseSearch, evalSearchAst } from './search.js';
+import { api } from './api.js';
 import FeedbackModal from './FeedbackModal.jsx';
 import { ProgressSummary, RatingBadge, StatusEditor, FeedbackButton } from './problemUI.jsx';
 import { useProblemActions } from './useProblemActions.js';
@@ -15,9 +16,27 @@ function Controls(props) {
     tag, setTag, tags,
     sort, setSort,
     searchInput, setSearchInput, onCommitSearch,
+    handle, setHandle, onSync, syncing,
   } = props;
   return (
     <div className="controls">
+      <div className="cf-sync">
+        <label>
+          CF handle:
+          <input
+            type="text"
+            className="cf-sync-input"
+            placeholder="your handle"
+            value={handle}
+            onChange={(e) => setHandle(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') onSync(); }}
+          />
+        </label>
+        <button type="button" className="btn btn-primary" onClick={onSync} disabled={syncing}>
+          {syncing ? 'Syncing…' : 'Sync from Codeforces'}
+        </button>
+      </div>
+
       <label>
         Quick filter:
         <select className="inline-select" value={filter} onChange={(e) => setFilter(e.target.value)}>
@@ -81,12 +100,36 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
   const [sort, setSort] = useState("rating_desc");
   const [searchInput, setSearchInput] = useState("");
   const [committedSearch, setCommittedSearch] = useState("");
+  const [handle, setHandle] = useState(() => localStorage.getItem("pset.cfHandle") || "");
+  const [syncing, setSyncing] = useState(false);
 
   const {
     feedback, feedbackFor, setFeedbackFor,
     toast, justSolved,
     updateStatus, submitFeedback, deleteFeedback, showToast,
   } = useProblemActions(cfProblems, setCfProblems);
+
+  async function syncFromCodeforces() {
+    const h = handle.trim();
+    if (!h) return;
+    localStorage.setItem("pset.cfHandle", h);
+    setSyncing(true);
+    try {
+      const { solved, attempted } = await api.cfSync(h);
+      // Re-read statuses from the server so the table matches the DB exactly
+      // (the backend keeps existing AC/NI, so this reflects what was actually written).
+      const statusMap = await api.getStatus();
+      setCfProblems((cur) => cur.map((p) => {
+        const s = statusMap[p.id];
+        return { ...p, status: s?.status || "", statusUpdatedAt: s?.updated_at || null };
+      }));
+      showToast(`Synced from CF: ${solved} solved, ${attempted} attempted`, "success");
+    } catch (err) {
+      showToast(`Sync failed: ${err.message}`, "error");
+    } finally {
+      setSyncing(false);
+    }
+  }
 
   const solvedCount = useMemo(
     () => cfProblems.reduce((n, p) => n + (p.status === "AC" ? 1 : 0), 0),
@@ -159,6 +202,10 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded }) {
         searchInput={searchInput}
         setSearchInput={setSearchInput}
         onCommitSearch={() => setCommittedSearch(searchInput)}
+        handle={handle}
+        setHandle={setHandle}
+        onSync={syncFromCodeforces}
+        syncing={syncing}
       />
       {loaded ? (
         <div className="table-card">

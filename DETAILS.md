@@ -996,3 +996,67 @@ AC persisted under id `75000800` via the unmodified `PUT /api/status/{problem_id
   summary; first row (Rating ↓ default) `750H` / 3500 / 4 tags; marking it AC fired confetti
   + "Solved!" toast + progress 0→1; **zero console errors**; and `GET /api/status` confirmed
   the AC persisted under integer id `75000800`.
+
+---
+
+## Codeforces submission sync (`POST /api/cf-sync`) — this session
+
+"Connect my CF account and get my submissions": a **Sync from Codeforces** control on the
+Codeforces page that imports the user's real CF solve/attempt history by handle. Needs only
+the public CF handle — no CF password/credentials.
+
+### Import rules (per user)
+
+- **Solved + attempts.** For each problem the user submitted to: verdict `OK` → **AC**;
+  otherwise the latest non-OK verdict maps `WRONG_ANSWER→WA`, `TIME_LIMIT_EXCEEDED→TL`,
+  `RUNTIME_ERROR→RE`, everything else → **WA** (`TESTING`/`SKIPPED`/null skipped).
+- **AC always wins** (overrides any existing status, including NI).
+- **A failed verdict never overrides an existing AC or NI.** The user explicitly wanted
+  their manual NI ("no implementation") notes protected from being clobbered by a failed CF
+  attempt; AC is likewise protected from being downgraded. Enforced in SQL with
+  `ON CONFLICT … DO UPDATE … WHERE problem_status.status NOT IN ('AC','NI')`.
+
+### Backend — new `src/cf_sync.py` (mounted in `server.py`)
+
+- `POST /api/cf-sync {handle}` (auth required): fetches
+  `https://codeforces.com/api/user.status?handle=…` server-side (stdlib `urllib`, matches
+  `db.py` style — avoids browser CORS and thousands of per-problem calls), reduces
+  submissions to one best status per problem, then **bulk-upserts** via chunked multi-row
+  `INSERT … VALUES (…),(…) ON CONFLICT DO UPDATE` (200 rows/statement, so ~5 statements for
+  ~900 problems instead of ~900 round-trips — important for the remote Turso path). Returns
+  `{solved, attempted}`.
+- `_index_int` is duplicated from `scripts/pull_codeforces.py` (kept identical) so the ids
+  line up with `data/codeforces.json`. Bad handle → CF API `status:"FAILED"` surfaced as a
+  400 ("handle not found"); network failure → 502.
+- Statuses are written for **all** submitted problems, including CF problems not in the
+  rated `codeforces.json` (unrated/gym/older). Those rows are harmless — they don't collide
+  with ICPC ids and simply don't render — so the solved *count on the page* can be lower
+  than the toast's "N solved" (e.g. Dedibeat: 789 solved on CF, 700 shown, the 89 diff being
+  problems outside the rated set).
+
+### Frontend
+
+- **`src/api.js`**: `cfSync(handle)` → `POST /api/cf-sync`.
+- **`src/Codeforces.jsx`**: a `CF handle` input + **Sync from Codeforces** button (own row
+  atop the controls bar). Handle persists in `localStorage["pset.cfHandle"]`. On success it
+  **re-reads `GET /api/status`** and re-applies to `cfProblems`, so the table reflects
+  exactly what the backend wrote (no need to re-implement the AC/NI guard client-side).
+  Toast: "Synced from CF: N solved, M attempted"; errors → red toast; button disables while
+  syncing.
+- **`src/Codeforces.css`**: `.cf-sync` (full-width flex row) + `.cf-sync-input`.
+- **NI label**: left as "NI" (user's choice — no change to the status list).
+
+### Deploy note
+
+`cf-sync` is a **backend** change — it must be redeployed to Render for the live site to
+have the endpoint. Frontend-only hosts (GH Pages / Vercel) just need the rebuilt bundle.
+
+### Verification
+
+- `npm run build` clean; `npm run lint` shows only the pre-existing `api.js` error.
+- Live in the user's own Chrome (via the browser extension) against local uvicorn + Vite:
+  `POST /api/cf-sync {handle:"Dedibeat"}` → `{"solved":789,"attempted":121}` in ~1.2s;
+  `GET /api/status` then showed 912 statuses (790 AC / 111 WA / 7 TL / 3 RE / 1 NI) — the
+  previously-set **manual NI on `1826F` was preserved** and the manual AC on `750H` survived.
+  Clicking the **Sync from Codeforces** button in the UI fired the "789 solved, 121
+  attempted" toast and bumped progress to 700/10993.
