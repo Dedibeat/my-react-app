@@ -1181,3 +1181,21 @@ for the admin view to work on the live site.
   previously-set **manual NI on `1826F` was preserved** and the manual AC on `750H` survived.
   Clicking the **Sync from Codeforces** button in the UI fired the "789 solved, 121
   attempted" toast and bumped progress to 700/10993.
+
+---
+
+## Problem ratings refresh (2026-07-11)
+
+Replaced `data/problem_rating.json` with the latest calibrated ratings from
+`Dedibeat/analyze_standings`:
+
+`https://raw.githubusercontent.com/Dedibeat/analyze_standings/master/output/problem_ratings_calibrated.json`
+
+The refreshed file is valid JSON, keeps the same array/object shape, and contains 1,579 rating
+entries.
+
+### Verification
+
+- `python3 -m json.tool data/problem_rating.json` succeeds.
+- Spot check: first entry is problem `8072` with calibrated `difficulty: 1612.4` and
+  `difficulty_cf: 1322.0`.
