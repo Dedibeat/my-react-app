@@ -791,10 +791,13 @@ a personal/small-community tracker.
 
 ## Rating column replaces Solve Rate (this session)
 
-New dataset `data/problem_rating.json` (1579 entries) carries per-problem
-difficulty ratings. Each entry has both `difficulty` (~1206–3029, a custom
+Refreshed dataset `data/problem_rating.json` (2429 entries; 1579 overlap the
+currently displayed tagged problems) carries per-problem
+difficulty ratings. Each entry has both `difficulty` (~1224–3002, a custom
 scale) and `difficulty_cf` (800–4000, the Codeforces bounds). Per the user,
 the **`difficulty_cf`** field is used because it maps directly onto CF tiers.
+The source ratings were regenerated after the standings merge and the medal
+calculator refresh; the current calibrated range is 809.6–4000.
 Frontend-only; backend/data-flow untouched (the file is served by Vite's
 `publicDir: 'data'`, copied into `dist/` on build).
 
@@ -824,7 +827,7 @@ Frontend-only; backend/data-flow untouched (the file is served by Vite's
 
 ### Verification
 
-- `npm run build` clean; `dist/problem_rating.json` present (468 KB).
+- `npm run build` clean; `dist/problem_rating.json` present (704 KB).
 - `npm run lint` shows only the pre-existing `api.js` `no-empty` error.
 
 ---
