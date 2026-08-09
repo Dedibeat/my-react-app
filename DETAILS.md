@@ -1202,3 +1202,29 @@ entries.
 - `python3 -m json.tool data/problem_rating.json` succeeds.
 - Spot check: first entry is problem `8072` with calibrated `difficulty: 1612.4` and
   `difficulty_cf: 1322.0`.
+
+---
+
+## Problem ratings refresh (2026-08-09)
+
+Replaced `data/problem_rating.json` with the current local calibrated artifact from
+`../analyze_standings/output/problem_ratings_calibrated.json` (analyzer HEAD `c935d62`).
+The calibrated artifact is intentional: the app displays `difficulty_cf`, and the analyzer
+documents this file as the shipped survival-model estimate mapped to Codeforces-equivalent
+points. The raw Architecture A and Architecture B outputs remain relative model scales and
+are not the correct UI input.
+
+This refresh incorporates the analyzer's corrected treatment of omitted, unattempted
+problem cells as censored non-solves and its follow-up fix that excludes standings rows
+whose only solves use unknown problem labels. The file still contains 2,429 unique problem
+ratings, with 1,579 matching the app's 1,668 ICPC problems. Its `difficulty_cf` range is
+891.8–3876.6; problem `8072` now has `difficulty_cf: 1359.4` and
+`difficulty_cf_se: 4.7`.
+
+### Verification
+
+- `python3 -m json.tool data/problem_rating.json` succeeds.
+- All 2,429 `problem_id` values are unique.
+- The destination SHA-256 matches the analyzer artifact:
+  `77c3efc5b4522921a6f7b6484a7d2020b1ebbc4cf6b53a5bc137439b1e90cf86`.
+- `npm run build` succeeds and emits `dist/problem_rating.json`.
