@@ -1374,3 +1374,51 @@ since their columns shifted — acceptable while pulled back.
 Backend changed (`src/lists.py`, `db.py` SCHEMA, `server.py` mount) — Render
 needs a redeploy (auto-deploys on push to master) for the lists endpoints to
 exist on the live site. Schema applies automatically on first request.
+
+---
+
+## Slim tagged.json (this session, follow-up)
+
+Per request, the served ICPC dataset is now ~1 MB instead of ~14.9 MB.
+
+### What changed
+
+- **`canonical/tagged.json`** — the full dataset (all LLM fields: `statement`,
+  `analysis_notes`, `shortest_solution`, tagging provenance, `editorial`, ...)
+  moved here via `git mv` (history preserved). Not served by Vite (`publicDir:
+  'data'` only copies `data/`), so it ships nowhere.
+- **`data/tagged.json`** — regenerated as the **slim** served copy with exactly
+  what the UI reads:
+  - contest: `contest_id`, `contest_name`, `year`, `region`
+  - problem: `problem_id`, `problem_name`, `problem_url`, `primary_tags`,
+    `secondary_tags`, `extra_tags`, `importance`, `importance_confidence`,
+    `olympiad_techniques` (kept so the hidden Olympiad route still works)
+  - 14,856,903 B → **992,103 B** (93% smaller); same 213 contests / 1668
+    problems, problem ids identical to canonical.
+- **`public/tagged.json`** — mirrored to the slim copy (keeps the existing
+  "mirror of `data/`" invariant; still not served at runtime).
+- **`scripts/slim_tagged.py`** (new) — canonical → served transform. Re-run
+  after updating `canonical/tagged.json`:
+  `python3 scripts/slim_tagged.py`.
+- **No source code changed** — the app still fetches `/tagged.json`; it now
+  gets the slim file automatically.
+
+### Verification
+
+- Slim JSON parses; field sets match exactly the UI's reads (verified against
+  `flattenContests`); `olympiad_techniques` (600) and `importance` (541) counts
+  match canonical.
+- Headless Chrome against local uvicorn + Vite: **13/13 pass, zero console
+  errors** — 1668 problems load, render-cap note, tag badges, rating filter
+  (1900–2100 → 189 shown), contest select (116 contests + All), hidden
+  Olympiad route still renders 216 rows / 293 technique pills from slim data,
+  Profile by-importance card intact, list create + "dp AND graph" → 326 matches
+  → add-all works.
+- `npm run build` clean; `dist/tagged.json` is the 0.99 MB slim file.
+
+### Note
+
+`teamsSolved` in `flattenContests` (`p.problem_solved_in_contest`) is now
+`undefined` for every problem — the field was already unused by the UI
+(pre-existing dead field; left as-is). The canonical data retains the solve
+counts if ever needed.
