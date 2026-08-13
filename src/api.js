@@ -72,6 +72,39 @@ export const api = {
   async deleteFeedback(problemId) {
     return request(`/api/feedback/${encodeURIComponent(problemId)}`, { method: "DELETE" });
   },
+  async getLists() {
+    return request("/api/lists");
+  },
+  async createList(name) {
+    return request("/api/lists", {
+      method: "POST",
+      body: JSON.stringify({ name }),
+    });
+  },
+  async renameList(id, name) {
+    return request(`/api/lists/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ name }),
+    });
+  },
+  async deleteList(id) {
+    return request(`/api/lists/${id}`, { method: "DELETE" });
+  },
+  async getList(id) {
+    return request(`/api/lists/${id}`);
+  },
+  async addToList(id, problemIds) {
+    return request(`/api/lists/${id}/items`, {
+      method: "POST",
+      body: JSON.stringify({ problem_ids: problemIds }),
+    });
+  },
+  async removeFromList(id, problemIds) {
+    return request(`/api/lists/${id}/items`, {
+      method: "DELETE",
+      body: JSON.stringify({ problem_ids: problemIds }),
+    });
+  },
   async cfSync(handle) {
     return request("/api/cf-sync", {
       method: "POST",

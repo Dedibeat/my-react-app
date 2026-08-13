@@ -1228,3 +1228,149 @@ ratings, with 1,579 matching the app's 1,668 ICPC problems. Its `difficulty_cf` 
 - The destination SHA-256 matches the analyzer artifact:
   `77c3efc5b4522921a6f7b6484a7d2020b1ebbc4cf6b53a5bc137439b1e90cf86`.
 - `npm run build` succeeds and emits `dist/problem_rating.json`.
+
+---
+
+## Pull back CF/Olympiad + problem Lists + ICPC problemset improvements (this session)
+
+Per the user: temporarily pull back the Codeforces and Olympiad sections, add
+user-curated **problem lists** (pools), and make small ICPC problemset improvements.
+Discussed first until shared understanding (decisions recorded below).
+
+### Decisions (from the discussion)
+
+- **Lists are pools**, not ordered playlists: no ordering column; display order
+  comes from the table sort (Rating ↓ default) just like the main page.
+- **Private first**, sharing later.
+- A problem can be in **any number of lists**; adding is **dedup'd** server-side
+  (toast reports "added N (M already in it)").
+- Lists can hold **Codeforces problems too** — the integer id scheme is
+  collision-free (CF ids ≥ 100100 vs ICPC ~6k–15k) so the backend doesn't care.
+  `codeforces.json` stays loaded (1.9 MB) so lists can resolve CF ids.
+- **Bulk add by search expression** reuses the existing boolean search syntax
+  (`and` / `or` / `not` / parens) — not regex.
+- Pull back = **hide**, not remove: nav tabs gone, routes + code intact for a
+  one-line re-enable.
+- Importance is dropped from the problemset **UI** (column, filter widget, sort
+  options) — data untouched in `tagged.json`; the Profile "By importance" card
+  still works.
+
+### Pull back (hide)
+
+- `src/App.jsx`: nav is now **Problem Set | Lists** (Profile stays in the user
+  chip). Olympiad + Codeforces routes remain but are unlinked.
+- Auto CF sync on load removed (`applyCfSync`/`runCfSync`/`cfHandle`/
+  `cfSyncing`/`cfSyncMsg` states deleted) — one less external API call on startup.
+  `codeforces.json` is still fetched (lists need the data).
+- `src/Profile.jsx`: the Codeforces connect card removed; `.cf-connect*` CSS
+  deleted from `Profile.css`.
+
+### Backend — `src/lists.py` (new, mounted in `server.py`)
+
+Two new tables appended to `SCHEMA` in `src/db.py` (all `IF NOT EXISTS`, safe on
+the live Turso DB):
+
+- `problem_lists (id, user_id, name, created_at)` — owner FK cascade.
+- `problem_list_items (list_id, problem_id, added_at)`, PK `(list_id, problem_id)`
+  — no position column (pool semantics). No user_id needed (owner via the list).
+
+Endpoints (all ownership-checked; non-owner sees 404, no auth → 401):
+
+- `GET /api/lists` — summaries with `problem_count` and `solved_count`
+  (solved counts the owner's AC statuses via a LEFT JOIN on `problem_status`).
+- `POST /api/lists {name}` — 400 on empty/too-long name, 409 on duplicate name
+  (per user).
+- `PATCH /api/lists/{id} {name}`, `DELETE /api/lists/{id}`.
+- `GET /api/lists/{id}` — meta + `problem_ids` in insertion order.
+- `POST /api/lists/{id}/items {problem_ids}` — dedups within the request and
+  against existing members, returns `{added, existing}`. Chunked multi-row
+  INSERT (200 rows/statement, same pattern as `cf_sync.py`) so large bulk adds
+  (up to 5000 ids) stay within one request. Cap 5000.
+- `DELETE /api/lists/{id}/items {problem_ids}` — batch remove.
+
+### Frontend
+
+**`src/api.js`** — `getLists / createList / renameList / deleteList / getList /
+addToList / removeFromList`.
+
+**`src/useProblemActions.js`** — optional third arg `resolve(id) =>
+[problemsArray, setProblemsFn]`. When given, `updateStatus` routes to that array
+instead of the base one. Backwards compatible; existing callers unchanged.
+
+**`src/ProblemSet.jsx`** (main page):
+
+- **Importance removed**: column, the P1–P5 dual-slider widget, `+unrated` pill,
+  and the importance sort options are gone. Sort is now Rating ↓ (default) /
+  Rating ↑ / ID ↑.
+- **Rating range filter**: min/max typable number inputs (same pattern as the
+  CF page). Unrated problems are filtered out when a bound is set (consistent
+  with CF page).
+- **Contest select** in the controls (e.g. "ICPC 2023 · Asia East Continent
+  (12)") — contest-level browsing that didn't exist before. When a specific
+  contest is picked, an "Add contest to list…" button appears.
+- **Checkbox column** + bulk bar ("N selected · Add to list… · Clear"). Header
+  checkbox toggles all filtered rows.
+- **`AddToListModal.jsx`** (new): existing-list dropdown (with problem counts) or
+  "New list" name input; on save calls `addToList` and the toast reports
+  dedup. Modal chrome mirrors FeedbackModal.
+- **Render cap 500** + "Showing first 500 of N" note (CF-page pattern) — the
+  1668-row render was the interaction bottleneck.
+- **Loading skeleton** replaces the spinner on the problemset page.
+
+**`src/Lists.jsx` + `Lists.css`** (new, route `/lists`):
+
+- Overview: create-list input, cards (name, N problems, solved/total + gradient
+  progress bar), rename (inline input) / delete (confirm).
+- Detail: back button, rename/delete, "N problems" + "M not in dataset" (when a
+  member id no longer resolves — future-proof), **add-by-search panel** (boolean
+  syntax across the whole ICPC+CF pool, live "N new matches" count, "Add all N"
+  button, optional preview of first 15 matches), the same scoped table with
+  quick-filter/sort/search/tags + checkboxes, and a bulk "Remove from list".
+- Status/feedback edits go through `useProblemActions` with `resolve` routing by
+  id range (CF ≥ 100000 → cfProblems array), so progress stays in sync with the
+  main page and statuses remain global.
+
+**`src/ProblemSet.css`**: hide-tags now targets column 5 (Tags moved from 4 to 5
+after the checkbox column); mobile card `::before` labels renumbered
+(1 = checkbox with no label); sticky `thead th`; `.cell-check`, `.bulk-bar`,
+`.table-note`, `.rating-filter`/`.rating-input`, `.skeleton-card` shimmer;
+removed the `.importance-range*` widget CSS (kept `.importance` — Profile still
+uses it). Mobile: rating/contest inputs get full-width + 44px touch targets.
+
+**Olympiad/Codeforces pages**: untouched (hidden). Their mobile `::before`
+overrides in `Olympiad.css`/`Codeforces.css` still target their own column
+orders, so they're unaffected by the renumbering. Known cosmetic nit on those
+(hidden) pages: the general mobile rules `td:nth-child(4) a {max-width:60%}` /
+`td:nth-child(5) {flex-direction:column}` no longer hit their tag/problem cells
+since their columns shifted — acceptable while pulled back.
+
+### Verification
+
+- Backend (local sqlite, curls): empty list, create, 409 duplicate name, 400
+  empty name, add with in-request dedup (`{added:3, existing:0}` for 4 ids with
+  one dup), re-add (`{added:1, existing:1}`), get with ids, summary counts,
+  rename, remove, 600-id chunked add, `solved_count` join (601 problems → 1
+  after marking 8072 AC), 404 on other user's list, 401 unauth, delete cascade,
+  400 empty items. All pass.
+- Headless Chrome (puppeteer-core, system Chrome, local uvicorn + Vite with
+  `VITE_API_BASE`): 20/20 checks pass, zero console errors —
+  - nav shows only Problem Set | Lists;
+  - 8 columns (checkbox + 7), Rating present, Importance gone;
+  - "Showing first 500 of 1668" note;
+  - rating filter 1900–2100 → "189 shown";
+  - contest select → "Add contest to list…" → new list with all 12 contest
+    problems;
+  - checkbox bulk-add with dedup toast ("already in");
+  - Lists overview card → detail with 12 members;
+  - add-panel "graph AND tree" → 368 new matches → "Add all 368" → 380 total;
+  - marking a member AC bumps list progress 0/380 → 1/380;
+  - bulk remove shrinks 380 → 379;
+  - mobile labels correct (checkbox cell has no label).
+- `npm run build` clean; `npm run lint` shows only the pre-existing `api.js`
+  `no-empty` error.
+
+### Deploy note
+
+Backend changed (`src/lists.py`, `db.py` SCHEMA, `server.py` mount) — Render
+needs a redeploy (auto-deploys on push to master) for the lists endpoints to
+exist on the live site. Schema applies automatically on first request.

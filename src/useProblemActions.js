@@ -4,7 +4,11 @@ import { api } from './api.js';
 // Status editing, AC celebration, feedback CRUD, and toasts shared by the
 // problem-set and olympiad pages. Operates on the lifted `problems` state so
 // progress stays in sync across both pages.
-export function useProblemActions(problems, setProblems) {
+//
+// `resolve` is optional: (id) => [problemsArray, setProblemsFn]. When given,
+// status updates route to that array instead of `problems` (the Lists page
+// spans the ICPC and Codeforces arrays).
+export function useProblemActions(problems, setProblems, resolve) {
   const [feedback, setFeedback] = useState({});
   const [feedbackFor, setFeedbackFor] = useState(null);
   const [toast, setToast] = useState(null);
@@ -27,10 +31,11 @@ export function useProblemActions(problems, setProblems) {
   }
 
   async function updateStatus(id, newStatus) {
-    const prev = problems.find((p) => p.id === id);
+    const [list, setList] = resolve ? resolve(id) : [problems, setProblems];
+    const prev = list.find((p) => p.id === id);
     const previous = prev?.status || "";
     const previousAt = prev?.statusUpdatedAt || null;
-    setProblems((cur) => cur.map((p) => (
+    setList((cur) => cur.map((p) => (
       p.id === id ? { ...p, status: newStatus, statusUpdatedAt: new Date().toISOString() } : p
     )));
     if (newStatus === "AC" && previous !== "AC") {
@@ -43,7 +48,7 @@ export function useProblemActions(problems, setProblems) {
       if (newStatus) await api.setStatus(id, newStatus);
       else await api.clearStatus(id);
     } catch (err) {
-      setProblems((cur) => cur.map((p) => (
+      setList((cur) => cur.map((p) => (
         p.id === id ? { ...p, status: previous, statusUpdatedAt: previousAt } : p
       )));
       setJustSolved(null);

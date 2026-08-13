@@ -4,6 +4,7 @@ import './App.css';
 import ProblemSet from './ProblemSet.jsx';
 import Olympiad from './Olympiad.jsx';
 import Codeforces from './Codeforces.jsx';
+import Lists from './Lists.jsx';
 import Profile from './Profile.jsx';
 import { api, getToken, setToken } from './api.js';
 
@@ -53,16 +54,6 @@ function flattenContests(contests) {
 
 // Import the user's Codeforces solve/attempt history, then re-read statuses so
 // cfProblems reflects exactly what the backend wrote (it preserves existing AC/NI).
-async function applyCfSync(handle, setCfProblems) {
-  const { solved, attempted } = await api.cfSync(handle);
-  const fresh = await api.getStatus();
-  setCfProblems((cur) => cur.map((p) => {
-    const s = fresh[p.id];
-    return { ...p, status: s?.status || "", statusUpdatedAt: s?.updated_at || null };
-  }));
-  return { solved, attempted };
-}
-
 export default function App() {
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
@@ -73,10 +64,12 @@ export default function App() {
   const [submitting, setSubmitting] = useState(false);
   const [problems, setProblems] = useState([]);
   const [cfProblems, setCfProblems] = useState([]);
+  const [lists, setLists] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const [cfHandle, setCfHandle] = useState(() => localStorage.getItem("pset.cfHandle") || "");
-  const [cfSyncing, setCfSyncing] = useState(false);
-  const [cfSyncMsg, setCfSyncMsg] = useState("");
+
+  async function reloadLists() {
+    try { setLists(await api.getLists()); } catch { /* keep the previous list data */ }
+  }
 
   useEffect(() => {
     if (!getToken()) { setAuthLoading(false); return; }
@@ -87,7 +80,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (!user) { setProblems([]); setCfProblems([]); setLoaded(false); return; }
+    if (!user) { setProblems([]); setCfProblems([]); setLists([]); setLoaded(false); return; }
     let cancelled = false;
     async function load() {
       const [dataset, ratings, cf, statusMap] = await Promise.all([
@@ -124,32 +117,11 @@ export default function App() {
       setProblems(flat);
       setCfProblems(cfFlat);
       setLoaded(true);
-
-      // Auto-sync Codeforces statuses on load if a handle is saved.
-      const savedHandle = localStorage.getItem("pset.cfHandle");
-      if (savedHandle) {
-        try { await applyCfSync(savedHandle, setCfProblems); } catch { /* ignore auto-sync errors */ }
-      }
+      reloadLists();
     }
     load();
     return () => { cancelled = true; };
   }, [user]);
-
-  async function runCfSync() {
-    const h = cfHandle.trim();
-    if (!h) return;
-    localStorage.setItem("pset.cfHandle", h);
-    setCfSyncing(true);
-    setCfSyncMsg("");
-    try {
-      const { solved, attempted } = await applyCfSync(h, setCfProblems);
-      setCfSyncMsg(`Synced ${solved} solved, ${attempted} attempted`);
-    } catch (err) {
-      setCfSyncMsg(`Sync failed: ${err.message}`);
-    } finally {
-      setCfSyncing(false);
-    }
-  }
 
   async function submit(e) {
     e.preventDefault();
@@ -238,8 +210,7 @@ export default function App() {
           </Link>
           <nav className="app-nav">
             <NavLink to="/" end className="nav-tab">Problem Set</NavLink>
-            <NavLink to="/olympiad" className="nav-tab">Olympiad</NavLink>
-            <NavLink to="/codeforces" className="nav-tab">Codeforces</NavLink>
+            <NavLink to="/lists" className="nav-tab">Lists</NavLink>
           </nav>
           <div className="user-area">
             <Link to="/profile" className="user-chip" title="Your profile">
@@ -252,7 +223,31 @@ export default function App() {
         <Routes>
           <Route
             path="/"
-            element={<ProblemSet problems={problems} setProblems={setProblems} loaded={loaded} isAdmin={user.is_admin} />}
+            element={
+              <ProblemSet
+                problems={problems}
+                setProblems={setProblems}
+                loaded={loaded}
+                isAdmin={user.is_admin}
+                lists={lists}
+                reloadLists={reloadLists}
+              />
+            }
+          />
+          <Route
+            path="/lists"
+            element={
+              <Lists
+                problems={problems}
+                setProblems={setProblems}
+                cfProblems={cfProblems}
+                setCfProblems={setCfProblems}
+                loaded={loaded}
+                isAdmin={user.is_admin}
+                lists={lists}
+                reloadLists={reloadLists}
+              />
+            }
           />
           <Route
             path="/olympiad"
@@ -269,11 +264,6 @@ export default function App() {
                 user={user}
                 problems={problems}
                 loaded={loaded}
-                cfHandle={cfHandle}
-                setCfHandle={setCfHandle}
-                onCfSync={runCfSync}
-                cfSyncing={cfSyncing}
-                cfSyncMsg={cfSyncMsg}
               />
             }
           />

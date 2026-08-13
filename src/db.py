@@ -34,6 +34,24 @@ CREATE TABLE IF NOT EXISTS problem_feedback (
 );
 
 CREATE INDEX IF NOT EXISTS idx_feedback_user ON problem_feedback(user_id);
+
+CREATE TABLE IF NOT EXISTS problem_lists (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  name TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_lists_user ON problem_lists(user_id);
+
+CREATE TABLE IF NOT EXISTS problem_list_items (
+  list_id INTEGER NOT NULL,
+  problem_id INTEGER NOT NULL,
+  added_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (list_id, problem_id),
+  FOREIGN KEY (list_id) REFERENCES problem_lists(id) ON DELETE CASCADE
+);
 """
 
 
