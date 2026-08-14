@@ -151,10 +151,21 @@
   gap: 12px;
 }
 .preview-name {
+  flex: 1;
+  min-width: 0;
   color: var(--text);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.preview-contest {
+  flex: none;
+  max-width: 40%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+  font-size: 0.8rem;
 }
 .preview-rating {
   flex: none;

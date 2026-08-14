@@ -1542,3 +1542,11 @@ Follow-up refinements per feedback.
 Verified headless (14/14, zero console errors): one panel, "tree AND dp" →
 446 matches with Add all 446 / Delete all 0, first-5 preview with name+rating,
 add-all → 446 problems, re-search → Delete all 446 → 0.
+
+---
+
+## Lists preview: add contest info
+
+The add/delete search preview (first 5 matches) now shows `name · contest ·
+rating` per line — contest is a muted, truncated middle column (`preview-contest`)
+between the name and the right-aligned rating.

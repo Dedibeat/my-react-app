@@ -498,6 +498,7 @@ export default function Lists({
               {searchMatches.slice(0, 5).map((p) => (
                 <li key={p.id}>
                   <span className="preview-name">{p.name}</span>
+                  <span className="preview-contest">{p.contest}</span>
                   {p.rating != null && <span className="preview-rating">{p.rating}</span>}
                 </li>
               ))}
