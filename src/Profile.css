@@ -1,8 +1,8 @@
 .profile {
-  max-width: 760px;
+  max-width: 800px;
   margin: 0 auto;
   display: grid;
-  gap: 12px;
+  gap: 16px;
 }
 
 .profile-card {
@@ -10,19 +10,24 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
-  padding: 16px 20px;
+  padding: 18px 20px;
 }
 
 .profile-card-title {
   margin: 0 0 12px;
-  font-size: 0.82rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-muted);
 }
 
-/* ---------- Identity ---------- */
+/* ---------- 1. Identity & Overall Progress ---------- */
+.profile-identity-card {
+  display: grid;
+  gap: 16px;
+}
+
 .profile-identity {
   display: flex;
   align-items: center;
@@ -30,59 +35,116 @@
 }
 
 .profile-avatar {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: var(--accent-soft);
   color: var(--accent);
   display: grid;
   place-items: center;
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   text-transform: uppercase;
   flex: none;
+  border: 1px solid rgba(37, 99, 235, 0.15);
+}
+
+.profile-identity-info {
+  display: grid;
+  gap: 2px;
 }
 
 .profile-name {
   margin: 0;
   font-size: 1.35rem;
+  font-weight: 700;
   letter-spacing: -0.02em;
 }
 
-.profile-joined { margin: 2px 0 0; }
+.profile-joined {
+  margin: 0;
+  font-size: 0.875rem;
+}
 
-/* ---------- Importance + status grid ---------- */
+.profile-overall-progress {
+  display: grid;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.progress-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.875rem;
+}
+
+.progress-count {
+  color: var(--text-muted);
+}
+.progress-count b {
+  color: var(--text);
+  font-weight: 700;
+}
+.progress-slash {
+  color: var(--border-strong);
+  margin: 0 1px;
+}
+
+.progress-pct {
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.progress-track {
+  height: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- 2. Rating & Status Grid ---------- */
 .profile-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 16px;
 }
 
-.importance-rows {
+.rating-tier-rows {
   display: grid;
-  gap: 10px;
+  gap: 7px;
 }
 
-.importance-row {
+.rating-tier-row {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.importance-row .importance {
-  font-weight: 700;
-  font-size: 0.78rem;
-  padding: 1px 8px;
-  border-radius: 999px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  min-width: 34px;
+.rating-tier-badge {
+  width: 84px;
+  min-width: 84px;
   text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 6px;
   flex: none;
 }
 
 .mini-track {
   flex: 1;
-  height: 8px;
+  height: 7px;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -91,41 +153,48 @@
 
 .mini-fill {
   height: 100%;
-  background: var(--accent);
   border-radius: 999px;
-  transition: width 0.5s ease;
+  transition: width 0.4s ease;
 }
 
-.importance-row-count {
-  font-size: 0.82rem;
-  color: var(--text-muted);
+.rating-tier-count {
+  font-size: 0.8125rem;
+  color: var(--text);
   font-variant-numeric: tabular-nums;
-  min-width: 52px;
+  min-width: 58px;
   text-align: right;
+  flex: none;
+}
+.rating-tier-count b {
+  font-weight: 700;
 }
 
-/* ---------- Status tiles ---------- */
+/* ---------- Status Tiles ---------- */
 .status-tiles {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
-  gap: 10px;
+  gap: 8px;
+  height: calc(100% - 28px);
+  align-content: stretch;
 }
 
 .status-tile {
-  display: grid;
-  justify-items: center;
-  gap: 0;
-  padding: 10px 8px;
-  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 6px;
+  border-radius: var(--radius-sm);
   background: var(--surface-2);
   border: 1px solid var(--border);
 }
 
 .status-tile-count {
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 .status-tile-label {
@@ -138,13 +207,13 @@
 
 .status-tile-ac {
   background: var(--green-soft);
-  border-color: #b5e6c3;
+  border-color: var(--green-border);
 }
 .status-tile-ac .status-tile-count { color: var(--green); }
 
 .status-tile-wa, .status-tile-tl, .status-tile-re {
   background: var(--red-soft);
-  border-color: #f0c5c5;
+  border-color: var(--red-border);
 }
 .status-tile-wa .status-tile-count,
 .status-tile-tl .status-tile-count,
@@ -156,148 +225,7 @@
 }
 .status-tile-ni .status-tile-count { color: var(--amber); }
 
-/* ---------- Recent activity ---------- */
-.activity-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 4px;
-}
-
-.activity-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 6px 0;
-  border-bottom: 1px solid var(--border);
-}
-.activity-row:last-child { border-bottom: none; }
-
-.activity-pill {
-  min-width: 56px;
-  padding: 2px 10px;
-  font-size: 0.78rem;
-  cursor: default;
-  flex: none;
-}
-.activity-pill:hover { border-color: var(--border-strong); }
-.activity-pill.status-solved:hover { border-color: #b5e6c3; }
-.activity-pill.status-unsolved:hover { border-color: #f0c5c5; }
-
-.activity-row .problem-link {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.activity-time {
-  flex: none;
-  font-size: 0.82rem;
-  font-variant-numeric: tabular-nums;
-}
-
-/* ---------- Activity heatmap ---------- */
-.activity-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.activity-head .profile-card-title { margin-bottom: 0; }
-
-.activity-year {
-  height: 28px;
-  padding: 0 8px;
-  font-size: 0.82rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.cal {
-  margin-top: 14px;
-  overflow-x: auto;
-}
-
-.cal-months {
-  display: flex;
-  gap: 3px;
-  padding-left: 30px;
-  margin-bottom: 4px;
-}
-.cal-months span {
-  width: 11px;
-  flex: none;
-  font-size: 10px;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-
-.cal-body { display: flex; gap: 3px; }
-
-.cal-weekdays {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  width: 27px;
-  flex: none;
-}
-.cal-weekdays span {
-  height: 11px;
-  line-height: 11px;
-  font-size: 10px;
-  color: var(--text-muted);
-}
-
-.cal-weeks { display: flex; gap: 3px; }
-.cal-week { display: flex; flex-direction: column; gap: 3px; }
-
-.cal-day {
-  width: 11px;
-  height: 11px;
-  border-radius: 2px;
-  box-shadow: inset 0 0 0 1px rgba(27, 31, 35, 0.06);
-}
-.cal-pad { background: transparent; box-shadow: none; }
-
-.cal-legend {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 3px;
-  margin-top: 8px;
-  font-size: 11px;
-}
-.cal-legend .cal-day { display: inline-block; }
-
-.activity-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px 12px;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-}
-.activity-stat { display: grid; gap: 2px; }
-.activity-stat-n {
-  font-size: 1.5rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  line-height: 1.1;
-}
-.activity-stat-n small {
-  font-size: 0.95rem;
-  font-weight: 600;
-}
-.activity-stat-label {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-}
-
-/* ---------- QOJ Account Sync Card ---------- */
+/* ---------- 3. QOJ Account Sync Card ---------- */
 .qoj-card {
   display: grid;
   gap: 14px;
@@ -490,14 +418,234 @@
   border: 1px solid var(--red-border);
 }
 
+/* ---------- 4. Activity Heatmap & Streaks ---------- */
+.activity-card {
+  display: grid;
+  gap: 12px;
+}
+
+.activity-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.activity-head .profile-card-title {
+  margin-bottom: 0;
+}
+
+.activity-year {
+  height: 28px;
+  padding: 0 8px;
+  font-size: 0.8125rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.cal {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.cal-months {
+  display: flex;
+  gap: 3px;
+  padding-left: 28px;
+  margin-bottom: 4px;
+}
+.cal-months span {
+  width: 11px;
+  flex: none;
+  font-size: 10px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.cal-body {
+  display: flex;
+  gap: 3px;
+}
+
+.cal-weekdays {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 25px;
+  flex: none;
+}
+.cal-weekdays span {
+  height: 11px;
+  line-height: 11px;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.cal-weeks {
+  display: flex;
+  gap: 3px;
+}
+.cal-week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cal-day {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(27, 31, 35, 0.06);
+}
+.cal-pad {
+  background: transparent;
+  box-shadow: none;
+}
+
+.cal-legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  margin-top: 4px;
+  font-size: 11px;
+}
+.cal-legend .cal-day {
+  display: inline-block;
+}
+
+.activity-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px 12px;
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.activity-stat {
+  display: grid;
+  gap: 2px;
+}
+.activity-stat-n {
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.activity-stat-n small {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.activity-stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ---------- 5. Recent Activity List ---------- */
+.activity-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.activity-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 4px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease;
+}
+.activity-row:last-child {
+  border-bottom: none;
+}
+.activity-row:hover {
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+}
+
+.activity-pill {
+  min-width: 52px;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: default;
+  flex: none;
+}
+
+.activity-row .difficulty {
+  min-width: 44px;
+  text-align: center;
+  flex: none;
+}
+
+.activity-row .problem-link {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--accent);
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+.activity-row .problem-link:hover {
+  text-decoration: underline;
+}
+
+.activity-contest {
+  flex: 0 1 220px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.activity-time {
+  flex: none;
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+/* ---------- Responsive Breakpoints ---------- */
 @media (max-width: 768px) {
-  .profile-grid { grid-template-columns: 1fr; }
-  .profile-card { padding: 14px 16px; }
-  /* ProblemSet.css makes .status-pill full-width on mobile; keep activity pills compact */
-  .activity-pill { width: auto; min-height: 0; }
-  .activity-stats { grid-template-columns: repeat(2, 1fr); }
-  .qoj-inputs { flex-direction: column; }
-  .qoj-sync-btn { width: 100%; min-height: 40px; }
-  .qoj-connected-actions { flex-direction: column; align-items: stretch; }
-  .qoj-connected-actions .btn { width: 100%; min-height: 40px; }
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+  .profile-card {
+    padding: 14px 16px;
+  }
+  .activity-pill {
+    width: auto;
+    min-height: 0;
+  }
+  .activity-contest {
+    display: none;
+  }
+  .activity-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .qoj-inputs {
+    flex-direction: column;
+  }
+  .qoj-sync-btn {
+    width: 100%;
+    min-height: 40px;
+  }
+  .qoj-connected-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .qoj-connected-actions .btn {
+    width: 100%;
+    min-height: 40px;
+  }
 }

@@ -1665,3 +1665,29 @@ Enhanced automatic QOJ synchronization to be completely non-blocking and real-ti
 - Automatically updates user state when connecting or disconnecting QOJ.
 
 Verified: 5/5 automated tests passed (355ms initial render, 57 solves immediate, smooth focus change without flickering, zero console errors).
+
+---
+
+## Clean Profile redesign: Solved by Rating & Rating in Recent Activity
+
+Refactored `Profile.jsx` and `Profile.css` for a clean, data-dense layout:
+
+### 1. Solved by Rating
+- Removed obsolete "By importance" (`p1`–`p5`) breakdown.
+- Added **Solved by Rating** breakdown across standard CP/Codeforces rating tiers:
+  - `< 1200` (`difficulty-grey`)
+  - `1200–1399` (`difficulty-green`)
+  - `1400–1599` (`difficulty-teal`)
+  - `1600–1899` (`difficulty-blue`)
+  - `1900–2099` (`difficulty-violet`)
+  - `2100–2399` (`difficulty-orange`)
+  - `≥ 2400` (`difficulty-red`)
+- Each tier displays the color-coded difficulty pill, a smooth horizontal progress bar, and solved/total counts.
+
+### 2. Rating Badges in Recent Activity
+- Added `RatingBadge` component directly into each Recent Activity row alongside status pill, problem link, contest name, and relative time.
+
+### 3. Streamlined Clean Profile Layout
+- Integrated overall progress bar into the identity header card.
+- Clean 2-column breakdown: Solved by Rating on the left, By Status on the right.
+- Cleaned up obsolete CSS rules and ensured responsive breakpoints.

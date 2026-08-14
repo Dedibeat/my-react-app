@@ -1,10 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
 import './Profile.css';
-import { IMPORTANCE_COLOR, getStatusClass } from './problemMeta.js';
+import { getStatusClass } from './problemMeta.js';
+import { RatingBadge } from './problemUI.jsx';
 import { api } from './api.js';
 
-const IMPORTANCE_LEVELS = ['p5', 'p4', 'p3', 'p2', 'p1'];
 const STATUS_KEYS = ['AC', 'WA', 'TL', 'RE', 'NI'];
+
+const RATING_TIERS = [
+  { label: '< 1200', min: 0, max: 1199, cls: 'difficulty-grey', color: '#64748b' },
+  { label: '1200–1399', min: 1200, max: 1399, cls: 'difficulty-green', color: '#16a34a' },
+  { label: '1400–1599', min: 1400, max: 1599, cls: 'difficulty-teal', color: '#0d9488' },
+  { label: '1600–1899', min: 1600, max: 1899, cls: 'difficulty-blue', color: '#2563eb' },
+  { label: '1900–2099', min: 1900, max: 2099, cls: 'difficulty-violet', color: '#9333ea' },
+  { label: '2100–2399', min: 2100, max: 2399, cls: 'difficulty-orange', color: '#ea580c' },
+  { label: '≥ 2400', min: 2400, max: 99999, cls: 'difficulty-red', color: '#dc2626' },
+];
 
 function parseTs(ts) {
   return new Date(ts.includes('T') ? ts : ts.replace(' ', 'T') + 'Z');
@@ -269,22 +279,33 @@ export default function Profile({ user, setUser, problems, loaded, reloadStatuse
   const stats = useMemo(() => {
     const total = problems.length;
     let solved = 0;
-    const byImportance = {};
-    for (const lvl of IMPORTANCE_LEVELS) byImportance[lvl] = { solved: 0, total: 0 };
+    const byRating = RATING_TIERS.map((t) => ({ ...t, solved: 0, total: 0 }));
+    let unratedSolved = 0, unratedTotal = 0;
     const byStatus = { AC: 0, WA: 0, TL: 0, RE: 0, NI: 0 };
+
     for (const p of problems) {
       if (p.status === 'AC') solved++;
-      if (p.importance in byImportance) {
-        byImportance[p.importance].total++;
-        if (p.status === 'AC') byImportance[p.importance].solved++;
-      }
       if (p.status in byStatus) byStatus[p.status]++;
+
+      if (p.rating != null && Number.isFinite(p.rating)) {
+        const r = Math.round(p.rating);
+        const tier = byRating.find((t) => r >= t.min && r <= t.max);
+        if (tier) {
+          tier.total++;
+          if (p.status === 'AC') tier.solved++;
+        }
+      } else {
+        unratedTotal++;
+        if (p.status === 'AC') unratedSolved++;
+      }
     }
+
     const recent = problems
       .filter((p) => p.status && p.statusUpdatedAt)
       .sort((a, b) => parseTs(b.statusUpdatedAt) - parseTs(a.statusUpdatedAt))
-      .slice(0, 8);
-    return { total, solved, byImportance, byStatus, recent };
+      .slice(0, 10);
+
+    return { total, solved, byRating, unratedSolved, unratedTotal, byStatus, recent };
   }, [problems]);
 
   if (!loaded) {
@@ -302,46 +323,49 @@ export default function Profile({ user, setUser, problems, loaded, reloadStatuse
 
   return (
     <div className="profile">
-      <div className="profile-card profile-identity">
-        <span className="profile-avatar">{user.username.charAt(0)}</span>
-        <div>
-          <h2 className="profile-name">{user.username}</h2>
-          <p className="muted profile-joined">
-            {joined ? `Joined ${joined}` : 'Member'} · {stats.solved} solved
-          </p>
+      {/* 1. Header & Overall Progress */}
+      <div className="profile-card profile-identity-card">
+        <div className="profile-identity">
+          <span className="profile-avatar">{user.username.charAt(0)}</span>
+          <div className="profile-identity-info">
+            <h2 className="profile-name">{user.username}</h2>
+            <p className="muted profile-joined">
+              {joined ? `Joined ${joined}` : 'Member'} · <b>{stats.solved}</b> solved
+            </p>
+          </div>
         </div>
-      </div>
 
-      <ActivityHeatmap problems={problems} />
-
-      <div className="profile-card">
-        <div className="progress-info">
-          <span className="progress-count">
-            <b>{stats.solved}</b> / {stats.total} solved
+        <div className="profile-overall-progress">
+          <div className="progress-info">
+            <span className="progress-count">
+              <b>{stats.solved}</b> <span className="progress-slash">/</span> {stats.total} ICPC problems solved
+            </span>
             <span className="progress-pct">{pct.toFixed(1)}%</span>
-          </span>
-        </div>
-        <div className="progress-track">
-          <div className="progress-fill" style={{ width: `${pct}%` }} />
+          </div>
+          <div className="progress-track" aria-hidden="true">
+            <div className="progress-fill" style={{ width: `${pct}%` }} />
+          </div>
         </div>
       </div>
 
+      {/* 2. Solved by Rating & Status Breakdown Grid */}
       <div className="profile-grid">
         <div className="profile-card">
-          <h3 className="profile-card-title">By importance</h3>
-          <div className="importance-rows">
-            {IMPORTANCE_LEVELS.map((lvl) => {
-              const { solved, total } = stats.byImportance[lvl];
-              const rowPct = total > 0 ? (solved / total) * 100 : 0;
+          <h3 className="profile-card-title">Solved by rating</h3>
+          <div className="rating-tier-rows">
+            {stats.byRating.map((tier) => {
+              const rowPct = tier.total > 0 ? (tier.solved / tier.total) * 100 : 0;
               return (
-                <div className="importance-row" key={lvl}>
-                  <span className="importance" style={{ background: IMPORTANCE_COLOR[lvl] }}>
-                    {lvl.toUpperCase()}
+                <div className="rating-tier-row" key={tier.label}>
+                  <span className={`difficulty ${tier.cls} rating-tier-badge`}>
+                    {tier.label}
                   </span>
-                  <div className="mini-track">
-                    <div className="mini-fill" style={{ width: `${rowPct}%` }} />
+                  <div className="mini-track" title={`${rowPct.toFixed(1)}% (${tier.solved}/${tier.total})`}>
+                    <div className="mini-fill" style={{ width: `${rowPct}%`, background: tier.color }} />
                   </div>
-                  <span className="importance-row-count">{solved}/{total}</span>
+                  <span className="rating-tier-count">
+                    <b>{tier.solved}</b> <small className="muted">/ {tier.total}</small>
+                  </span>
                 </div>
               );
             })}
@@ -361,6 +385,7 @@ export default function Profile({ user, setUser, problems, loaded, reloadStatuse
         </div>
       </div>
 
+      {/* 3. QOJ Account Sync */}
       <div className="profile-card qoj-card">
         <div className="qoj-card-head">
           <div className="qoj-card-title-row">
@@ -374,7 +399,7 @@ export default function Profile({ user, setUser, problems, loaded, reloadStatuse
           <p className="qoj-desc">
             {qojInfo?.connected ? (
               <>
-                Connected to QOJ handle <a href={`https://qoj.ac/user/profile/${qojInfo.handle}`} target="_blank" rel="noopener noreferrer" className="qoj-user-link"><b>{qojInfo.handle}</b></a>. Problem statuses sync automatically in the background on login and every 30 minutes.
+                Connected to QOJ handle <a href={`https://qoj.ac/user/profile/${qojInfo.handle}`} target="_blank" rel="noopener noreferrer" className="qoj-user-link"><b>{qojInfo.handle}</b></a>. Problem statuses sync automatically on focus, reload, and every 30 minutes.
               </>
             ) : (
               <>
@@ -389,7 +414,7 @@ export default function Profile({ user, setUser, problems, loaded, reloadStatuse
             <div className="qoj-meta-row">
               <span className="qoj-meta-item">
                 <span className="qoj-meta-label">Auto-sync:</span>
-                <span className="qoj-meta-val qoj-meta-val-active">Every 30m & on startup</span>
+                <span className="qoj-meta-val qoj-meta-val-active">Focus, reload & 30m</span>
               </span>
               {qojInfo.last_synced && (
                 <span className="qoj-meta-item">
@@ -526,10 +551,14 @@ export default function Profile({ user, setUser, problems, loaded, reloadStatuse
         )}
       </div>
 
+      {/* 4. Activity Heatmap & Streaks */}
+      <ActivityHeatmap problems={problems} />
+
+      {/* 5. Recent Activity with Rating */}
       <div className="profile-card">
         <h3 className="profile-card-title">Recent activity</h3>
         {stats.recent.length === 0 ? (
-          <p className="muted">No activity yet — go solve something.</p>
+          <p className="muted" style={{ margin: '8px 0 0', fontSize: '0.875rem' }}>No activity yet — go solve something.</p>
         ) : (
           <ul className="activity-list">
             {stats.recent.map((p) => (
@@ -537,9 +566,15 @@ export default function Profile({ user, setUser, problems, loaded, reloadStatuse
                 <span className={`status-pill activity-pill ${getStatusClass(p.status)}`}>
                   {p.status === 'AC' ? '✓ AC' : p.status}
                 </span>
-                <a className="problem-link" href={p.url} target="_blank" rel="noopener noreferrer">
+                <RatingBadge rating={p.rating} />
+                <a className="problem-link" href={p.url} target="_blank" rel="noopener noreferrer" title={p.name}>
                   {p.name}
                 </a>
+                {p.contest && (
+                  <span className="activity-contest muted" title={p.contest}>
+                    {p.contest}
+                  </span>
+                )}
                 <span className="muted activity-time">
                   {relativeTime(parseTs(p.statusUpdatedAt))}
                 </span>
