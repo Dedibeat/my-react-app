@@ -142,13 +142,13 @@ function ProblemsTable({
       <table id="problemsTable" className={showTag ? "" : "tags-hidden"} aria-describedby="summary">
         <thead>
           <tr>
-            <th style={{ width: 70 }} data-label="ID">ID</th>
+            <th data-label="ID">ID</th>
             <th data-label="Contest">Contest</th>
             <th data-label="Problem">Problem</th>
             <th data-label="Tags">Tags</th>
             <th data-label="Rating">Rating</th>
-            <th style={{ width: 180 }} title="Click a cell to edit" data-label="Status">Status</th>
-            <th style={{ width: 44 }} aria-label="Feedback" data-label="Feedback" />
+            <th title="Click a cell to edit" data-label="Status">Status</th>
+            <th aria-label="Feedback" data-label="Feedback" />
           </tr>
         </thead>
         <tbody>

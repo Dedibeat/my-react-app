@@ -1584,3 +1584,21 @@ Comprehensive visual polish across the entire application:
 ### 5. Verification
 - 37/37 automated headless Chrome tests passed with zero console errors.
 - `npm run build` completed cleanly.
+
+---
+
+## Blue problem links & even column alignment across tables
+
+Per request:
+- **Problem name links**: Restored the blue/indigo accent color (`var(--accent)`) with 600 weight and hover underline across all tables (`ProblemSet.css`).
+- **Even column widths across tables**: Replaced ad-hoc table layout calculations and inline `th` styles with strict, consistent column sizing rules (`th[data-label]`, `td[data-label]`):
+  - Checkbox: 44px
+  - ID: 76px (exact 0.0px diff between Problem Set and Lists)
+  - Contest: 220px (exact 0.0px diff)
+  - Problem: flexible (`min-width: 220px`)
+  - Tags / Techniques: 260px (`min-width: 200px`)
+  - Rating: 88px (exact 0.0px diff)
+  - Status: 155px (exact 0.0px diff)
+  - Feedback / Hint: 46px (exact 0.0px diff)
+
+Verified with automated browser inspection (8/8 checks pass, 0.0px column variance, zero console errors).

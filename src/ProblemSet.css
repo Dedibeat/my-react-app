@@ -219,7 +219,7 @@ table {
 }
 
 th, td {
-  padding: 11px 14px;
+  padding: 10px 14px;
   text-align: left;
   vertical-align: middle;
   border-bottom: 1px solid var(--border);
@@ -239,9 +239,86 @@ thead th {
   border-bottom: 1px solid var(--border);
 }
 
-.cell-check {
-  width: 42px;
+/* Consistent column sizing across Problem Set and Lists */
+th.cell-check,
+td.cell-check {
+  width: 44px;
+  min-width: 44px;
+  max-width: 44px;
   text-align: center;
+  padding: 10px 8px;
+}
+
+th[data-label="ID"],
+td[data-label="ID"],
+.cell-id {
+  width: 76px;
+  min-width: 76px;
+  max-width: 76px;
+}
+
+th[data-label="Code"],
+td[data-label="Code"] {
+  width: 90px;
+  min-width: 90px;
+  max-width: 100px;
+}
+
+th[data-label="Contest"],
+td[data-label="Contest"] {
+  width: 180px;
+  min-width: 160px;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+th[data-label="Problem"],
+td[data-label="Problem"] {
+  min-width: 220px;
+}
+
+th[data-label="Tags"],
+td[data-label="Tags"],
+th[data-label="Techniques"],
+td[data-label="Techniques"] {
+  width: 260px;
+  min-width: 200px;
+}
+
+th[data-label="Rating"],
+td[data-label="Rating"] {
+  width: 88px;
+  min-width: 80px;
+  white-space: nowrap;
+}
+
+th[data-label="Status"],
+td[data-label="Status"],
+.cell-status {
+  width: 155px;
+  min-width: 145px;
+  white-space: nowrap;
+}
+
+th[data-label="Hint"],
+td[data-label="Hint"],
+.cell-hint {
+  width: 44px;
+  min-width: 44px;
+  text-align: center;
+  padding: 10px 4px;
+}
+
+th[data-label="Feedback"],
+td[data-label="Feedback"],
+.cell-feedback {
+  width: 46px;
+  min-width: 46px;
+  max-width: 46px;
+  text-align: center;
+  padding: 10px 8px;
 }
 .cell-check input {
   width: 16px;
@@ -298,13 +375,13 @@ tbody tr.row-solved:hover td {
 }
 
 .problem-link {
-  font-weight: 500;
-  color: var(--text);
+  font-weight: 600;
+  color: var(--accent);
   text-decoration: none;
   transition: color 0.12s;
 }
 .problem-link:hover {
-  color: var(--accent);
+  color: var(--accent-hover);
   text-decoration: underline;
 }
 

@@ -211,14 +211,14 @@ export default function Olympiad({ problems, setProblems, loaded, isAdmin }) {
           <table id="problemsTable" className="oly-table" aria-describedby="summary">
             <thead>
               <tr>
-                <th style={{ width: 70 }} data-label="ID">ID</th>
+                <th data-label="ID">ID</th>
                 <th data-label="Contest">Contest</th>
                 <th data-label="Problem">Problem</th>
                 <th data-label="Techniques">Techniques</th>
-                <th style={{ width: 44 }} aria-label="Practice hint" data-label="Hint" />
+                <th aria-label="Practice hint" data-label="Hint" />
                 <th data-label="Rating">Rating</th>
-                <th style={{ width: 180 }} title="Click a cell to edit" data-label="Status">Status</th>
-                <th style={{ width: 44 }} aria-label="Feedback" data-label="Feedback" />
+                <th title="Click a cell to edit" data-label="Status">Status</th>
+                <th aria-label="Feedback" data-label="Feedback" />
               </tr>
             </thead>
             <tbody>

@@ -195,12 +195,12 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded, isAdmin 
           <table id="problemsTable" className={`cf-table ${showTag ? "" : "cf-tags-hidden"}`} aria-describedby="summary">
             <thead>
               <tr>
-                <th style={{ width: 80 }} data-label="Code">Code</th>
+                <th data-label="Code">Code</th>
                 <th data-label="Problem">Problem</th>
                 <th data-label="Tags">Tags</th>
                 <th data-label="Rating">Rating</th>
-                <th style={{ width: 180 }} title="Click a cell to edit" data-label="Status">Status</th>
-                <th style={{ width: 44 }} aria-label="Feedback" data-label="Feedback" />
+                <th title="Click a cell to edit" data-label="Status">Status</th>
+                <th aria-label="Feedback" data-label="Feedback" />
               </tr>
             </thead>
             <tbody>
