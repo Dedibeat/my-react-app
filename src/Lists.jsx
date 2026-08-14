@@ -43,6 +43,7 @@ export default function Lists({
   const [renamingId, setRenamingId] = useState(null); // list id, or 'detail'
   const [renameVal, setRenameVal] = useState('');
   const [busy, setBusy] = useState(false);
+  const [editing, setEditing] = useState(false);
 
   // members-table controls
   const [showTag, setShowTag] = useState(false);
@@ -50,11 +51,15 @@ export default function Lists({
   const [sort, setSort] = useState('rating_desc');
   const [searchInput, setSearchInput] = useState('');
   const [committedSearch, setCommittedSearch] = useState('');
+  const [ratingMin, setRatingMin] = useState(null);
+  const [ratingMax, setRatingMax] = useState(null);
   const [selected, setSelected] = useState(() => new Set());
 
-  // add-panel controls
+  // add/remove-by-search controls
   const [addInput, setAddInput] = useState('');
   const [addCommitted, setAddCommitted] = useState('');
+  const [removeInput, setRemoveInput] = useState('');
+  const [removeCommitted, setRemoveCommitted] = useState('');
 
   const pool = useMemo(() => {
     const m = new Map();
@@ -77,6 +82,8 @@ export default function Lists({
 
   useEffect(() => {
     if (selectedId == null) { setDetail(null); return; }
+    setEditing(false);
+    setSelected(new Set());
     let cancelled = false;
     setDetailLoading(true);
     api.getList(selectedId)
@@ -125,6 +132,13 @@ export default function Lists({
       list = list.filter((p) => !p.status);
     }
 
+    if (ratingMin != null) {
+      list = list.filter((p) => p.rating >= ratingMin);
+    }
+    if (ratingMax != null) {
+      list = list.filter((p) => p.rating <= ratingMax);
+    }
+
     if (searchAst) {
       list = list.filter((p) => evalSearchAst(searchAst, hayFor(p)));
     }
@@ -139,7 +153,7 @@ export default function Lists({
       sorted.sort((a, b) => Number(a.id) - Number(b.id));
     }
     return sorted;
-  }, [members, filter, sort, searchAst]);
+  }, [members, filter, sort, ratingMin, ratingMax, searchAst]);
 
   const capped = visible.slice(0, RENDER_CAP);
 
@@ -151,6 +165,15 @@ export default function Lists({
     if (!ast) return [];
     return [...pool.values()].filter((p) => !memberSet.has(p.id) && evalSearchAst(ast, hayFor(p)));
   }, [addCommitted, pool, memberSet]);
+
+  // ---- remove-by-search: matches within the current list ----
+  const removeMatches = useMemo(() => {
+    if (!removeCommitted.trim()) return [];
+    let ast;
+    try { ast = parseSearch(removeCommitted); } catch { return []; }
+    if (!ast) return [];
+    return members.list.filter((p) => evalSearchAst(ast, hayFor(p)));
+  }, [removeCommitted, members]);
 
   async function refreshDetail() {
     const fresh = await api.getList(detail.id);
@@ -217,6 +240,25 @@ export default function Lists({
       );
     } catch (err) {
       showToast(`Add failed: ${err.message}`, 'error');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function removeAllMatches() {
+    const ids = removeMatches.map((p) => Number(p.id));
+    if (!ids.length || busy) return;
+    if (!window.confirm(`Remove ${ids.length} ${ids.length === 1 ? 'problem' : 'problems'} from this list?`)) return;
+    setBusy(true);
+    try {
+      await api.removeFromList(detail.id, ids);
+      await refreshDetail();
+      setRemoveCommitted('');
+      setRemoveInput('');
+      reloadLists();
+      showToast(`Removed ${ids.length}`, 'success');
+    } catch (err) {
+      showToast(`Remove failed: ${err.message}`, 'error');
     } finally {
       setBusy(false);
     }
@@ -388,6 +430,13 @@ export default function Lists({
         <span className="modal-spacer" />
         {detail && (
           <>
+            <button
+              type="button"
+              className={`btn ${editing ? 'btn-primary' : ''}`}
+              onClick={() => { setEditing(!editing); setSelected(new Set()); }}
+            >
+              {editing ? 'Done editing' : 'Edit problems'}
+            </button>
             <button type="button" className="btn" onClick={() => { setRenamingId('detail'); setRenameVal(detail.name); }}>
               Rename
             </button>
@@ -398,7 +447,7 @@ export default function Lists({
         )}
       </div>
 
-      {detail && (
+      {detail && editing && (
         <div className="add-panel">
           <div className="add-panel-row">
             <input
@@ -443,6 +492,56 @@ export default function Lists({
                 <li key={p.id}>{p.contest} · {p.name}</li>
               ))}
               {addMatches.length > 15 && <li className="muted">…and {addMatches.length - 15} more</li>}
+            </ul>
+          )}
+        </div>
+      )}
+
+      {detail && editing && (
+        <div className="add-panel">
+          <div className="add-panel-row">
+            <input
+              type="search"
+              placeholder="Remove problems by search — name, tags, code (and, or, not, ())"
+              value={removeInput}
+              onChange={(e) => setRemoveInput(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') setRemoveCommitted(removeInput); }}
+            />
+            <button
+              type="button"
+              className="btn btn-icon"
+              onClick={() => setRemoveCommitted(removeInput)}
+              aria-label="Search"
+              title="Search"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </button>
+          </div>
+          {removeCommitted.trim() && (
+            <div className="add-panel-result">
+              <span>
+                {removeMatches.length} {removeMatches.length === 1 ? 'match' : 'matches'} to remove for “{removeCommitted}”
+              </span>
+              <button
+                type="button"
+                className="btn btn-primary"
+                disabled={removeMatches.length === 0 || busy}
+                onClick={removeAllMatches}
+              >
+                {busy ? 'Removing…' : `Remove all ${removeMatches.length}`}
+              </button>
+            </div>
+          )}
+          {removeMatches.length > 0 && (
+            <ul className="add-preview">
+              {removeMatches.slice(0, 15).map((p) => (
+                <li key={p.id}>{p.contest} · {p.name}</li>
+              ))}
+              {removeMatches.length > 15 && <li className="muted">…and {removeMatches.length - 15} more</li>}
             </ul>
           )}
         </div>
@@ -494,12 +593,34 @@ export default function Lists({
                 </svg>
               </button>
             </label>
+            <label className="rating-filter">
+              Rating:
+              <input
+                type="number"
+                className="rating-input"
+                placeholder="min"
+                min={0}
+                step={100}
+                value={ratingMin ?? ""}
+                onChange={(e) => setRatingMin(e.target.value ? Number(e.target.value) : null)}
+              />
+              <span className="rating-dash">–</span>
+              <input
+                type="number"
+                className="rating-input"
+                placeholder="max"
+                min={0}
+                step={100}
+                value={ratingMax ?? ""}
+                onChange={(e) => setRatingMax(e.target.value ? Number(e.target.value) : null)}
+              />
+            </label>
             <button className="btn" onClick={() => setShowTag(!showTag)}>
               {showTag ? 'Hide tags' : 'Show tags'}
             </button>
           </div>
 
-          {selected.size > 0 && (
+          {editing && selected.size > 0 && (
             <div className="bulk-bar">
               <span>{selected.size} selected</span>
               <button type="button" className="btn btn-primary" disabled={busy} onClick={removeSelected}>
@@ -518,14 +639,16 @@ export default function Lists({
             <table id="problemsTable" className={showTag ? "" : "tags-hidden"} aria-describedby="summary">
               <thead>
                 <tr>
-                  <th className="cell-check">
-                    <input
-                      type="checkbox"
-                      aria-label="Select all shown"
-                      checked={visible.length > 0 && visible.every((p) => selected.has(p.id))}
-                      onChange={toggleAllSelected}
-                    />
-                  </th>
+                  {editing && (
+                    <th className="cell-check">
+                      <input
+                        type="checkbox"
+                        aria-label="Select all shown"
+                        checked={visible.length > 0 && visible.every((p) => selected.has(p.id))}
+                        onChange={toggleAllSelected}
+                      />
+                    </th>
+                  )}
                   <th style={{ width: 70 }} data-label="ID">ID</th>
                   <th data-label="Contest">Contest</th>
                   <th data-label="Problem">Problem</th>
@@ -538,19 +661,21 @@ export default function Lists({
               <tbody>
                 {visible.length === 0 && (
                   <tr className="empty-row">
-                    <td colSpan={8}>No problems match your filters.</td>
+                    <td colSpan={editing ? 8 : 7}>No problems match your filters.</td>
                   </tr>
                 )}
                 {capped.map((p) => (
                   <tr key={p.id} className={p.status === "AC" ? "row-solved" : ""}>
-                    <td className="cell-check">
-                      <input
-                        type="checkbox"
-                        aria-label={`Select ${p.name}`}
-                        checked={selected.has(p.id)}
-                        onChange={() => toggleSelected(p.id)}
-                      />
-                    </td>
+                    {editing && (
+                      <td className="cell-check">
+                        <input
+                          type="checkbox"
+                          aria-label={`Select ${p.name}`}
+                          checked={selected.has(p.id)}
+                          onChange={() => toggleSelected(p.id)}
+                        />
+                      </td>
+                    )}
                     <td className="cell-id" data-label="ID">{p.id}</td>
                     <td data-label="Contest">{p.contest}</td>
                     <td data-label="Problem">

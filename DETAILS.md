@@ -1482,3 +1482,44 @@ rating filter (1900–2100 → 189), tags hidden-by-default + toggle works, list
 create, add-panel search "dp AND graph" → 326 matches with auto-visible preview,
 add-all works, member-table checkboxes + bulk remove bar. `npm run build` clean;
 `npm run lint` only the pre-existing `api.js` no-empty error.
+
+---
+
+## Lists: edit mode + bulk remove-by-search + rating range
+
+Follow-up corrections/additions to the Lists page.
+
+### Edit mode (correction)
+
+The add-by-search panel and checkboxes were still always visible on the list
+detail, which was the "bloat" the user wanted gone. They are now tucked behind
+an **"Edit problems" / "Done editing"** toggle in the detail header:
+
+- Default view: clean member table (7 columns, no checkbox column, no search-add
+  panel).
+- Edit mode: shows the add-by-search panel, a **remove-by-search panel**, the
+  checkbox column, and the bulk "Remove from list" bar.
+- `editing` resets to off (and selection clears) when switching lists.
+
+### Bulk remove by search (new)
+
+A second panel in edit mode mirrors add-by-search but matches against the
+list's **current members**:
+
+- Boolean search (same `and/or/not/(...)` syntax), live match count
+  ("N matches to remove"), auto-visible 15-item preview, and a
+  "Remove all N" button (with a confirm, like the checkbox bulk-remove).
+- Reuses the backend `DELETE /api/lists/{id}/items` batch endpoint.
+
+### Rating range filter (new)
+
+The member table controls now include the same **Rating min–max** inputs as the
+main Problem Set page; `visible` filters on `p.rating` before sort.
+
+### Verification
+
+Headless Chrome (local uvicorn + Vite): **11/11 pass, zero console errors** —
+rating inputs present, add-by-search adds 1568 "graph" problems, two panels
+render in edit mode, "graph AND tree" reports 369 to remove and removes them
+(header count 1568 → 1199), rating min filter narrows rows. `npm run build`
+clean; `npm run lint` only the pre-existing `api.js` no-empty error.
