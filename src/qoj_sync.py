@@ -66,6 +66,19 @@ def parse_qoj_profile_html(html: str) -> tuple[list[int], list[int]]:
     return accepted, tried
 
 
+def normalize_qoj_cookie(cookie_str: str | None) -> str:
+    """Normalize cookie input so both raw token and key=val strings work."""
+    if not cookie_str:
+        return ""
+    cookie_str = cookie_str.strip()
+    if not cookie_str:
+        return ""
+    # If user pasted just the token value (e.g. "vognkrelsevjan6d4fsd6180v0"), prepend UOJSESSID=
+    if "=" not in cookie_str and len(cookie_str) >= 8:
+        return f"UOJSESSID={cookie_str}"
+    return cookie_str
+
+
 def fetch_qoj_profile(handle: str, cookies: str | None = None) -> str:
     """Fetch user profile HTML from qoj.ac using browser headers and session cookies."""
     url = f"https://qoj.ac/user/profile/{urllib.parse.quote(handle)}"
@@ -78,7 +91,8 @@ def fetch_qoj_profile(handle: str, cookies: str | None = None) -> str:
     req.add_header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
     req.add_header("Accept-Language", "en-US,en;q=0.9")
 
-    cookie_str = cookies or os.environ.get("QOJ_COOKIES", "")
+    raw_cookie = cookies or os.environ.get("QOJ_COOKIES", "")
+    cookie_str = normalize_qoj_cookie(raw_cookie)
     if cookie_str:
         req.add_header("Cookie", cookie_str)
 
@@ -124,7 +138,8 @@ def sync_user_qoj(
     saved_cookie = row[1] if row else None
 
     target_handle = (handle or "").strip() or saved_handle
-    target_cookie = (cookies or "").strip() or saved_cookie
+    raw_cookie = (cookies or "").strip() or saved_cookie
+    target_cookie = normalize_qoj_cookie(raw_cookie)
 
     accepted: list[int] = []
     tried: list[int] = []

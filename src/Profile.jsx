@@ -223,14 +223,16 @@ export default function Profile({ user, problems, loaded, reloadStatuses }) {
     setSyncing(true);
     setSyncMsg(null);
     try {
-      const res = await api.qojSync(handle, qojCookie.trim() || undefined, undefined, undefined);
+      const rawCookie = qojCookie.trim();
+      const formattedCookie = rawCookie && !rawCookie.includes('=') ? `UOJSESSID=${rawCookie}` : rawCookie;
+      const res = await api.qojSync(handle, formattedCookie || undefined, undefined, undefined);
       if (reloadStatuses) await reloadStatuses();
       setQojInfo({
         connected: true,
         handle: res.handle,
         last_synced: new Date().toISOString(),
         auto_sync: true,
-        has_cookie: Boolean(qojCookie.trim() || qojInfo?.has_cookie),
+        has_cookie: Boolean(rawCookie || qojInfo?.has_cookie),
         solved_count: res.solved,
       });
       setSyncMsg({
@@ -499,7 +501,7 @@ export default function Profile({ user, problems, loaded, reloadStatuses }) {
                 <input
                   type="text"
                   className="qoj-cookie-input"
-                  placeholder="UOJSESSID=... (from browser DevTools Application → Cookies)"
+                  placeholder="Paste UOJSESSID value (e.g. vognkrelsevjan6d4fsd6180v0)"
                   value={qojCookie}
                   onChange={(e) => setQojCookie(e.target.value)}
                 />

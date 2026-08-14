@@ -1636,3 +1636,12 @@ Added seamless 1-click and background automated synchronization with QOJ.ac acco
 
 ### 6. Verification
 - 12/12 end-to-end automated tests passed: connected `Dedibeat` (84 AC, 16 WA on QOJ), verified 57 matching ICPC problems marked `AC`, verified `WA` on tried problems, 1-click sync and disconnect tested. Zero console errors.
+
+---
+
+## Auto-normalize raw session tokens in QOJ sync
+
+Fixed session cookie parsing:
+- Users copying raw token values (e.g. `vognkrelsevjan6d4fsd6180v0` without `UOJSESSID=`) previously resulted in unauthenticated headers.
+- Added `normalize_qoj_cookie()` in `src/qoj_sync.py` and auto-formatting in `src/Profile.jsx` to automatically prepend `UOJSESSID=` if not present.
+- Tested and verified with raw token payload: successfully synced 84 AC and 16 WA problems.
