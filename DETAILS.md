@@ -1719,3 +1719,14 @@ Integrated Petrozavodsk camp contests and ICPC World Finals contests from QOJ wi
   - Color-coded Codeforces difficulty rating badges display correctly
   - Boolean and text search correctly indexes new contests and problems (e.g. "Turning Red" rated 1931, "Announcements" rated 1582)
 
+---
+
+## Fix Dev Mode API Proxy & CORS Bypass (`vite.config.js`, `src/api.js`)
+
+- **Root Cause of "Failed to fetch" in dev**: `src/api.js` was directly querying `https://my-react-app-33zw.onrender.com` in dev mode. When developers access the app via `http://127.0.0.1:5173` or non-whitelisted localhost ports, the browser blocked the requests with CORS.
+- **Fix**:
+  - In `src/api.js`: in dev mode (`import.meta.env.DEV`), `API_BASE` defaults to relative `""` (`/api/*`).
+  - In `vite.config.js`: configured Vite's dev server proxy to forward `/api` to Render (`https://my-react-app-33zw.onrender.com`) with `changeOrigin: true` (or to `process.env.VITE_PROXY_TARGET` if running local uvicorn).
+  - All dev requests are now same-origin to Vite with zero CORS errors and zero manual configuration needed.
+
+

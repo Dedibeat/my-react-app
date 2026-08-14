@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
@@ -6,7 +7,11 @@ export default defineConfig({
   publicDir: 'data',
   server: {
     proxy: {
-      '/api': 'http://127.0.0.1:8000',
+      '/api': {
+        target: process.env.VITE_PROXY_TARGET || 'https://my-react-app-33zw.onrender.com',
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
 })
