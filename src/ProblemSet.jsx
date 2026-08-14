@@ -264,7 +264,7 @@ export default function ProblemSet({ problems, setProblems, loaded, isAdmin }) {
     }
 
     if (searchAst) {
-      const hay = (p) => `${p.name} ${p.searchKey} ${p.tags}`.toLowerCase();
+      const hay = (p) => `${p.id} ${p.name} ${p.searchKey} ${p.tags}`.toLowerCase();
       list = list.filter((p) => evalSearchAst(searchAst, hay(p)));
     }
 

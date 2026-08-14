@@ -18,8 +18,8 @@ function isCfId(id) {
 
 function hayFor(p) {
   return isCfId(p.id)
-    ? `${p.name} ${p.code} ${p.tags}`.toLowerCase()
-    : `${p.name} ${p.searchKey} ${p.tags}`.toLowerCase();
+    ? `${p.id} ${p.name} ${p.code} ${p.tags}`.toLowerCase()
+    : `${p.id} ${p.name} ${p.searchKey} ${p.tags}`.toLowerCase();
 }
 
 function SkeletonCard() {

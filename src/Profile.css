@@ -297,10 +297,207 @@
   color: var(--text-muted);
 }
 
+/* ---------- QOJ Account Sync Card ---------- */
+.qoj-card {
+  display: grid;
+  gap: 14px;
+  border-left: 3px solid var(--accent);
+}
+
+.qoj-card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.qoj-card-title-row .profile-card-title {
+  margin-bottom: 0;
+}
+
+.qoj-badge-connected {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-soft);
+  color: var(--green);
+  border: 1px solid var(--green-border);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.qoj-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  display: inline-block;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.qoj-desc {
+  margin: 6px 0 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+.qoj-user-link {
+  color: var(--accent);
+  text-decoration: none;
+}
+.qoj-user-link:hover {
+  text-decoration: underline;
+}
+
+.qoj-connected-view {
+  display: grid;
+  gap: 12px;
+}
+
+.qoj-meta-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 8px 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+}
+.qoj-meta-item {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+.qoj-meta-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.qoj-meta-val {
+  font-weight: 600;
+  color: var(--text);
+}
+.qoj-meta-val-active {
+  color: var(--green);
+}
+
+.qoj-connected-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.qoj-form {
+  display: grid;
+  gap: 10px;
+}
+
+.qoj-inputs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.qoj-handle-input {
+  flex: 1 1 200px;
+  min-width: 180px;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+}
+.qoj-handle-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.qoj-sync-btn {
+  padding: 8px 18px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.qoj-cookie-toggle {
+  align-self: flex-start;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 2px 0;
+  transition: color 0.15s;
+}
+.qoj-cookie-toggle:hover {
+  color: var(--accent);
+}
+
+.qoj-cookie-box {
+  display: grid;
+  gap: 6px;
+  animation: fadeIn 0.15s ease;
+}
+
+.qoj-cookie-input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 0.8125rem;
+  font-family: monospace;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.qoj-cookie-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+.qoj-cookie-tip {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.qoj-cookie-tip code {
+  background: var(--surface-2);
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  font-size: 0.75rem;
+}
+
+.qoj-sync-msg {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  animation: fadeIn 0.15s ease;
+}
+.qoj-sync-msg-success {
+  background: var(--green-soft);
+  color: var(--green);
+  border: 1px solid var(--green-border);
+}
+.qoj-sync-msg-error {
+  background: var(--red-soft);
+  color: var(--red);
+  border: 1px solid var(--red-border);
+}
+
 @media (max-width: 768px) {
   .profile-grid { grid-template-columns: 1fr; }
   .profile-card { padding: 14px 16px; }
   /* ProblemSet.css makes .status-pill full-width on mobile; keep activity pills compact */
   .activity-pill { width: auto; min-height: 0; }
   .activity-stats { grid-template-columns: repeat(2, 1fr); }
+  .qoj-inputs { flex-direction: column; }
+  .qoj-sync-btn { width: 100%; min-height: 40px; }
+  .qoj-connected-actions { flex-direction: column; align-items: stretch; }
+  .qoj-connected-actions .btn { width: 100%; min-height: 40px; }
 }

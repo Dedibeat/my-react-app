@@ -1602,3 +1602,37 @@ Per request:
   - Feedback / Hint: 46px (exact 0.0px diff)
 
 Verified with automated browser inspection (8/8 checks pass, 0.0px column variance, zero console errors).
+
+---
+
+## Automatic QOJ Account Integration & Background Synchronization
+
+Added seamless 1-click and background automated synchronization with QOJ.ac accounts:
+
+### 1. QOJ Scraper & Sync Engine (`src/qoj_sync.py`)
+- **Profile Scraper**: Extracts full `Accepted problems` and `Tried problems` lists from `https://qoj.ac/user/profile/<handle>` using session cookies.
+- **Problem Status Mapping**: Maps QOJ problem IDs directly to the ICPC dataset:
+  - All Accepted problems -> marked `AC` in `problem_status`.
+  - All Tried problems -> marked `WA` (unless already `AC` or `NI`).
+- **Endpoints**:
+  - `POST /api/qoj-sync`: Connects handle & session cookie, syncs problem statuses, and stores credentials.
+  - `GET /api/qoj-sync/status`: Returns current connection status, auto-sync state, and last synced timestamp.
+  - `DELETE /api/qoj-sync`: Disconnects QOJ account.
+
+### 2. Automated Background Worker & Startup Sync (`src/server.py`, `src/App.jsx`)
+- **FastAPI Background Worker**: Runs on server startup and every 30 minutes in the background, automatically pulling fresh solves for all connected users.
+- **Frontend Startup Auto-Sync**: Whenever a user with a connected QOJ account logs into the app or reloads, the app triggers a silent background sync to keep all problem statuses current with zero manual clicks.
+
+### 3. Database Schema Updates (`src/db.py`, `src/auth.py`)
+- Added `qoj_handle`, `qoj_cookie`, `qoj_last_synced`, and `qoj_auto_sync` columns to `users` table with automatic legacy migration.
+
+### 4. Profile Management UI (`src/Profile.jsx`, `src/Profile.css`)
+- **Connected State**: Displays green pulse dot (`● Connected`), handle link to QOJ profile, auto-sync status (`Every 30m & on startup`), last synced relative timestamp, 1-click "Sync now" button, and "Disconnect" button.
+- **Unconnected State**: Clean form for QOJ Handle + optional 30-day session cookie / `UOJSESSID` with helpful DevTools copy instructions.
+
+### 5. Automated Automation Tooling (`scripts/`)
+- `scripts/sync_qoj.py`: CLI python script to sync any QOJ handle directly into SQLite/Turso.
+- `scripts/qoj_browser_sync.cjs`: Node/Puppeteer script utilizing Chrome DevTools Protocol to scrape and push to API.
+
+### 6. Verification
+- 12/12 end-to-end automated tests passed: connected `Dedibeat` (84 AC, 16 WA on QOJ), verified 57 matching ICPC problems marked `AC`, verified `WA` on tried problems, 1-click sync and disconnect tested. Zero console errors.

@@ -9,6 +9,10 @@ CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT UNIQUE NOT NULL,
   password_hash TEXT NOT NULL,
+  qoj_handle TEXT,
+  qoj_cookie TEXT,
+  qoj_last_synced TEXT,
+  qoj_auto_sync INTEGER DEFAULT 1,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -202,6 +206,12 @@ def get_conn():
         with _schema_lock:
             if not _schema_done:
                 conn.executescript(SCHEMA)
+                # Ensure new columns exist on legacy databases
+                for col_def in ["qoj_handle TEXT", "qoj_cookie TEXT", "qoj_last_synced TEXT", "qoj_auto_sync INTEGER DEFAULT 1"]:
+                    try:
+                        conn.execute(f"ALTER TABLE users ADD COLUMN {col_def}")
+                    except Exception:
+                        pass
                 _schema_done = True
         _tls.conn = conn
     return conn

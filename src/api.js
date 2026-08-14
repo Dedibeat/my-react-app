@@ -23,7 +23,9 @@ async function request(path, opts = {}) {
     try {
       const body = await res.json();
       if (body.detail) msg = body.detail;
-    } catch {}
+    } catch {
+      /* ignore JSON parse error */
+    }
     throw new Error(msg);
   }
   return res.status === 204 ? null : res.json();
@@ -105,10 +107,21 @@ export const api = {
       body: JSON.stringify({ problem_ids: problemIds }),
     });
   },
-  async cfSync(handle) {
-    return request("/api/cf-sync", {
+  async qojSync(handle, cookies, solved, attempted) {
+    return request("/api/qoj-sync", {
       method: "POST",
-      body: JSON.stringify({ handle }),
+      body: JSON.stringify({
+        handle: handle || undefined,
+        cookies: cookies || undefined,
+        solved: solved || undefined,
+        attempted: attempted || undefined,
+      }),
     });
+  },
+  async getQojStatus() {
+    return request("/api/qoj-sync/status");
+  },
+  async disconnectQoj() {
+    return request("/api/qoj-sync", { method: "DELETE" });
   },
 };

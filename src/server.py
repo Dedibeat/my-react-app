@@ -1,3 +1,4 @@
+import asyncio
 import os
 import logging
 import traceback
@@ -8,6 +9,7 @@ from fastapi.responses import JSONResponse
 
 from src.auth import router as auth_router
 from src.cf_sync import router as cf_sync_router
+from src.qoj_sync import router as qoj_sync_router, run_qoj_auto_sync_all
 from src.db import get_conn
 from src.feedback import router as feedback_router
 from src.lists import router as lists_router
@@ -31,11 +33,22 @@ app.include_router(status_router)
 app.include_router(feedback_router)
 app.include_router(lists_router)
 app.include_router(cf_sync_router)
+app.include_router(qoj_sync_router)
+
+
+async def _qoj_background_worker():
+    # Run a quick sync shortly after startup, then every 30 minutes
+    await asyncio.sleep(5)
+    await run_qoj_auto_sync_all()
+    while True:
+        await asyncio.sleep(1800)
+        await run_qoj_auto_sync_all()
 
 
 @app.on_event("startup")
-def _startup():
+async def _startup():
     get_conn()
+    asyncio.create_task(_qoj_background_worker())
 
 
 @app.exception_handler(Exception)

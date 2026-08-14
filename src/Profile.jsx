@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import './Profile.css';
 import { IMPORTANCE_COLOR, getStatusClass } from './problemMeta.js';
+import { api } from './api.js';
 
 const IMPORTANCE_LEVELS = ['p5', 'p4', 'p3', 'p2', 'p1'];
 const STATUS_KEYS = ['AC', 'WA', 'TL', 'RE', 'NI'];
@@ -198,7 +199,65 @@ function relativeTime(date) {
   return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
-export default function Profile({ user, problems, loaded }) {
+export default function Profile({ user, problems, loaded, reloadStatuses }) {
+  const [qojInfo, setQojInfo] = useState(null);
+  const [qojHandle, setQojHandle] = useState(user?.qoj_handle || 'Dedibeat');
+  const [qojCookie, setQojCookie] = useState('');
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [syncing, setSyncing] = useState(false);
+  const [syncMsg, setSyncMsg] = useState(null);
+
+  useEffect(() => {
+    api.getQojStatus()
+      .then((info) => {
+        setQojInfo(info);
+        if (info.handle) setQojHandle(info.handle);
+      })
+      .catch(() => { /* ignore */ });
+  }, []);
+
+  async function handleQojSync(e) {
+    if (e) e.preventDefault();
+    const handle = qojHandle.trim();
+    if (!handle || syncing) return;
+    setSyncing(true);
+    setSyncMsg(null);
+    try {
+      const res = await api.qojSync(handle, qojCookie.trim() || undefined, undefined, undefined);
+      if (reloadStatuses) await reloadStatuses();
+      setQojInfo({
+        connected: true,
+        handle: res.handle,
+        last_synced: new Date().toISOString(),
+        auto_sync: true,
+        has_cookie: Boolean(qojCookie.trim() || qojInfo?.has_cookie),
+        solved_count: res.solved,
+      });
+      setSyncMsg({
+        kind: 'success',
+        text: `✓ Synced ${res.solved} AC and ${res.attempted} WA problems from QOJ (${res.handle})`,
+      });
+    } catch (err) {
+      setSyncMsg({
+        kind: 'error',
+        text: `Sync failed: ${err.message}`,
+      });
+    } finally {
+      setSyncing(false);
+    }
+  }
+
+  async function handleDisconnect() {
+    if (!window.confirm('Disconnect QOJ account? Your existing problem statuses will be kept.')) return;
+    try {
+      await api.disconnectQoj();
+      setQojInfo({ connected: false });
+      setSyncMsg({ kind: 'success', text: 'Disconnected from QOJ.' });
+    } catch (err) {
+      setSyncMsg({ kind: 'error', text: `Disconnect failed: ${err.message}` });
+    }
+  }
+
   const stats = useMemo(() => {
     const total = problems.length;
     let solved = 0;
@@ -292,6 +351,171 @@ export default function Profile({ user, problems, loaded }) {
             ))}
           </div>
         </div>
+      </div>
+
+      <div className="profile-card qoj-card">
+        <div className="qoj-card-head">
+          <div className="qoj-card-title-row">
+            <h3 className="profile-card-title">QOJ Account Integration</h3>
+            {qojInfo?.connected && (
+              <span className="qoj-badge-connected" title="Auto-sync active">
+                <span className="qoj-pulse-dot" /> Connected
+              </span>
+            )}
+          </div>
+          <p className="qoj-desc">
+            {qojInfo?.connected ? (
+              <>
+                Connected to QOJ handle <a href={`https://qoj.ac/user/profile/${qojInfo.handle}`} target="_blank" rel="noopener noreferrer" className="qoj-user-link"><b>{qojInfo.handle}</b></a>. Problem statuses sync automatically in the background on login and every 30 minutes.
+              </>
+            ) : (
+              <>
+                Connect your <b>qoj.ac</b> account to automatically synchronize your solved and attempted ICPC problem statuses across the app.
+              </>
+            )}
+          </p>
+        </div>
+
+        {qojInfo?.connected ? (
+          <div className="qoj-connected-view">
+            <div className="qoj-meta-row">
+              <span className="qoj-meta-item">
+                <span className="qoj-meta-label">Auto-sync:</span>
+                <span className="qoj-meta-val qoj-meta-val-active">Every 30m & on startup</span>
+              </span>
+              {qojInfo.last_synced && (
+                <span className="qoj-meta-item">
+                  <span className="qoj-meta-label">Last synced:</span>
+                  <span className="qoj-meta-val">{relativeTime(parseTs(qojInfo.last_synced))}</span>
+                </span>
+              )}
+            </div>
+
+            <div className="qoj-connected-actions">
+              <button
+                type="button"
+                className="btn btn-primary qoj-sync-btn"
+                disabled={syncing}
+                onClick={() => handleQojSync()}
+              >
+                {syncing ? (
+                  <>
+                    <span className="spinner" />
+                    Syncing…
+                  </>
+                ) : (
+                  <>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polyline points="23 4 23 10 17 10"/>
+                      <polyline points="1 20 1 14 7 14"/>
+                      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                    </svg>
+                    Sync now
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                className="btn btn-ghost btn-sm"
+                onClick={() => setShowAdvanced(!showAdvanced)}
+              >
+                {showAdvanced ? 'Hide cookie' : 'Update session cookie'}
+              </button>
+
+              <button
+                type="button"
+                className="btn btn-danger-ghost btn-sm"
+                onClick={handleDisconnect}
+              >
+                Disconnect
+              </button>
+            </div>
+
+            {showAdvanced && (
+              <form onSubmit={handleQojSync} className="qoj-cookie-box" style={{ marginTop: '10px' }}>
+                <input
+                  type="text"
+                  className="qoj-cookie-input"
+                  placeholder="Paste new UOJSESSID=... if session expired"
+                  value={qojCookie}
+                  onChange={(e) => setQojCookie(e.target.value)}
+                />
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  <button type="submit" className="btn btn-primary btn-sm" disabled={syncing || !qojCookie.trim()}>
+                    Update & Sync
+                  </button>
+                  <p className="qoj-cookie-tip">
+                    QOJ persistent cookies keep auto-sync active for 30+ days.
+                  </p>
+                </div>
+              </form>
+            )}
+          </div>
+        ) : (
+          <form className="qoj-form" onSubmit={handleQojSync}>
+            <div className="qoj-inputs">
+              <input
+                type="text"
+                className="qoj-handle-input"
+                placeholder="QOJ Username (e.g. Dedibeat)"
+                value={qojHandle}
+                onChange={(e) => setQojHandle(e.target.value)}
+                required
+              />
+              <button
+                type="submit"
+                className="btn btn-primary qoj-sync-btn"
+                disabled={syncing || !qojHandle.trim()}
+              >
+                {syncing ? (
+                  <>
+                    <span className="spinner" />
+                    Connecting…
+                  </>
+                ) : (
+                  <>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polyline points="23 4 23 10 17 10"/>
+                      <polyline points="1 20 1 14 7 14"/>
+                      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                    </svg>
+                    Connect & Auto-Sync
+                  </>
+                )}
+              </button>
+            </div>
+
+            <button
+              type="button"
+              className="qoj-cookie-toggle"
+              onClick={() => setShowAdvanced(!showAdvanced)}
+            >
+              {showAdvanced ? '▴ Hide session cookie' : '▾ Session cookie (optional / if Cloudflare protected)'}
+            </button>
+
+            {showAdvanced && (
+              <div className="qoj-cookie-box">
+                <input
+                  type="text"
+                  className="qoj-cookie-input"
+                  placeholder="UOJSESSID=... (from browser DevTools Application → Cookies)"
+                  value={qojCookie}
+                  onChange={(e) => setQojCookie(e.target.value)}
+                />
+                <p className="qoj-cookie-tip">
+                  Tip: Copy <code>UOJSESSID</code> from browser DevTools for 30-day continuous background sync.
+                </p>
+              </div>
+            )}
+          </form>
+        )}
+
+        {syncMsg && (
+          <div className={`qoj-sync-msg qoj-sync-msg-${syncMsg.kind}`}>
+            {syncMsg.text}
+          </div>
+        )}
       </div>
 
       <div className="profile-card">

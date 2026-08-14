@@ -71,6 +71,24 @@ export default function App() {
     try { setLists(await api.getLists()); } catch { /* keep the previous list data */ }
   }
 
+  async function reloadStatuses() {
+    try {
+      const statusMap = await api.getStatus().catch(() => ({}));
+      setProblems((prev) =>
+        prev.map((p) => {
+          const s = statusMap[p.id];
+          return { ...p, status: s?.status || "", statusUpdatedAt: s?.updated_at || null };
+        })
+      );
+      setCfProblems((prev) =>
+        prev.map((p) => {
+          const s = statusMap[String(p.id)];
+          return { ...p, status: s?.status || "", statusUpdatedAt: s?.updated_at || null };
+        })
+      );
+    } catch { /* ignore */ }
+  }
+
   useEffect(() => {
     if (!getToken()) { setAuthLoading(false); return; }
     api.me()
@@ -83,6 +101,16 @@ export default function App() {
     if (!user) { setProblems([]); setCfProblems([]); setLists([]); setLoaded(false); return; }
     let cancelled = false;
     async function load() {
+      // Auto-sync QOJ if user has connected their handle
+      if (user.qoj_handle) {
+        try {
+          await api.qojSync(user.qoj_handle);
+        } catch {
+          /* continue with existing cached statuses if offline/cookie expired */
+        }
+      }
+      if (cancelled) return;
+
       const [dataset, ratings, cf, statusMap] = await Promise.all([
         fetch("/tagged.json").then((r) => r.json()),
         fetch("/problem_rating.json").then((r) => r.json()),
@@ -262,6 +290,7 @@ export default function App() {
                 user={user}
                 problems={problems}
                 loaded={loaded}
+                reloadStatuses={reloadStatuses}
               />
             }
           />
