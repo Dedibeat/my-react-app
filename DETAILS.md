@@ -1422,3 +1422,63 @@ Per request, the served ICPC dataset is now ~1 MB instead of ~14.9 MB.
 `undefined` for every problem — the field was already unused by the UI
 (pre-existing dead field; left as-is). The canonical data retains the solve
 counts if ever needed.
+
+---
+
+## Problem Set cleanup + Lists edit section (this session)
+
+Requested: remove the contest selector, move the add/checkbox affordances out of
+the main browse list, and fix the broken add-panel preview.
+
+### Problem Set — now browse-only
+
+- Removed the **Contest dropdown** and its **"Add contest to list…"** button.
+- Removed the **checkbox column**, the **bulk "Add to list…" bar**, and the
+  **AddToListModal** wiring (`selected`, `addTarget`, `toggleSelected`,
+  `toggleAllSelected`, `openAddModal`, `selectedProblems`, `contests` memo all
+  deleted). Problem Set no longer takes `lists`/`reloadLists` props (App.jsx
+  updated).
+- Kept: quick filter, sort, search, region, rating min/max, show/hide tags, and
+  the 7-column table (ID · Contest · Problem · Tags · Rating · Status · Feedback).
+- Adding problems to a list now happens entirely on the Lists page.
+
+### Lists detail = the "edit section"
+
+- The add-by-search panel + checkbox column + bulk "Remove from list" were
+  already here; they stay as the single place to edit a list's contents.
+- **Fixed the preview**: it was hidden behind a "Preview"/"Hide preview" toggle
+  (you'd see "N matches" but no list until clicking it). Removed the toggle
+  (`addOpen` state); the match preview now shows **automatically** whenever there
+  are matches.
+
+### CSS: nth-child → data-label
+
+Removing the checkbox column shifted every column index, which the shared
+`ProblemSet.css` relied on (`.tags-hidden` used `nth-child(5)`; mobile labels used
+`td:nth-child(N)::before`). Replaced both with `data-label` attributes so column
+layout no longer depends on position:
+
+- Every `<th>`/`<td>` in Problem Set, Lists, Codeforces, and Olympiad now carries
+  a `data-label` (e.g. `data-label="Tags"`).
+- `.tags-hidden` now hides `[data-label="Tags"]`.
+- Mobile card labels use `content: attr(data-label)`; the special problem-wrap
+  and tag-stack rules target `[data-label="Problem"]` / `[data-label="Tags"]`.
+- Removed the now-unused `.contest-select` rule.
+
+This also fixed a pre-existing mobile mislabeling on the (hidden) Codeforces and
+Olympiad pages, which previously had their columns offset by the old nth-child
+labels.
+
+### Note
+
+`AddToListModal.jsx` / `AddToListModal.css` are now orphaned (no importer). Kept
+in case "add contest to list" or bulk-add-from-a-list returns; delete if unused.
+
+### Verification
+
+Headless Chrome against local uvicorn + Vite: **22/22 pass, zero console errors**
+— contest select gone, no checkbox column, 7-column table, 1668 problems load,
+rating filter (1900–2100 → 189), tags hidden-by-default + toggle works, list
+create, add-panel search "dp AND graph" → 326 matches with auto-visible preview,
+add-all works, member-table checkboxes + bulk remove bar. `npm run build` clean;
+`npm run lint` only the pre-existing `api.js` no-empty error.

@@ -91,7 +91,6 @@
 }
 
 .inline-select { width: 140px; }
-.contest-select { width: 260px; }
 
 /* Rating range filter */
 .rating-filter .rating-dash {
@@ -209,9 +208,9 @@ tbody tr.row-solved:hover td { background: #ecf8f0; }
   color: var(--text-muted);
 }
 
-/* Hide 5th column (Tags) when tags-hidden class is present */
-#problemsTable.tags-hidden th:nth-child(5),
-#problemsTable.tags-hidden td:nth-child(5) {
+/* Hide the Tags column when tags-hidden class is present */
+#problemsTable.tags-hidden th[data-label="Tags"],
+#problemsTable.tags-hidden td[data-label="Tags"] {
   display: none;
 }
 
@@ -469,7 +468,6 @@ tbody tr.row-solved:hover td { background: #ecf8f0; }
     padding: 8px 10px;
   }
   .inline-select,
-  .contest-select,
   input[type="search"],
   input[type="number"],
   .controls .btn {
@@ -515,16 +513,8 @@ tbody tr.row-solved:hover td { background: #ecf8f0; }
     font-size: 15px;
   }
 
-  tbody td:nth-child(1)::before { content: none; }
-  tbody td:nth-child(2)::before { content: "ID"; }
-  tbody td:nth-child(3)::before { content: "Contest"; }
-  tbody td:nth-child(4)::before { content: "Problem"; }
-  tbody td:nth-child(5)::before { content: "Tags"; }
-  tbody td:nth-child(6)::before { content: "Rating"; }
-  tbody td:nth-child(7)::before { content: "Status"; }
-  tbody td:nth-child(8)::before { content: "Feedback"; }
-
-  tbody td::before {
+  tbody td[data-label]::before {
+    content: attr(data-label);
     display: inline-block;
     min-width: 90px;
     white-space: nowrap;
@@ -540,11 +530,11 @@ tbody tr.row-solved:hover td { background: #ecf8f0; }
   .empty-row td::before { content: none; }
 
   /* Problem name: allow wrapping */
-  tbody td:nth-child(4) { gap: 12px; }
-  tbody td:nth-child(4) a { max-width: 60%; display: inline-block; word-break: break-word; }
+  tbody td[data-label="Problem"] { gap: 12px; }
+  tbody td[data-label="Problem"] a { max-width: 60%; display: inline-block; word-break: break-word; }
 
   /* tags: stack label above so badges wrap freely */
-  tbody td:nth-child(5) {
+  tbody td[data-label="Tags"] {
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;

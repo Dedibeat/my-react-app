@@ -211,14 +211,14 @@ export default function Olympiad({ problems, setProblems, loaded, isAdmin }) {
           <table id="problemsTable" className="oly-table" aria-describedby="summary">
             <thead>
               <tr>
-                <th style={{ width: 70 }}>ID</th>
-                <th>Contest</th>
-                <th>Problem</th>
-                <th>Techniques</th>
-                <th style={{ width: 44 }} aria-label="Practice hint" />
-                <th>Rating</th>
-                <th style={{ width: 180 }} title="Click a cell to edit">Status</th>
-                <th style={{ width: 44 }} aria-label="Feedback" />
+                <th style={{ width: 70 }} data-label="ID">ID</th>
+                <th data-label="Contest">Contest</th>
+                <th data-label="Problem">Problem</th>
+                <th data-label="Techniques">Techniques</th>
+                <th style={{ width: 44 }} aria-label="Practice hint" data-label="Hint" />
+                <th data-label="Rating">Rating</th>
+                <th style={{ width: 180 }} title="Click a cell to edit" data-label="Status">Status</th>
+                <th style={{ width: 44 }} aria-label="Feedback" data-label="Feedback" />
               </tr>
             </thead>
             <tbody>
@@ -229,26 +229,26 @@ export default function Olympiad({ problems, setProblems, loaded, isAdmin }) {
               )}
               {visible.map((p) => (
                 <tr key={p.id} className={p.status === "AC" ? "row-solved" : ""}>
-                  <td className="cell-id">{p.id}</td>
-                  <td>{p.contest}</td>
-                  <td>
+                  <td className="cell-id" data-label="ID">{p.id}</td>
+                  <td data-label="Contest">{p.contest}</td>
+                  <td data-label="Problem">
                     <a className="problem-link" href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>
                   </td>
-                  <td><TechniquePills techniques={p.olyTechniques} /></td>
-                  <td className="cell-hint">
+                  <td data-label="Techniques"><TechniquePills techniques={p.olyTechniques} /></td>
+                  <td className="cell-hint" data-label="Hint">
                     {p.practiceHint && (
                       <span className="oly-hint" title={p.practiceHint} aria-label="practice hint">💡</span>
                     )}
                   </td>
-                  <td><RatingBadge rating={p.rating} /></td>
-                  <td className="cell-status">
+                  <td data-label="Rating"><RatingBadge rating={p.rating} /></td>
+                  <td className="cell-status" data-label="Status">
                     <StatusEditor
                       value={p.status}
                       onChange={(newStatus) => updateStatus(p.id, newStatus)}
                       celebrating={justSolved === p.id}
                     />
                   </td>
-                  <td className="cell-feedback">
+                  <td className="cell-feedback" data-label="Feedback">
                     <FeedbackButton
                       hasFeedback={Boolean(feedback[p.id])}
                       onClick={() => setFeedbackFor(p)}

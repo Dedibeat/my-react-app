@@ -229,8 +229,6 @@ export default function App() {
                 setProblems={setProblems}
                 loaded={loaded}
                 isAdmin={user.is_admin}
-                lists={lists}
-                reloadLists={reloadLists}
               />
             }
           />

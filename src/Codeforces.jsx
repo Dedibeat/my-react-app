@@ -195,12 +195,12 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded, isAdmin 
           <table id="problemsTable" className={`cf-table ${showTag ? "" : "cf-tags-hidden"}`} aria-describedby="summary">
             <thead>
               <tr>
-                <th style={{ width: 80 }}>Code</th>
-                <th>Problem</th>
-                <th>Tags</th>
-                <th>Rating</th>
-                <th style={{ width: 180 }} title="Click a cell to edit">Status</th>
-                <th style={{ width: 44 }} aria-label="Feedback" />
+                <th style={{ width: 80 }} data-label="Code">Code</th>
+                <th data-label="Problem">Problem</th>
+                <th data-label="Tags">Tags</th>
+                <th data-label="Rating">Rating</th>
+                <th style={{ width: 180 }} title="Click a cell to edit" data-label="Status">Status</th>
+                <th style={{ width: 44 }} aria-label="Feedback" data-label="Feedback" />
               </tr>
             </thead>
             <tbody>
@@ -211,26 +211,26 @@ export default function Codeforces({ cfProblems, setCfProblems, loaded, isAdmin 
               )}
               {capped.map((p) => (
                 <tr key={p.id} className={p.status === "AC" ? "row-solved" : ""}>
-                  <td className="cell-id">{p.code}</td>
-                  <td>
+                  <td className="cell-id" data-label="Code">{p.code}</td>
+                  <td data-label="Problem">
                     <a className="problem-link" href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>
                   </td>
-                  <td>
+                  <td data-label="Tags">
                     <div className="tags">
                       {p.tagList.map((t, i) => (
                         <span key={i} className="tag">{t}</span>
                       ))}
                     </div>
                   </td>
-                  <td><RatingBadge rating={p.rating} /></td>
-                  <td className="cell-status">
+                  <td data-label="Rating"><RatingBadge rating={p.rating} /></td>
+                  <td className="cell-status" data-label="Status">
                     <StatusEditor
                       value={p.status}
                       onChange={(newStatus) => updateStatus(p.id, newStatus)}
                       celebrating={justSolved === p.id}
                     />
                   </td>
-                  <td className="cell-feedback">
+                  <td className="cell-feedback" data-label="Feedback">
                     <FeedbackButton
                       hasFeedback={Boolean(feedback[p.id])}
                       onClick={() => setFeedbackFor(p)}

@@ -2,7 +2,6 @@ import { useState, useMemo } from 'react';
 import './ProblemSet.css';
 import { parseSearch, evalSearchAst } from './search.js';
 import FeedbackModal from './FeedbackModal.jsx';
-import AddToListModal from './AddToListModal.jsx';
 import { ProgressSummary, RatingBadge, StatusEditor, FeedbackButton } from './problemUI.jsx';
 import { useProblemActions } from './useProblemActions.js';
 
@@ -14,10 +13,8 @@ function Controls(props) {
     filter, setFilter,
     sort, setSort,
     region, setRegion, regions,
-    contest, setContest, contests,
     ratingMin, setRatingMin, ratingMax, setRatingMax,
     searchInput, setSearchInput, onCommitSearch,
-    onAddContest,
   } = props;
   return (
     <div className="controls">
@@ -101,21 +98,6 @@ function Controls(props) {
         </select>
       </label>
 
-      <label>
-        Contest:
-        <select
-          id="contestSelect"
-          className="inline-select contest-select"
-          value={contest}
-          onChange={(e) => setContest(e.target.value)}
-        >
-          <option value="all">All</option>
-          {contests.map((c) => (
-            <option key={c.key} value={c.key}>{c.contest} · {c.region} ({c.count})</option>
-          ))}
-        </select>
-      </label>
-
       <label className="rating-filter">
         Rating:
         <input
@@ -139,12 +121,6 @@ function Controls(props) {
         />
       </label>
 
-      {contest !== "all" && (
-        <button type="button" className="btn" onClick={onAddContest} title="Add every problem of this contest to a list">
-          Add contest to list…
-        </button>
-      )}
-
       <button id="toggle-tags" className="btn" onClick={() => setShowTag(!showTag)}>
         {showTag ? 'Hide tags' : 'Show tags'}
       </button>
@@ -154,9 +130,8 @@ function Controls(props) {
 
 function ProblemsTable({
   showTag, problems, capped, updateStatus, justSolved, feedback,
-  onOpenFeedback, selected, onToggle, onToggleAll,
+  onOpenFeedback,
 }) {
-  const allSelected = problems.length > 0 && problems.every((p) => selected.has(p.id));
   return (
     <div className="table-card">
       {problems.length > RENDER_CAP && (
@@ -167,45 +142,29 @@ function ProblemsTable({
       <table id="problemsTable" className={showTag ? "" : "tags-hidden"} aria-describedby="summary">
         <thead>
           <tr>
-            <th className="cell-check">
-              <input
-                type="checkbox"
-                aria-label="Select all shown"
-                checked={allSelected}
-                onChange={onToggleAll}
-              />
-            </th>
-            <th style={{ width: 70 }}>ID</th>
-            <th>Contest</th>
-            <th>Problem</th>
-            <th>Tags</th>
-            <th>Rating</th>
-            <th style={{ width: 180 }} title="Click a cell to edit">Status</th>
-            <th style={{ width: 44 }} aria-label="Feedback" />
+            <th style={{ width: 70 }} data-label="ID">ID</th>
+            <th data-label="Contest">Contest</th>
+            <th data-label="Problem">Problem</th>
+            <th data-label="Tags">Tags</th>
+            <th data-label="Rating">Rating</th>
+            <th style={{ width: 180 }} title="Click a cell to edit" data-label="Status">Status</th>
+            <th style={{ width: 44 }} aria-label="Feedback" data-label="Feedback" />
           </tr>
         </thead>
         <tbody>
           {problems.length === 0 && (
             <tr className="empty-row">
-              <td colSpan={8}>No problems match your filters.</td>
+              <td colSpan={7}>No problems match your filters.</td>
             </tr>
           )}
           {capped.map((p) => (
             <tr key={p.id} className={p.status === "AC" ? "row-solved" : ""}>
-              <td className="cell-check">
-                <input
-                  type="checkbox"
-                  aria-label={`Select ${p.name}`}
-                  checked={selected.has(p.id)}
-                  onChange={() => onToggle(p.id)}
-                />
-              </td>
-              <td className="cell-id">{p.id}</td>
-              <td>{p.contest}</td>
-              <td>
+              <td className="cell-id" data-label="ID">{p.id}</td>
+              <td data-label="Contest">{p.contest}</td>
+              <td data-label="Problem">
                 <a className="problem-link" href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>
               </td>
-              <td>
+              <td data-label="Tags">
                 <div className="tags">
                   {p.tagList.map((t, i) => {
                     const isExtra = p.extraTagSet.has(t);
@@ -217,15 +176,15 @@ function ProblemsTable({
                   })}
                 </div>
               </td>
-              <td><RatingBadge rating={p.rating} /></td>
-              <td className="cell-status">
+              <td data-label="Rating"><RatingBadge rating={p.rating} /></td>
+              <td className="cell-status" data-label="Status">
                 <StatusEditor
                   value={p.status}
                   onChange={(newStatus) => updateStatus(p.id, newStatus)}
                   celebrating={justSolved === p.id}
                 />
               </td>
-              <td className="cell-feedback">
+              <td className="cell-feedback" data-label="Feedback">
                 <FeedbackButton
                   hasFeedback={Boolean(feedback[p.id])}
                   onClick={() => onOpenFeedback(p)}
@@ -249,18 +208,15 @@ function SkeletonTable() {
   );
 }
 
-export default function ProblemSet({ problems, setProblems, loaded, isAdmin, lists, reloadLists }) {
+export default function ProblemSet({ problems, setProblems, loaded, isAdmin }) {
   const [showTag, setShowTag] = useState(false);
   const [filter, setFilter] = useState("all");
   const [sort, setSort] = useState("rating_desc");
   const [searchInput, setSearchInput] = useState("");
   const [committedSearch, setCommittedSearch] = useState("");
   const [region, setRegion] = useState("all");
-  const [contest, setContest] = useState("all");
   const [ratingMin, setRatingMin] = useState(null);
   const [ratingMax, setRatingMax] = useState(null);
-  const [selected, setSelected] = useState(() => new Set());
-  const [addTarget, setAddTarget] = useState(null);
 
   const {
     feedback, feedbackFor, setFeedbackFor,
@@ -279,17 +235,6 @@ export default function ProblemSet({ problems, setProblems, loaded, isAdmin, lis
     return Array.from(set).sort();
   }, [problems]);
 
-  const contests = useMemo(() => {
-    const m = new Map();
-    for (const p of problems) {
-      const key = `${p.contest}|${p.region}`;
-      const c = m.get(key);
-      if (c) c.count++;
-      else m.set(key, { key, contest: p.contest, region: p.region, count: 1 });
-    }
-    return Array.from(m.values()).sort((a, b) => a.contest.localeCompare(b.contest));
-  }, [problems]);
-
   const searchAst = useMemo(() => {
     if (!committedSearch.trim()) return null;
     try { return parseSearch(committedSearch); }
@@ -301,10 +246,6 @@ export default function ProblemSet({ problems, setProblems, loaded, isAdmin, lis
 
     if (region !== "all") {
       list = list.filter((p) => p.region === region);
-    }
-
-    if (contest !== "all") {
-      list = list.filter((p) => `${p.contest}|${p.region}` === contest);
     }
 
     if (ratingMin != null) {
@@ -338,38 +279,9 @@ export default function ProblemSet({ problems, setProblems, loaded, isAdmin, lis
       sorted.sort((a, b) => Number(a.id) - Number(b.id));
     }
     return sorted;
-  }, [problems, filter, sort, region, contest, ratingMin, ratingMax, searchAst]);
+  }, [problems, filter, sort, region, ratingMin, ratingMax, searchAst]);
 
   const capped = visible.slice(0, RENDER_CAP);
-
-  function toggleSelected(id) {
-    setSelected((cur) => {
-      const next = new Set(cur);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  }
-
-  function toggleAllSelected() {
-    setSelected((cur) => {
-      const all = visible.every((p) => cur.has(p.id));
-      const next = new Set(cur);
-      if (all) for (const p of visible) next.delete(p.id);
-      else for (const p of visible) next.add(p.id);
-      return next;
-    });
-  }
-
-  function openAddModal(target) {
-    if (target.length === 0) return;
-    setAddTarget(target);
-  }
-
-  const selectedProblems = useMemo(
-    () => problems.filter((p) => selected.has(p.id)),
-    [problems, selected],
-  );
 
   return (
     <>
@@ -392,26 +304,11 @@ export default function ProblemSet({ problems, setProblems, loaded, isAdmin, lis
         region={region}
         setRegion={setRegion}
         regions={regions}
-        contest={contest}
-        setContest={setContest}
-        contests={contests}
         ratingMin={ratingMin}
         setRatingMin={setRatingMin}
         ratingMax={ratingMax}
         setRatingMax={setRatingMax}
-        onAddContest={() => openAddModal(problems.filter((p) => `${p.contest}|${p.region}` === contest))}
       />
-      {selected.size > 0 && (
-        <div className="bulk-bar">
-          <span>{selected.size} selected</span>
-          <button type="button" className="btn btn-primary" onClick={() => openAddModal(selectedProblems)}>
-            Add to list…
-          </button>
-          <button type="button" className="btn" onClick={() => setSelected(new Set())}>
-            Clear
-          </button>
-        </div>
-      )}
       {loaded ? (
         <ProblemsTable
           showTag={showTag}
@@ -421,9 +318,6 @@ export default function ProblemSet({ problems, setProblems, loaded, isAdmin, lis
           justSolved={justSolved}
           feedback={feedback}
           onOpenFeedback={setFeedbackFor}
-          selected={selected}
-          onToggle={toggleSelected}
-          onToggleAll={toggleAllSelected}
         />
       ) : (
         <SkeletonTable />
@@ -437,24 +331,6 @@ export default function ProblemSet({ problems, setProblems, loaded, isAdmin, lis
           onDelete={deleteFeedback}
           onError={(err) => showToast(`Save failed: ${err.message}`, "error")}
           onClose={() => setFeedbackFor(null)}
-        />
-      )}
-      {addTarget && (
-        <AddToListModal
-          problems={addTarget}
-          lists={lists}
-          onClose={() => setAddTarget(null)}
-          onSaved={(added, existing) => {
-            reloadLists();
-            setSelected(new Set());
-            showToast(
-              existing > 0
-                ? `Added ${added} to list (${existing} already in it)`
-                : `Added ${added} to list`,
-              "success",
-            );
-          }}
-          onError={(err) => showToast(`Add failed: ${err.message}`, "error")}
         />
       )}
       {toast && <div className={`toast toast-${toast.kind}`} role="status">{toast.msg}</div>}

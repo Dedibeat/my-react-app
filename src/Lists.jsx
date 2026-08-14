@@ -53,7 +53,6 @@ export default function Lists({
   const [selected, setSelected] = useState(() => new Set());
 
   // add-panel controls
-  const [addOpen, setAddOpen] = useState(false);
   const [addInput, setAddInput] = useState('');
   const [addCommitted, setAddCommitted] = useState('');
 
@@ -422,14 +421,6 @@ export default function Lists({
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
             </button>
-            <button
-              type="button"
-              className="btn"
-              onClick={() => { setAddOpen(!addOpen); }}
-              title={addOpen ? 'Hide the match preview' : 'Show a preview of the matches'}
-            >
-              {addOpen ? 'Hide preview' : 'Preview'}
-            </button>
           </div>
           {addCommitted.trim() && (
             <div className="add-panel-result">
@@ -446,7 +437,7 @@ export default function Lists({
               </button>
             </div>
           )}
-          {addOpen && addMatches.length > 0 && (
+          {addMatches.length > 0 && (
             <ul className="add-preview">
               {addMatches.slice(0, 15).map((p) => (
                 <li key={p.id}>{p.contest} · {p.name}</li>
@@ -535,13 +526,13 @@ export default function Lists({
                       onChange={toggleAllSelected}
                     />
                   </th>
-                  <th style={{ width: 70 }}>ID</th>
-                  <th>Contest</th>
-                  <th>Problem</th>
-                  <th>Tags</th>
-                  <th>Rating</th>
-                  <th style={{ width: 180 }} title="Click a cell to edit">Status</th>
-                  <th style={{ width: 44 }} aria-label="Feedback" />
+                  <th style={{ width: 70 }} data-label="ID">ID</th>
+                  <th data-label="Contest">Contest</th>
+                  <th data-label="Problem">Problem</th>
+                  <th data-label="Tags">Tags</th>
+                  <th data-label="Rating">Rating</th>
+                  <th style={{ width: 180 }} title="Click a cell to edit" data-label="Status">Status</th>
+                  <th style={{ width: 44 }} aria-label="Feedback" data-label="Feedback" />
                 </tr>
               </thead>
               <tbody>
@@ -560,27 +551,27 @@ export default function Lists({
                         onChange={() => toggleSelected(p.id)}
                       />
                     </td>
-                    <td className="cell-id">{p.id}</td>
-                    <td>{p.contest}</td>
-                    <td>
+                    <td className="cell-id" data-label="ID">{p.id}</td>
+                    <td data-label="Contest">{p.contest}</td>
+                    <td data-label="Problem">
                       <a className="problem-link" href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>
                     </td>
-                    <td>
+                    <td data-label="Tags">
                       <div className="tags">
                         {p.tagList.map((t, i) => (
                           <span key={i} className="tag">{t}</span>
                         ))}
                       </div>
                     </td>
-                    <td><RatingBadge rating={p.rating} /></td>
-                    <td className="cell-status">
+                    <td data-label="Rating"><RatingBadge rating={p.rating} /></td>
+                    <td className="cell-status" data-label="Status">
                       <StatusEditor
                         value={p.status}
                         onChange={(newStatus) => updateStatus(p.id, newStatus)}
                         celebrating={justSolved === p.id}
                       />
                     </td>
-                    <td className="cell-feedback">
+                    <td className="cell-feedback" data-label="Feedback">
                       <FeedbackButton
                         hasFeedback={Boolean(feedback[p.id])}
                         onClick={() => setFeedbackFor(p)}
