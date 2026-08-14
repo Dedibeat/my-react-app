@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { HashRouter, Routes, Route, Link, NavLink, Navigate } from 'react-router-dom';
 import './App.css';
 import ProblemSet from './ProblemSet.jsx';
@@ -71,7 +71,7 @@ export default function App() {
     try { setLists(await api.getLists()); } catch { /* keep the previous list data */ }
   }
 
-  async function reloadStatuses() {
+  const reloadStatuses = useCallback(async () => {
     try {
       const statusMap = await api.getStatus().catch(() => ({}));
       setProblems((prev) =>
@@ -87,7 +87,48 @@ export default function App() {
         })
       );
     } catch { /* ignore */ }
-  }
+  }, []);
+
+  const lastSyncRef = useRef(0);
+  const isSyncingRef = useRef(false);
+
+  const backgroundSync = useCallback(async (force = false) => {
+    if (!user?.qoj_handle || isSyncingRef.current) return;
+    const now = Date.now();
+    // Throttle to once every 20 seconds unless forced
+    if (!force && now - lastSyncRef.current < 20000) return;
+    lastSyncRef.current = now;
+    isSyncingRef.current = true;
+    try {
+      const res = await api.qojSync(user.qoj_handle);
+      if (res) {
+        await reloadStatuses();
+      }
+    } catch {
+      /* silent background catch */
+    } finally {
+      isSyncingRef.current = false;
+    }
+  }, [user, reloadStatuses]);
+
+  // Window focus & tab visibility change listener
+  useEffect(() => {
+    if (!user?.qoj_handle) return;
+
+    const handleFocus = () => {
+      if (document.visibilityState === 'visible') {
+        backgroundSync();
+      }
+    };
+
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', handleFocus);
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      document.removeEventListener('visibilitychange', handleFocus);
+    };
+  }, [user, backgroundSync]);
 
   useEffect(() => {
     if (!getToken()) { setAuthLoading(false); return; }
@@ -101,16 +142,7 @@ export default function App() {
     if (!user) { setProblems([]); setCfProblems([]); setLists([]); setLoaded(false); return; }
     let cancelled = false;
     async function load() {
-      // Auto-sync QOJ if user has connected their handle
-      if (user.qoj_handle) {
-        try {
-          await api.qojSync(user.qoj_handle);
-        } catch {
-          /* continue with existing cached statuses if offline/cookie expired */
-        }
-      }
-      if (cancelled) return;
-
+      // 1. Instantly render problems and cached statuses from DB without blocking
       const [dataset, ratings, cf, statusMap] = await Promise.all([
         fetch("/tagged.json").then((r) => r.json()),
         fetch("/problem_rating.json").then((r) => r.json()),
@@ -146,10 +178,15 @@ export default function App() {
       setCfProblems(cfFlat);
       setLoaded(true);
       reloadLists();
+
+      // 2. Smoothly run background sync for fresh QOJ updates without blocking initial render
+      if (user.qoj_handle && !cancelled) {
+        backgroundSync(true);
+      }
     }
     load();
     return () => { cancelled = true; };
-  }, [user]);
+  }, [user, backgroundSync]);
 
   async function submit(e) {
     e.preventDefault();
@@ -288,6 +325,7 @@ export default function App() {
             element={
               <Profile
                 user={user}
+                setUser={setUser}
                 problems={problems}
                 loaded={loaded}
                 reloadStatuses={reloadStatuses}

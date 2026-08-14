@@ -199,7 +199,7 @@ function relativeTime(date) {
   return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
-export default function Profile({ user, problems, loaded, reloadStatuses }) {
+export default function Profile({ user, setUser, problems, loaded, reloadStatuses }) {
   const [qojInfo, setQojInfo] = useState(null);
   const [qojHandle, setQojHandle] = useState(user?.qoj_handle || 'Dedibeat');
   const [qojCookie, setQojCookie] = useState('');
@@ -235,6 +235,9 @@ export default function Profile({ user, problems, loaded, reloadStatuses }) {
         has_cookie: Boolean(rawCookie || qojInfo?.has_cookie),
         solved_count: res.solved,
       });
+      if (setUser) {
+        setUser((prev) => ({ ...prev, qoj_handle: res.handle }));
+      }
       setSyncMsg({
         kind: 'success',
         text: `✓ Synced ${res.solved} AC and ${res.attempted} WA problems from QOJ (${res.handle})`,
@@ -253,6 +256,9 @@ export default function Profile({ user, problems, loaded, reloadStatuses }) {
     if (!window.confirm('Disconnect QOJ account? Your existing problem statuses will be kept.')) return;
     try {
       await api.disconnectQoj();
+      if (setUser) {
+        setUser((prev) => ({ ...prev, qoj_handle: null }));
+      }
       setQojInfo({ connected: false });
       setSyncMsg({ kind: 'success', text: 'Disconnected from QOJ.' });
     } catch (err) {
