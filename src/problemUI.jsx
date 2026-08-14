@@ -21,21 +21,22 @@ export function ProgressSummary({ solved, total, visibleCount, loaded }) {
   );
 }
 
-// Codeforces rating color tiers (soft-background badges)
-function cfClass(rating) {
-  if (rating < 1200) return 'difficulty-grey';
-  if (rating < 1400) return 'difficulty-green';
-  if (rating < 1600) return 'difficulty-teal';
-  if (rating < 1900) return 'difficulty-blue';
-  if (rating < 2100) return 'difficulty-violet';
-  if (rating < 2400) return 'difficulty-orange';
-  return 'difficulty-red';
+// Codeforces rating color tiers
+function cfColor(rating) {
+  if (rating < 1200) return '#808080'; // gray
+  if (rating < 1400) return '#008000'; // green
+  if (rating < 1600) return '#03a89e'; // cyan
+  if (rating < 1900) return '#0000ff'; // blue
+  if (rating < 2100) return '#aa00aa'; // purple
+  if (rating < 2400) return '#ff8c00'; // orange
+  return '#ff0000'; // red
 }
 
 export function RatingBadge({ rating }) {
   if (rating == null) return <span className="difficulty difficulty-muted">—</span>;
+  const color = cfColor(rating);
   return (
-    <span className={`difficulty ${cfClass(rating)}`}>
+    <span className="difficulty" style={{ color, borderColor: color }}>
       {Math.round(rating)}
     </span>
   );

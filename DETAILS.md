@@ -1550,27 +1550,3 @@ add-all → 446 problems, re-search → Delete all 446 → 0.
 The add/delete search preview (first 5 matches) now shows `name · contest ·
 rating` per line — contest is a muted, truncated middle column (`preview-contest`)
 between the name and the right-aligned rating.
-
----
-
-## Kimi K3 design pass — applied to React
-
-Ported the high-value visual upgrades from a Kimi K3 HTML/CSS mockup into the
-existing components (kept the app's React structure + tokens, not the raw HTML):
-
-- **Rating badges** (`problemUI.jsx`): switched from inline text/border colors to
-  soft-background Codeforces tiers (`difficulty-grey/green/teal/blue/violet/orange/red`).
-- **Checkboxes** (`ProblemSet.css`): custom styled checkbox (appearance:none,
-  indigo fill + white check) instead of native accent-color.
-- **Lists overview** (`Lists.jsx` + `Lists.css`): added "Organize problems into
-  personal collections." subtitle; card Rename/Delete actions are now
-  hover/focus-revealed.
-- **Add/remove panel** (`Lists.jsx`): search button is now a primary "Search"
-  button (icon + label) instead of icon-only.
-- **Preview columns** (`Lists.css`): fixed-width contest (150px) and right-aligned
-  rating (60px) columns for clean alignment; 96px contest on ≤480px.
-
-Verified headless (8/8, zero console errors): red rating badge with soft bg,
-subtitle, card actions hidden (opacity 0), primary "Search" button, 150px preview
-contest column, custom checkbox. Build clean; lint only the pre-existing api.js
-warning.
