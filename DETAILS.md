@@ -1550,3 +1550,37 @@ add-all → 446 problems, re-search → Delete all 446 → 0.
 The add/delete search preview (first 5 matches) now shows `name · contest ·
 rating` per line — contest is a muted, truncated middle column (`preview-contest`)
 between the name and the right-aligned rating.
+
+---
+
+## Complete UI & Styling Redesign
+
+Comprehensive visual polish across the entire application:
+
+### 1. Design System & Typography (`index.css`)
+- Upgraded font stack to `"Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif`.
+- Modern color tokens: slate text hierarchy (`--text: #0f172a`, `--text-secondary: #334155`, `--text-muted: #64748b`), refined borders (`#e2e8f0` / `#cbd5e1`), smooth elevation (`--shadow-xs`, `--shadow-sm`, `--shadow-md`, `--shadow-lg`), and rounded radius tokens.
+- Refined `.btn` base with active micro-interactions (`scale(0.98)`), smooth transitions, and distinct `.btn-primary` and `.btn-danger-ghost` states.
+
+### 2. App Shell & Navigation (`App.css`)
+- Sleek brand mark with indigo gradient (`#4f46e5` to `#6366f1`) and subtle glow shadow.
+- Refined segmented pill navigation tabs (`.app-nav`, `.nav-tab`, `.nav-tab.active`).
+- Refined user chip with subtle border, shadow, and avatar badge.
+
+### 3. Problem Set & Table Components (`ProblemSet.css`, `problemUI.jsx`)
+- **Rating Badges**: Replaced raw inline hex colors with modern Codeforces soft-background badges (`difficulty-grey`, `green`, `teal`, `blue`, `violet`, `orange`, `red`) with tabular numbers and matching border tints.
+- **Status Pills**: Added a clean status dot indicator (`.status-dot`), soft background tints for solved (`#dcfce7`) and unsolved (`#fee2e2`), and dashed styling for empty state.
+- **Controls Toolbar**: Unified toolbar card with clean labels, custom input focus rings, and rating range inputs.
+- **Table**: Clean sticky header (`#f8fafc`), subtle hover tints, solved row highlights, tag pills (rounded-4px, soft border, muted typography), and problem links with smooth underline transitions.
+- **Custom Checkbox**: Styled 16px checkbox (`.cell-check input`) with white checkmark and indigo background.
+
+### 4. Lists Overview & Edit Panel (`Lists.jsx`, `Lists.css`)
+- **Lists Overview**: Added subtitle ("Organize and curate custom problem sets for focused practice."), `+ Create list` button with SVG icon, and modern list cards with hover lift (`translateY(-2px)`), problem count pill, and hover-revealed action buttons.
+- **List Detail Header**: Back button with arrow SVG, problem count pill, and icon-enhanced `Edit problems` / `Done editing` buttons.
+- **Add / Remove Search Panel**: Left accent border, search input with primary `Search` button, match summary text, side-by-side `Add all N` (primary) and `Delete all M` (danger-ghost) buttons.
+- **Search Preview**: 5-item preview table with problem name (truncated), contest (muted), and styled `RatingBadge` aligned right, plus `…and N more matching problems` footer.
+- **Bulk Bar**: Indigo-soft banner with `N selected`, `Remove from list`, and `Clear` actions.
+
+### 5. Verification
+- 37/37 automated headless Chrome tests passed with zero console errors.
+- `npm run build` completed cleanly.

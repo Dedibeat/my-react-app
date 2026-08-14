@@ -303,7 +303,10 @@ export default function Lists({
     return (
       <>
         <div className="lists-head">
-          <h2 className="lists-title">My lists</h2>
+          <div>
+            <h2 className="lists-title">My lists</h2>
+            <p className="lists-subtitle">Organize and curate custom problem sets for focused practice.</p>
+          </div>
           <div className="lists-create">
             <input
               type="text"
@@ -319,6 +322,7 @@ export default function Lists({
               disabled={busy || !newName.trim()}
               onClick={createList}
             >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               {busy ? 'Creating…' : 'Create list'}
             </button>
           </div>
@@ -398,7 +402,10 @@ export default function Lists({
   return (
     <>
       <div className="list-detail-head">
-        <button type="button" className="btn" onClick={() => setSelectedId(null)}>← Lists</button>
+        <button type="button" className="btn list-detail-back" onClick={() => setSelectedId(null)}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Lists
+        </button>
         {renamingId === 'detail' && detail ? (
           <span className="list-rename-row">
             <input
@@ -411,7 +418,7 @@ export default function Lists({
                 if (e.key === 'Escape') setRenamingId(null);
               }}
             />
-            <button type="button" className="btn" onClick={() => saveRename(detail)}>Save</button>
+            <button type="button" className="btn btn-primary" onClick={() => saveRename(detail)}>Save</button>
           </span>
         ) : (
           <h2 className="lists-title">{detail ? detail.name : '…'}</h2>
@@ -432,7 +439,17 @@ export default function Lists({
               className={`btn ${editing ? 'btn-primary' : ''}`}
               onClick={() => { setEditing(!editing); setSelected(new Set()); }}
             >
-              {editing ? 'Done editing' : 'Edit problems'}
+              {editing ? (
+                <>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  Done editing
+                </>
+              ) : (
+                <>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  Edit problems
+                </>
+              )}
             </button>
             <button type="button" className="btn" onClick={() => { setRenamingId('detail'); setRenameVal(detail.name); }}>
               Rename
@@ -456,22 +473,23 @@ export default function Lists({
             />
             <button
               type="button"
-              className="btn btn-icon"
+              className="btn btn-primary add-panel-search-btn"
               onClick={() => setAddCommitted(addInput)}
               aria-label="Search"
               title="Search"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <circle cx="11" cy="11" r="8" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
+              Search
             </button>
           </div>
           {addCommitted.trim() && (
             <div className="add-panel-result">
-              <span>
-                {searchMatches.length} {searchMatches.length === 1 ? 'match' : 'matches'} for “{addCommitted}”
+              <span className="add-panel-result-text">
+                <b>{searchMatches.length}</b> {searchMatches.length === 1 ? 'match' : 'matches'} for “{addCommitted}”
               </span>
               <span className="add-panel-actions">
                 <button
@@ -499,10 +517,10 @@ export default function Lists({
                 <li key={p.id}>
                   <span className="preview-name">{p.name}</span>
                   <span className="preview-contest">{p.contest}</span>
-                  {p.rating != null && <span className="preview-rating">{p.rating}</span>}
+                  <span className="preview-rating"><RatingBadge rating={p.rating} /></span>
                 </li>
               ))}
-              {searchMatches.length > 5 && <li className="muted">…and {searchMatches.length - 5} more</li>}
+              {searchMatches.length > 5 && <li className="preview-more">…and {searchMatches.length - 5} more matching problems</li>}
             </ul>
           )}
         </div>
