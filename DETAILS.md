@@ -1691,3 +1691,31 @@ Refactored `Profile.jsx` and `Profile.css` for a clean, data-dense layout:
 - Integrated overall progress bar into the identity header card.
 - Clean 2-column breakdown: Solved by Rating on the left, By Status on the right.
 - Cleaned up obsolete CSS rules and ensured responsive breakpoints.
+
+---
+
+## Petrozavodsk and ICPC World Finals Added to Problem Set (this session)
+
+Integrated Petrozavodsk camp contests and ICPC World Finals contests from QOJ with calibrated ratings calculated in `analyze_standings`:
+
+### 1. Standings IRT Fit & Calibration (`../analyze_standings`)
+- Updated `arch_b/anchor.py` to include World Finals contests in the supplemental MAP fit alongside Petrozavodsk and regional ICPC contests.
+- Re-ran `python -m arch_b.run --survival` and `python -m arch_b.calibrate`.
+- Fit converged with LOCO shaped-RMSE 244 and generated 2,475 calibrated difficulty ratings (`difficulty_cf` on the 800–4000 Codeforces scale).
+
+### 2. Dataset Merging & Slimming (`canonical/tagged.json`, `data/tagged.json`, `data/problem_rating.json`)
+- Added **57 Petrozavodsk camp contests** (671 problems) with region `"Petrozavodsk"`.
+- Added **4 ICPC World Finals contests** (2022–2025 Luxor, Astana, Baku; 41 unique problems) with region `"World Finals"`.
+- Deduplicated problem IDs and URLs (e.g. shared problems between Luxor 46th and 47th World Finals) to ensure 0 React key collisions and 0 DB primary key collisions.
+- Ran `scripts/slim_tagged.py` to regenerate `data/tagged.json` (1.24 MB, 206 contests, 2,380 unique problems total) and updated `public/tagged.json`.
+- Updated `data/problem_rating.json` with all 2,475 calibrated ratings (100% of Petrozavodsk and World Finals problems are rated).
+
+### 3. Verification
+- `npm run build` and `npm run build:gh` succeeded cleanly.
+- `npm run lint` clean (0 errors, 0 warnings).
+- Headless browser verification via Puppeteer:
+  - Total problems loaded: 2,380
+  - Region filter contains `"Petrozavodsk"` (671 problems) and `"World Finals"` (41 problems)
+  - Color-coded Codeforces difficulty rating badges display correctly
+  - Boolean and text search correctly indexes new contests and problems (e.g. "Turning Red" rated 1931, "Announcements" rated 1582)
+
