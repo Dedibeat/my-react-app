@@ -324,6 +324,8 @@ export default function Lists({
           </div>
         </div>
 
+        <p className="lists-subtitle">Organize problems into personal collections.</p>
+
         {!loaded ? (
           <SkeletonCard />
         ) : lists.length === 0 ? (
@@ -456,16 +458,15 @@ export default function Lists({
             />
             <button
               type="button"
-              className="btn btn-icon"
+              className="btn btn-primary"
               onClick={() => setAddCommitted(addInput)}
-              aria-label="Search"
-              title="Search"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                 fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <circle cx="11" cy="11" r="8" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
+              Search
             </button>
           </div>
           {addCommitted.trim() && (

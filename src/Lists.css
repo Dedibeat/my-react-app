@@ -1,5 +1,6 @@
 /* ---------- Lists overview ---------- */
 .lists-title { margin: 0; font-size: 1.2rem; }
+.lists-subtitle { margin: 2px 0 14px; color: var(--text-muted); font-size: 0.9rem; }
 
 .lists-head {
   display: flex;
@@ -76,7 +77,9 @@
   white-space: nowrap;
 }
 
-.list-card-actions { display: flex; gap: 6px; }
+.list-card-actions { display: flex; gap: 6px; opacity: 0; transition: opacity 0.15s; }
+.list-card:hover .list-card-actions,
+.list-card:focus-within .list-card-actions { opacity: 1; }
 .list-card-actions .btn { font-size: 0.82rem; padding: 4px 10px; }
 
 .list-rename-row { display: flex; align-items: center; gap: 6px; }
@@ -159,8 +162,8 @@
   white-space: nowrap;
 }
 .preview-contest {
+  width: 150px;
   flex: none;
-  max-width: 40%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -168,10 +171,16 @@
   font-size: 0.8rem;
 }
 .preview-rating {
+  width: 60px;
   flex: none;
+  text-align: right;
   font-variant-numeric: tabular-nums;
   font-weight: 600;
   color: var(--text-muted);
+}
+
+@media (max-width: 480px) {
+  .preview-contest { width: 96px; }
 }
 
 @media (max-width: 768px) {

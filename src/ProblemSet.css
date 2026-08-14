@@ -182,9 +182,29 @@ thead th {
 .cell-check input {
   width: 16px;
   height: 16px;
-  accent-color: var(--accent);
+  border: 1.5px solid var(--border-strong);
+  border-radius: 4px;
+  appearance: none;
+  -webkit-appearance: none;
   cursor: pointer;
   vertical-align: middle;
+  position: relative;
+  transition: background 0.12s, border-color 0.12s;
+}
+.cell-check input:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.cell-check input:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
 
 tbody tr:last-child td { border-bottom: none; }
@@ -245,12 +265,19 @@ tbody tr.row-solved:hover td { background: #ecf8f0; }
   font-weight: 700;
   padding: 2px 8px;
   border-radius: 6px;
-  color: #000;
   display: inline-block;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid transparent;
   font-variant-numeric: tabular-nums;
   font-size: 0.85rem;
 }
+
+.difficulty-grey   { background: #f3f4f6; color: #374151; }
+.difficulty-green  { background: #dcfce7; color: #15803d; }
+.difficulty-teal   { background: #ccfbf1; color: #0f766e; }
+.difficulty-blue   { background: #dbeafe; color: #1d4ed8; }
+.difficulty-violet { background: #ede9fe; color: #6d28d9; }
+.difficulty-orange { background: #ffedd5; color: #c2410c; }
+.difficulty-red    { background: #fee2e2; color: #b91c1c; }
 
 .difficulty-muted {
   font-weight: 400;
