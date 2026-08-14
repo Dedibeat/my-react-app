@@ -55,11 +55,9 @@ export default function Lists({
   const [ratingMax, setRatingMax] = useState(null);
   const [selected, setSelected] = useState(() => new Set());
 
-  // add/remove-by-search controls
+  // edit-panel search (add new + delete existing from one query)
   const [addInput, setAddInput] = useState('');
   const [addCommitted, setAddCommitted] = useState('');
-  const [removeInput, setRemoveInput] = useState('');
-  const [removeCommitted, setRemoveCommitted] = useState('');
 
   const pool = useMemo(() => {
     const m = new Map();
@@ -157,23 +155,24 @@ export default function Lists({
 
   const capped = visible.slice(0, RENDER_CAP);
 
-  // ---- add-panel search: new matches across the whole pool ----
-  const addMatches = useMemo(() => {
+  // ---- edit-panel search: one query across the whole pool, split by membership ----
+  const searchMatches = useMemo(() => {
     if (!addCommitted.trim()) return [];
     let ast;
     try { ast = parseSearch(addCommitted); } catch { return []; }
     if (!ast) return [];
-    return [...pool.values()].filter((p) => !memberSet.has(p.id) && evalSearchAst(ast, hayFor(p)));
-  }, [addCommitted, pool, memberSet]);
+    return [...pool.values()].filter((p) => evalSearchAst(ast, hayFor(p)));
+  }, [addCommitted, pool]);
 
-  // ---- remove-by-search: matches within the current list ----
-  const removeMatches = useMemo(() => {
-    if (!removeCommitted.trim()) return [];
-    let ast;
-    try { ast = parseSearch(removeCommitted); } catch { return []; }
-    if (!ast) return [];
-    return members.list.filter((p) => evalSearchAst(ast, hayFor(p)));
-  }, [removeCommitted, members]);
+  const newMatches = useMemo(
+    () => searchMatches.filter((p) => !memberSet.has(p.id)),
+    [searchMatches, memberSet],
+  );
+
+  const deleteMatches = useMemo(
+    () => searchMatches.filter((p) => memberSet.has(p.id)),
+    [searchMatches, memberSet],
+  );
 
   async function refreshDetail() {
     const fresh = await api.getList(detail.id);
@@ -227,7 +226,7 @@ export default function Lists({
   }
 
   async function addAllMatches() {
-    const ids = addMatches.map((p) => Number(p.id));
+    const ids = newMatches.map((p) => Number(p.id));
     if (!ids.length || busy) return;
     setBusy(true);
     try {
@@ -246,15 +245,13 @@ export default function Lists({
   }
 
   async function removeAllMatches() {
-    const ids = removeMatches.map((p) => Number(p.id));
+    const ids = deleteMatches.map((p) => Number(p.id));
     if (!ids.length || busy) return;
     if (!window.confirm(`Remove ${ids.length} ${ids.length === 1 ? 'problem' : 'problems'} from this list?`)) return;
     setBusy(true);
     try {
       await api.removeFromList(detail.id, ids);
       await refreshDetail();
-      setRemoveCommitted('');
-      setRemoveInput('');
       reloadLists();
       showToast(`Removed ${ids.length}`, 'success');
     } catch (err) {
@@ -452,7 +449,7 @@ export default function Lists({
           <div className="add-panel-row">
             <input
               type="search"
-              placeholder="Add problems by search — name, tags, code (and, or, not, ())"
+              placeholder="Search problems to add or remove — name, tags, code (and, or, not, ())"
               value={addInput}
               onChange={(e) => setAddInput(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') setAddCommitted(addInput); }}
@@ -474,78 +471,43 @@ export default function Lists({
           {addCommitted.trim() && (
             <div className="add-panel-result">
               <span>
-                {addMatches.length} new {addMatches.length === 1 ? 'match' : 'matches'} for “{addCommitted}”
+                {searchMatches.length} {searchMatches.length === 1 ? 'match' : 'matches'} for “{addCommitted}”
               </span>
-              <button
-                type="button"
-                className="btn btn-primary"
-                disabled={addMatches.length === 0 || busy}
-                onClick={addAllMatches}
-              >
-                {busy ? 'Adding…' : `Add all ${addMatches.length}`}
-              </button>
+              <span className="add-panel-actions">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  disabled={newMatches.length === 0 || busy}
+                  onClick={addAllMatches}
+                >
+                  {busy ? 'Adding…' : `Add all ${newMatches.length}`}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger-ghost"
+                  disabled={deleteMatches.length === 0 || busy}
+                  onClick={removeAllMatches}
+                >
+                  {busy ? 'Removing…' : `Delete all ${deleteMatches.length}`}
+                </button>
+              </span>
             </div>
           )}
-          {addMatches.length > 0 && (
+          {searchMatches.length > 0 && (
             <ul className="add-preview">
-              {addMatches.slice(0, 15).map((p) => (
-                <li key={p.id}>{p.contest} · {p.name}</li>
+              {searchMatches.slice(0, 5).map((p) => (
+                <li key={p.id}>
+                  <span className="preview-name">{p.name}</span>
+                  {p.rating != null && <span className="preview-rating">{p.rating}</span>}
+                </li>
               ))}
-              {addMatches.length > 15 && <li className="muted">…and {addMatches.length - 15} more</li>}
+              {searchMatches.length > 5 && <li className="muted">…and {searchMatches.length - 5} more</li>}
             </ul>
           )}
         </div>
       )}
 
-      {detail && editing && (
-        <div className="add-panel">
-          <div className="add-panel-row">
-            <input
-              type="search"
-              placeholder="Remove problems by search — name, tags, code (and, or, not, ())"
-              value={removeInput}
-              onChange={(e) => setRemoveInput(e.target.value)}
-              onKeyDown={(e) => { if (e.key === 'Enter') setRemoveCommitted(removeInput); }}
-            />
-            <button
-              type="button"
-              className="btn btn-icon"
-              onClick={() => setRemoveCommitted(removeInput)}
-              aria-label="Search"
-              title="Search"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-            </button>
-          </div>
-          {removeCommitted.trim() && (
-            <div className="add-panel-result">
-              <span>
-                {removeMatches.length} {removeMatches.length === 1 ? 'match' : 'matches'} to remove for “{removeCommitted}”
-              </span>
-              <button
-                type="button"
-                className="btn btn-primary"
-                disabled={removeMatches.length === 0 || busy}
-                onClick={removeAllMatches}
-              >
-                {busy ? 'Removing…' : `Remove all ${removeMatches.length}`}
-              </button>
-            </div>
-          )}
-          {removeMatches.length > 0 && (
-            <ul className="add-preview">
-              {removeMatches.slice(0, 15).map((p) => (
-                <li key={p.id}>{p.contest} · {p.name}</li>
-              ))}
-              {removeMatches.length > 15 && <li className="muted">…and {removeMatches.length - 15} more</li>}
-            </ul>
-          )}
-        </div>
-      )}
+
 
       {detailLoading || !detail ? (
         <SkeletonCard />

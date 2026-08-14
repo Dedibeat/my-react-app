@@ -1523,3 +1523,22 @@ rating inputs present, add-by-search adds 1568 "graph" problems, two panels
 render in edit mode, "graph AND tree" reports 369 to remove and removes them
 (header count 1568 → 1199), rating min filter narrows rows. `npm run build`
 clean; `npm run lint` only the pre-existing `api.js` no-empty error.
+
+---
+
+## Lists edit panel: one search, add + delete, cleaner preview
+
+Follow-up refinements per feedback.
+
+- **Single search** in edit mode (was two panels): one query across the whole
+  pool, split by membership — **"Add all N"** (new matches not in the list) and
+  **"Delete all M"** (matches already in the list, with a confirm). Removed the
+  separate "Remove problems by search" panel and its `removeInput`/`removeCommitted`
+  state.
+- **Preview**: now shows only the **first 5** matches (was 15) as `name` +
+  right-aligned muted rating, plus a "…and N more" line — instead of the noisy
+  `contest · name` lines.
+
+Verified headless (14/14, zero console errors): one panel, "tree AND dp" →
+446 matches with Add all 446 / Delete all 0, first-5 preview with name+rating,
+add-all → 446 problems, re-search → Delete all 446 → 0.

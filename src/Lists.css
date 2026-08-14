@@ -130,6 +130,8 @@
   font-size: 0.9rem;
 }
 
+.add-panel-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
 .add-preview {
   list-style: none;
   margin: 0;
@@ -143,9 +145,22 @@
   color: var(--text-muted);
 }
 .add-preview li {
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.preview-name {
+  color: var(--text);
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.preview-rating {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--text-muted);
 }
 
 @media (max-width: 768px) {
