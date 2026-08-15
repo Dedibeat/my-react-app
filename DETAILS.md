@@ -1729,4 +1729,27 @@ Integrated Petrozavodsk camp contests and ICPC World Finals contests from QOJ wi
   - In `vite.config.js`: configured Vite's dev server proxy to forward `/api` to Render (`https://my-react-app-33zw.onrender.com`) with `changeOrigin: true` (or to `process.env.VITE_PROXY_TARGET` if running local uvicorn).
   - All dev requests are now same-origin to Vite with zero CORS errors and zero manual configuration needed.
 
+---
+
+## Server Latencies, Pinger Analysis & Initial Load Optimization (this session)
+
+### 1. Pinger Analysis & Reliability (`cron-job.org` / keep-alive)
+- **Status**: cron-job.org pinger is active and returning 200s against `/api/health`.
+- **Potential Failure Modes to Keep in Mind**:
+  - **Auto-disable on timeout**: If cold start or Render hiccup causes consecutive request timeouts (>30s), cron-job.org auto-disables the job unless retries and notifications are configured.
+  - **Account/Job Expiration**: Free monitoring services sometimes pause if the dashboard is not visited for several months.
+  - **Render 750h/mo quota**: Running only 1 web service uses 744 hours in a 31-day month (safely within the 750h limit). Avoid running a 2nd free web service on the same Render account to prevent mid-month suspension.
+
+### 2. Latency Identification & Priority Actions
+- **Frontend Initial Data Hydration**: Previously, `App.jsx` fetched `tagged.json` (1.2MB), `problem_rating.json` (0.7MB), and `codeforces.json` (1.9MB) all in a single blocking `Promise.all` alongside `api.getStatus()`, loading ~3.8MB uncompressed JSON before rendering anything.
+- **Applied Fix (`src/App.jsx`)**:
+  - Decoupled `codeforces.json` from the critical initial render path. `tagged.json` + `problem_rating.json` + `getStatus()` now resolve and render the main Problem Set tab immediately (`loaded = true`).
+  - `codeforces.json` is loaded asynchronously in parallel and sets `cfProblems` with `cfLoaded = true`.
+  - Increased tab-focus QOJ sync throttle from 20s to 120s (2 minutes) to prevent aggressive background scraping when rapidly switching browser tabs.
+- **Database Network Latency Note**: Turso DB queries run over stdlib HTTPS pipeline (`_pipeline` in `src/db.py`). Kept as-is for maximum reliability and simplicity (no native binary / Hrana crashes).
+
+### 3. Verification
+- `npm run build` and `npm run lint` clean (0 errors, 0 warnings).
+
+
 

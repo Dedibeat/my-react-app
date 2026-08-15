@@ -66,6 +66,7 @@ export default function App() {
   const [cfProblems, setCfProblems] = useState([]);
   const [lists, setLists] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [cfLoaded, setCfLoaded] = useState(false);
 
   async function reloadLists() {
     try { setLists(await api.getLists()); } catch { /* keep the previous list data */ }
@@ -95,8 +96,8 @@ export default function App() {
   const backgroundSync = useCallback(async (force = false) => {
     if (!user?.qoj_handle || isSyncingRef.current) return;
     const now = Date.now();
-    // Throttle to once every 20 seconds unless forced
-    if (!force && now - lastSyncRef.current < 20000) return;
+    // Throttle to once every 2 minutes unless forced
+    if (!force && now - lastSyncRef.current < 120000) return;
     lastSyncRef.current = now;
     isSyncingRef.current = true;
     try {
@@ -139,14 +140,13 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (!user) { setProblems([]); setCfProblems([]); setLists([]); setLoaded(false); return; }
+    if (!user) { setProblems([]); setCfProblems([]); setLists([]); setLoaded(false); setCfLoaded(false); return; }
     let cancelled = false;
     async function load() {
-      // 1. Instantly render problems and cached statuses from DB without blocking
-      const [dataset, ratings, cf, statusMap] = await Promise.all([
+      // 1. Fetch main problemset & statuses first for instant initial rendering
+      const [dataset, ratings, statusMap] = await Promise.all([
         fetch("/tagged.json").then((r) => r.json()),
         fetch("/problem_rating.json").then((r) => r.json()),
-        fetch("/codeforces.json").then((r) => r.json()),
         api.getStatus().catch(() => ({})),
       ]);
       if (cancelled) return;
@@ -159,27 +159,38 @@ export default function App() {
         p.statusUpdatedAt = s?.updated_at || null;
         p.rating = ratingMap[p.id] ?? null;
       }
-      const cfFlat = cf.map((p) => {
-        const s = statusMap[String(p.id)];
-        return {
-          id: String(p.id),
-          code: p.code,
-          contest: `Codeforces ${p.code}`,
-          name: p.name,
-          rating: p.rating,
-          tags: p.tags.join(', '),
-          tagList: p.tags,
-          url: p.url,
-          status: s?.status || "",
-          statusUpdatedAt: s?.updated_at || null,
-        };
-      });
       setProblems(flat);
-      setCfProblems(cfFlat);
       setLoaded(true);
       reloadLists();
 
-      // 2. Smoothly run background sync for fresh QOJ updates without blocking initial render
+      // 2. Fetch Codeforces dataset asynchronously so it does not block initial load
+      fetch("/codeforces.json")
+        .then((r) => r.json())
+        .then((cf) => {
+          if (cancelled) return;
+          const cfFlat = cf.map((p) => {
+            const s = statusMap[String(p.id)];
+            return {
+              id: String(p.id),
+              code: p.code,
+              contest: `Codeforces ${p.code}`,
+              name: p.name,
+              rating: p.rating,
+              tags: p.tags.join(', '),
+              tagList: p.tags,
+              url: p.url,
+              status: s?.status || "",
+              statusUpdatedAt: s?.updated_at || null,
+            };
+          });
+          setCfProblems(cfFlat);
+          setCfLoaded(true);
+        })
+        .catch(() => {
+          if (!cancelled) setCfLoaded(true);
+        });
+
+      // 3. Smoothly run background sync for fresh QOJ updates without blocking initial render
       if (user.qoj_handle && !cancelled) {
         backgroundSync(true);
       }
@@ -318,7 +329,7 @@ export default function App() {
           />
           <Route
             path="/codeforces"
-            element={<Codeforces cfProblems={cfProblems} setCfProblems={setCfProblems} loaded={loaded} isAdmin={user.is_admin} />}
+            element={<Codeforces cfProblems={cfProblems} setCfProblems={setCfProblems} loaded={cfLoaded} isAdmin={user.is_admin} />}
           />
           <Route
             path="/profile"
