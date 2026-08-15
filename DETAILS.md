@@ -1745,7 +1745,7 @@ Integrated Petrozavodsk camp contests and ICPC World Finals contests from QOJ wi
 - **Applied Fix (`src/App.jsx`)**:
   - Decoupled `codeforces.json` from the critical initial render path. `tagged.json` + `problem_rating.json` + `getStatus()` now resolve and render the main Problem Set tab immediately (`loaded = true`).
   - `codeforces.json` is loaded asynchronously in parallel and sets `cfProblems` with `cfLoaded = true`.
-  - Increased tab-focus QOJ sync throttle from 20s to 120s (2 minutes) to prevent aggressive background scraping when rapidly switching browser tabs.
+  - Tab-focus QOJ sync throttle kept at 20s for fast, responsive AC updates upon returning from QOJ.
 - **Database Network Latency Note**: Turso DB queries run over stdlib HTTPS pipeline (`_pipeline` in `src/db.py`). Kept as-is for maximum reliability and simplicity (no native binary / Hrana crashes).
 
 ### 3. Verification

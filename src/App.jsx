@@ -96,8 +96,8 @@ export default function App() {
   const backgroundSync = useCallback(async (force = false) => {
     if (!user?.qoj_handle || isSyncingRef.current) return;
     const now = Date.now();
-    // Throttle to once every 2 minutes unless forced
-    if (!force && now - lastSyncRef.current < 120000) return;
+    // Throttle to once every 20 seconds unless forced
+    if (!force && now - lastSyncRef.current < 20000) return;
     lastSyncRef.current = now;
     isSyncingRef.current = true;
     try {
