@@ -1791,4 +1791,21 @@ build` clean, and a local `vite dev` server serving the updated
 `tagged.json`/`problem_rating.json` (fetched via `curl`, confirmed contest
 2921 present and rating count correct).
 
+### Revision: fix null-year UCup contests (2026-08-19)
+
+37 of the 52 merged-in contests carried `year: null` (not in the source
+QOJ data), and `App.jsx`'s `contest: c.contest_name + ' ' + c.year` renders
+that verbatim — so e.g. contest 2921 showed as "Grand Prix of Ōokayama
+null" instead of a year. Fixed at the source: `export_ucup_only.py` in
+`../analyze_standings` now falls back to each UCup season's most common
+year (2024 for season 3, 2025 for season 4) when a contest's own `year` is
+missing. Re-ran the full pipeline — reset `canonical/tagged.json`,
+`data/problem_rating.json`, `data/tagged.json` to their pre-merge state
+(`git checkout` the prior commit's copies) so `scripts/merge_ucup.py`'s
+skip-if-present idempotency wouldn't silently keep the stale null-year
+entries, then re-ran `merge_ucup.py` + `slim_tagged.py`. Verified: 0
+Universal Cup contests left with `year: null`, contest 2921 now shows
+`year: 2025` and its display string reads "Grand Prix of Ōokayama 2025";
+`npm run build` clean.
+
 
