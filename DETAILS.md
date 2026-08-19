@@ -1751,5 +1751,44 @@ Integrated Petrozavodsk camp contests and ICPC World Finals contests from QOJ wi
 ### 3. Verification
 - `npm run build` and `npm run lint` clean (0 errors, 0 warnings).
 
+## Universal Cup problems added (2026-08-19)
+
+52 Universal Cup contests (`ucup_s3.json`/`ucup_s4.json` in `../analyze_standings`)
+were never part of `tagged.json` there, so they were missing from both this
+app's browsable problem list and its ratings — only UCup rounds that happen
+to overlap `tagged.json` (already counted) were showing. Root cause and the
+matching fix in `analyze_standings`'s virtual-contest calculator are in that
+repo's `details.md`.
+
+- `../analyze_standings/arch_b/export_ucup_only.py` (new) fits these 52
+  contests' problems on the same UCup-only survival fit that already anchors
+  the main tagged fit (`estimate_anchored`'s `return_ucup` extra), calibrates
+  them to CF-equivalent points with the same shape+affine map as
+  `arch_b.calibrate`, and writes `output/ucup_only_contests.json` +
+  `output/ucup_only_ratings.json`.
+- `scripts/merge_ucup.py` (new, this repo) merges those two files into
+  `canonical/tagged.json` and `data/problem_rating.json`, idempotently
+  (skips ids already present). No LLM tags/analysis fields are added — that
+  pipeline never ran on these problems — so `primary_tags`/`importance`/
+  `olympiad_techniques` are `null`, which the app already renders as blank
+  (same as any other untagged problem). `region` is set to the new literal
+  `"Universal Cup"` (region filter is data-driven, no code change needed).
+  Ran `scripts/slim_tagged.py` afterward to regenerate `data/tagged.json`.
+- Result: 206 → 258 canonical contests, 3064 problems in `data/tagged.json`,
+  2475 → 3159 ratings in `data/problem_rating.json`. Spot-checked contest
+  2921 ("Grand Prix of Ōokayama") end to end: present in `tagged.json` with
+  `region: "Universal Cup"`, its problems resolve to real `difficulty_cf`
+  values via `data/problem_rating.json`.
+- **Caveat**: `data/problem_rating.json` is otherwise refreshed by copying
+  `../analyze_standings/output/problem_ratings_calibrated.json` wholesale
+  (see the "Problem ratings refresh" entries above) — that file does not
+  include UCup-only problems, so a future refresh will silently drop these
+  52 contests' ratings unless `scripts/merge_ucup.py` is re-run afterward
+  (documented in the script's own docstring too).
+
+Verified: `python3 -m json.tool` on all three changed data files, `npm run
+build` clean, and a local `vite dev` server serving the updated
+`tagged.json`/`problem_rating.json` (fetched via `curl`, confirmed contest
+2921 present and rating count correct).
 
 
