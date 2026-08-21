@@ -1809,3 +1809,68 @@ Universal Cup contests left with `year: null`, contest 2921 now shows
 `npm run build` clean.
 
 
+## Problem ratings refresh (2026-08-21)
+
+Replaced `data/problem_rating.json` wholesale with
+`../analyze_standings/output/problem_ratings_calibrated.json` (analyzer HEAD
+`8a351e0`). Only `data/problem_rating.json` changed — `canonical/tagged.json`
+and `data/tagged.json` are untouched, so `scripts/slim_tagged.py` was not
+needed.
+
+**`scripts/merge_ucup.py` is no longer required after a ratings refresh.** The
+analyzer used to fit the Universal Cup in a separate Phase-1 pass whose problems
+never reached `problem_ratings_calibrated.json`, which is why the previous entry
+warned that a wholesale copy would silently drop those 52 contests' ratings.
+The analyzer now fits tagged + supplemental + Universal Cup in **one joint MAP**
+(`arch_b/joint.py`, replacing the two-phase `arch_b/anchor.py`), so the
+calibrated artifact already carries all 684 UCup problems. Verified after the
+copy: **684/684** Universal Cup problems still rated, no ids added or dropped.
+The script stays in the repo and is still idempotent; it now simply finds
+nothing to add. `canonical/tagged.json` still gets its UCup *contest* records
+from `merge_ucup.py`, which was already done in the 2026-08-19 entry.
+
+What moved, and why:
+
+- The analyzer's Universal Cup rounds were previously rated on their own
+  Phase-1 scale and then mapped to CF points with a map fit on the *tagged*
+  scale — two different fits, so the exported UCup ratings sat about **79 CF
+  points low**. The joint fit removes the second scale, which is most of the
+  shift below.
+- `difficulty_cf` shift across the 3,159 records: mean **+17.9**, median +3.7,
+  sd 34.4, range −86 to +157; 114 problems moved by more than 100. The large
+  positive movers are the Universal Cup problems. Range is now 893.7–3884.6
+  (mean 2447).
+- No problem ids were added or removed (3,159 records, 3,154 unique ids — see
+  the caveat below).
+
+New fields, and the payload cost:
+
+- Records now carry `difficulty_cf_fit_se`, `difficulty_cf_level_sd` and
+  `difficulty_cf_se`. The analyzer's `difficulty_cf_se` used to scale only the
+  fit's Laplace SE through the calibration map, treating the map itself as
+  exact; it is now that (kept as `difficulty_cf_fit_se`) plus the calibration
+  *level* uncertainty (`difficulty_cf_level_sd`, 73.4 CF for any contest with no
+  Codeforces anchor) in quadrature. Median SE therefore rises 46.8 → 86.4, which
+  is the honest figure rather than a change in the ratings.
+- `App.jsx` reads only `difficulty_cf`, so nothing in the UI changes. The extra
+  fields cost **+222 KB raw / +15 KB gzipped** (936 → 1,158 KB raw, 121 → 136 KB
+  gzipped) on the initial blocking fetch. Kept, matching the wholesale-copy
+  convention of previous refreshes and leaving the option to display an
+  uncertainty band later; strip them in the copy step if that fetch ever needs
+  trimming.
+
+Pre-existing, unchanged by this refresh: 5 `problem_id`s appear twice (8674,
+8676, 8677, 8680, 8683 — the same problems used in both contest 1661 and 1662),
+so `App.jsx`'s `ratingMap[String(r.problem_id)]` keeps whichever record comes
+last. Both copies existed before and after; not touched here.
+
+Verified: `python3 -m json.tool data/problem_rating.json` succeeds; 3,159
+records with the expected keys; 2,975 of 3,064 canonical problems rated (the 89
+unrated belong to short-format contests the analyzer's `MIN_SOLVE_HOURS` filter
+drops); `npm run build` clean, emitting `dist/problem_rating.json` (1,158 KB,
+3,159 records); spot-checked contest 2921 "Grand Prix of Ōokayama 2025" — its
+problems resolve to real `difficulty_cf` values (2061.1 / 2822.5 / 2270.1 /
+3150.7).
+
+Noted, not changed: `public/tagged.json` is stale (2026-08-14) and unused —
+`vite.config.js` sets `publicDir: 'data'`, so `dist/` is built from `data/`.
