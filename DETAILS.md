@@ -1895,3 +1895,33 @@ no runtime network or library dependency apart from outbound problem links.
 Added a `Techniques` link to the signed-in app navigation so the atlas is
 discoverable. The link opens the standalone artifact at its stable root URL;
 the existing React routes and problem data remain unchanged.
+
+
+## Technique tags merged into problem tags (2026-08-21)
+
+Integrated the full extraction output from
+`../llm-integration/tagged_gemini.json` into the app's existing problem tags.
+Problems are joined by `(contest_id, problem_id)`: all 3,023 source problems
+matched the canonical dataset exactly, while the 41 remaining app problems
+have no extraction result and were left unchanged.
+
+For each matched problem, technique ids were appended without removing or
+reordering existing tags:
+
+- `techniques.primary[].id` → `primary_tags`
+- `techniques.secondary[].id` → `secondary_tags`
+- `techniques.named_extras[]` → `extra_tags`
+
+Deduplication is across all three tag arrays, so a technique already present
+anywhere on the problem does not produce a duplicate pill. The merge added
+2,325 tags to 1,574 problems: 1,241 primary, 358 secondary, and 726 extra.
+Only the tag names are copied into the main dataset; confidence, evidence, and
+taxonomy-tier metadata remain available in `techniques_viewer.html`, avoiding
+the large initial-page payload cost of embedding the full extraction objects.
+
+Updated `canonical/tagged.json` as the source of truth, regenerated
+`data/tagged.json` with `scripts/slim_tagged.py`, and mirrored the tracked
+`dist/tagged.json`. Validation confirmed that no non-tag problem fields
+changed, every source technique name is present on its matched problem, all 41
+unmatched problems are byte-for-byte equivalent as parsed JSON, and the served
+and built datasets are identical.
