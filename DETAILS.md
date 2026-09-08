@@ -1925,3 +1925,9 @@ Updated `canonical/tagged.json` as the source of truth, regenerated
 changed, every source technique name is present on its matched problem, all 41
 unmatched problems are byte-for-byte equivalent as parsed JSON, and the served
 and built datasets are identical.
+
+Deployment completed on the current production host, GitHub Pages. Workflow
+run `34214021343` built commit `4ea0007` successfully and published it to
+https://dedibeat.github.io. Live verification confirmed the merged tags in
+`/tagged.json` and the atlas at `/techniques_viewer.html`. Vercel is no longer
+used; the README now reflects GitHub Pages as the frontend host.

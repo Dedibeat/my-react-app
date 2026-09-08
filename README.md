@@ -2,9 +2,9 @@
 
 Personal/small-community problem tracker. React frontend + FastAPI backend with Turso (libSQL) storage and JWT auth.
 
-- **Live app:** https://my-react-app-mu-ecru.vercel.app
+- **Live app:** https://dedibeat.github.io
 - **API host:** Render (`https://my-react-app-33zw.onrender.com`)
-- **Frontend host:** Vercel (proxies `/api/*` → Render)
+- **Frontend host:** GitHub Pages
 
 ## Local development
 
@@ -42,18 +42,13 @@ turso db tokens create problemset         # -> LIBSQL_AUTH_TOKEN
    - `LIBSQL_URL`
    - `LIBSQL_AUTH_TOKEN`
    - `JWT_SECRET` (any long random string; `openssl rand -hex 32`)
-   - `CORS_ORIGINS` = `https://my-react-app-mu-ecru.vercel.app`
+   - `CORS_ORIGINS` = `https://dedibeat.github.io`
 6. Deploy. Copy the service URL (e.g. `https://my-react-app-33zw.onrender.com`).
 
-### 3. Deploy the frontend to Vercel
+### 3. Deploy the frontend to GitHub Pages
 
-`vercel.json` already contains the `/api/*` rewrite pointing to Render. Update the destination URL if your Render domain differs, then:
-
-```bash
-npx vercel --prod
-```
-
-Vercel will run `npm run build` and serve `dist/`. The rewrite makes `/api/*` requests on the Vercel origin transparently forward to Render.
+Push `master`. The `deploy-gh-pages.yml` workflow runs `npm run build:gh` and
+publishes `dist/` to `Dedibeat/dedibeat.github.io`.
 
 ## Endpoints
 
