@@ -287,6 +287,7 @@ export default function App() {
           <nav className="app-nav">
             <NavLink to="/" end className="nav-tab">Problem Set</NavLink>
             <NavLink to="/lists" className="nav-tab">Lists</NavLink>
+            <a href="/techniques_viewer.html" className="nav-tab">Techniques</a>
           </nav>
           <div className="user-area">
             <Link to="/profile" className="user-chip" title="Your profile">

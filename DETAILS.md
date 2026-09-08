@@ -1874,3 +1874,24 @@ problems resolve to real `difficulty_cf` values (2061.1 / 2822.5 / 2270.1 /
 
 Noted, not changed: `public/tagged.json` is stale (2026-08-14) and unused —
 `vite.config.js` sets `publicDir: 'data'`, so `dist/` is built from `data/`.
+
+
+## Technique Atlas deployment (2026-08-21)
+
+Published the generated, self-contained Technique Atlas from
+`../llm-integration/data/techniques_viewer.html` as
+`data/techniques_viewer.html`. Because Vite uses `data/` as its public
+directory, production serves the artifact at `/techniques_viewer.html`
+without adding runtime code or dependencies. The imported file is byte-for-byte
+identical to the source artifact (SHA-256
+`8d9d589ef4505b73d214d88102b46e536b292c579e33e4d75716478fc1fd555a`).
+
+The atlas embeds 3,023 problems, including 2,934 calibrated ratings and 1,204
+problems with at least one named primary or secondary technique. It includes a
+128-entry notebook/extension taxonomy, filters, a technique-by-rating heatmap,
+regional and yearly comparisons, and a paginated problem index. The page has
+no runtime network or library dependency apart from outbound problem links.
+
+Added a `Techniques` link to the signed-in app navigation so the atlas is
+discoverable. The link opens the standalone artifact at its stable root URL;
+the existing React routes and problem data remain unchanged.
