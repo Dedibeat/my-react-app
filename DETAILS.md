@@ -1937,7 +1937,7 @@ used; the README now reflects GitHub Pages as the frontend host.
 
 Replaced `data/problem_rating.json` (and the tracked `dist/problem_rating.json`)
 with a byte copy of `../analyze_standings/output/problem_ratings_calibrated.json`
-(analyzer commit `893964e`, SHA-256 `a80c3856…cdb5`). The analyzer now ships
+(analyzer commit `893964e`; committed and served SHA-256 `f39ce9de…f15d` with LF endings, `a80c3856…cdb5` for the CRLF working copy on Windows). The analyzer now ships
 the **DE** problem calibration on the roster-fixed fit. The method, audit and
 release choices are in that repo's `de_release_audit.md` and in the "DE release"
 section of its `details.md`. Only the two ratings files changed; `App.jsx` still
@@ -1970,6 +1970,6 @@ further apart than before: up to 146 points on 8680 (1876.8 vs 2022.6).
 Verified: 3,159 records, 3,154 unique ids, and 2,975 of 3,064 canonical
 problems rated (unchanged); `npm run build` clean with unchanged bundle
 hashes; `vite preview` serves `/problem_rating.json` byte-identical to the
-analyzer artifact. `npm ci` was needed first (`node_modules` was missing).
+analyzer artifact. After deploy, https://dedibeat.github.io/problem_rating.json (workflow run 36399639434, success) is the committed blob and parses equal to the local file. `npm ci` was needed first (`node_modules` was missing).
 The local build's CRLF-only changes to `dist/index.html` and `dist/assets` were
 discarded, not committed.
