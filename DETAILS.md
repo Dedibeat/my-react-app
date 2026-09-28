@@ -1931,3 +1931,45 @@ run `34214021343` built commit `4ea0007` successfully and published it to
 https://dedibeat.github.io. Live verification confirmed the merged tags in
 `/tagged.json` and the atlas at `/techniques_viewer.html`. Vercel is no longer
 used; the README now reflects GitHub Pages as the frontend host.
+
+
+## Problem ratings refresh: DE calibration (2026-09-28)
+
+Replaced `data/problem_rating.json` (and the tracked `dist/problem_rating.json`)
+with a byte copy of `../analyze_standings/output/problem_ratings_calibrated.json`
+(analyzer commit `893964e`, SHA-256 `a80c3856…cdb5`). The analyzer now ships
+the **DE** problem calibration on the roster-fixed fit. The method, audit and
+release choices are in that repo's `de_release_audit.md` and in the "DE release"
+section of its `details.md`. Only the two ratings files changed; `App.jsx` still
+reads only `difficulty_cf`, so there is no code or UI change.
+
+What moved (same 3,159 records, same `(contest_id, problem_label)` set):
+
+- `difficulty_cf` shift against the previous (gym-map) ratings: mean **+70.0**,
+  median +77.6, range −481.7 to +544.3. 1,677 problems move by ≥100 and 599 by
+  ≥200. The new range is 800–3996 (mean 2517); 10 problems sit on the 800
+  floor.
+- The five EC online rounds (1485/1794/1799/2513/2524, 62 problems) move −73.6
+  on average and get no special handling. Teams do about 70–100 points better
+  online than onsite, so their ratings are not strictly onsite-equivalent (see
+  the analyzer's audit).
+- Spot check, contest 2921 "Grand Prix of Ōokayama 2025": A/B/C/D/E/F
+  2061.1 / 2822.5 / 2270.1 / 3150.7 / 3417.2 / 1763.1 →
+  2466.2 / 3066.6 / 2665.3 / 3306.5 / 3578.2 / 2110.4.
+
+Schema: records no longer carry `difficulty_cf_fit_se`, `difficulty_cf_level_sd`
+or `difficulty_cf_partial_se`. Those were gym-map uncertainties that do not
+describe DE, and DE has no SE of its own. The initial fetch shrinks from 1,130
+to 854 KB raw (121 → 99 KB gzipped).
+
+Pre-existing and unchanged: the five Luxor `problem_id`s (8674, 8676, 8677,
+8680, 8683) still appear in both contest 1661 and contest 1662, and
+`ratingMap` keeps the last one (contest 1662). DE rates the two appearances
+further apart than before: up to 146 points on 8680 (1876.8 vs 2022.6).
+
+Verified: 3,159 records, 3,154 unique ids, and 2,975 of 3,064 canonical
+problems rated (unchanged); `npm run build` clean with unchanged bundle
+hashes; `vite preview` serves `/problem_rating.json` byte-identical to the
+analyzer artifact. `npm ci` was needed first (`node_modules` was missing).
+The local build's CRLF-only changes to `dist/index.html` and `dist/assets` were
+discarded, not committed.
