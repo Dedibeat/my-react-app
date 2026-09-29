@@ -49,6 +49,7 @@ export default function Lists({
   const [renameVal, setRenameVal] = useState('');
   const [busy, setBusy] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
   const [joined, setJoined] = useState([]);
 
   // members-table controls
@@ -87,6 +88,7 @@ export default function Lists({
   useEffect(() => {
     if (selectedId == null) { setDetail(null); return; }
     setEditing(false);
+    setShareOpen(false);
     setSelected(new Set());
     let cancelled = false;
     setDetailLoading(true);
@@ -245,6 +247,7 @@ export default function Lists({
     try {
       const { share_token } = await api.shareList(detail.id);
       setDetail({ ...detail, share_token });
+      setShareOpen(true);
       reloadLists();
     } catch (err) {
       showToast(`Share failed: ${err.message}`, 'error');
@@ -529,11 +532,17 @@ export default function Lists({
                 </>
               )}
             </button>
-            {!detail.share_token && (
-              <button type="button" className="btn" disabled={busy} onClick={startSharing}>
-                Share
-              </button>
-            )}
+            <button
+              type="button"
+              className={`btn ${shareOpen ? 'btn-primary' : ''}`}
+              disabled={busy}
+              onClick={() => (detail.share_token ? setShareOpen(!shareOpen) : startSharing())}
+              title={detail.share_token ? 'Show share link' : 'Create a share link'}
+              aria-expanded={shareOpen}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              {detail.share_token ? 'Shared' : 'Share'}
+            </button>
             <button type="button" className="btn" onClick={() => { setRenamingId('detail'); setRenameVal(detail.name); }}>
               Rename
             </button>
@@ -544,7 +553,7 @@ export default function Lists({
         )}
       </div>
 
-      {detail && detail.share_token && (
+      {detail && detail.share_token && shareOpen && (
         <div className="share-bar">
           <span className="share-bar-label">Share link</span>
           <input

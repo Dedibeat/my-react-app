@@ -2046,6 +2046,17 @@ edits the problems.
 Backend changed → Render redeploys on push to `master`; schema migrates itself.
 
 
+### Follow-up: share link collapsed behind a button
+
+The always-visible share bar was distracting. The list header now has one
+link-icon button: **Share** (not shared yet → creates the link and opens the
+panel) or **Shared** (toggles the panel with link / Copy / Open board / Stop
+sharing). The panel starts collapsed each time a list is opened
+(`shareOpen` state in `src/Lists.jsx`); the button is highlighted while it's
+open. Verified in the browser: collapsed by default, toggles open/closed, Stop
+sharing → button reads "Share", Share → link created and panel opens. Lint and
+build clean.
+
 ## Hosting research: free API host without cold starts (2026-09-29)
 
 Asked for an alternative to Render with no cold start and free. Research only,
