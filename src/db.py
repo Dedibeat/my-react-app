@@ -56,6 +56,17 @@ CREATE TABLE IF NOT EXISTS problem_list_items (
   PRIMARY KEY (list_id, problem_id),
   FOREIGN KEY (list_id) REFERENCES problem_lists(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS problem_list_members (
+  list_id INTEGER NOT NULL,
+  user_id INTEGER NOT NULL,
+  joined_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (list_id, user_id),
+  FOREIGN KEY (list_id) REFERENCES problem_lists(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_list_members_user ON problem_list_members(user_id);
 """
 
 
@@ -212,6 +223,11 @@ def get_conn():
                         conn.execute(f"ALTER TABLE users ADD COLUMN {col_def}")
                     except Exception:
                         pass
+                try:
+                    conn.execute("ALTER TABLE problem_lists ADD COLUMN share_token TEXT")
+                except Exception:
+                    pass
+                conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_lists_share_token ON problem_lists(share_token)")
                 _schema_done = True
         _tls.conn = conn
     return conn

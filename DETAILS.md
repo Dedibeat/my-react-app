@@ -1973,3 +1973,97 @@ hashes; `vite preview` serves `/problem_rating.json` byte-identical to the
 analyzer artifact. After deploy, https://dedibeat.github.io/problem_rating.json (workflow run 36399639434, success) is the committed blob and parses equal to the local file. `npm ci` was needed first (`node_modules` was missing).
 The local build's CRLF-only changes to `dist/index.html` and `dist/assets` were
 discarded, not committed.
+
+
+## Shareable problem lists + group board (2026-09-29)
+
+A list owner can turn on a secret share link. Any **logged-in** user who opens
+it sees the list and can **join**; joined members show up on a group board that
+shows who solved which problem. Decisions (asked the user): logged-in viewers
+only; secret revocable token (lists stay private by default); join via a
+button; "Solved by" column + member progress bars; no copy/fork; only the owner
+edits the problems.
+
+### Backend (`src/lists.py`, `src/db.py`, `src/server.py`)
+
+- `problem_lists.share_token TEXT` (added by `ALTER TABLE` in `get_conn`'s
+  migration step, like the `users.qoj_*` columns) with a unique index, and a new
+  `problem_list_members (list_id, user_id, joined_at)` table. Both apply
+  automatically to the live Turso DB on first request after deploy.
+- `POST /api/lists/{id}/share` (owner) → `{share_token}` (`secrets.token_urlsafe(12)`,
+  16 chars; idempotent). `DELETE /api/lists/{id}/share` clears the token **and
+  removes all members**; sharing again makes a new link. Deleting a list also
+  deletes its members explicitly.
+- `GET /api/lists` and `GET /api/lists/{id}` now include `share_token`.
+- New `shared_router` (`/api/shared`, auth required everywhere):
+  - `GET /api/shared` — lists the user has joined (name, owner, counts, their
+    own solved count).
+  - `GET /api/shared/{token}` — name, owner, `is_owner`, `is_member`,
+    `problem_ids`, and `members` (owner + joined users, each with the list
+    problems they have AC). Non-members can view before joining. Bad/turned-off
+    token → 404.
+  - `POST /api/shared/{token}/join` (idempotent; owner is a no-op).
+  - `DELETE /api/shared/{token}/members/{user_id}` — a member can leave; only the
+    owner can remove others (403 otherwise).
+- Statuses stay global per user, so the board reads `problem_status` directly;
+  nothing is duplicated per list.
+
+### Frontend
+
+- `src/api.js`: `shareList / unshareList / getJoinedLists / getShared /
+  joinShared / removeSharedMember`.
+- `src/Lists.jsx`: list detail gets a **Share** button; once shared, a share bar
+  shows the link (`<origin><path>#/shared/<token>`) with Copy / Open board / Stop
+  sharing. Own list cards get a "Shared" pill. The overview has a new **Shared
+  with me** section (cards link to the board).
+- `src/SharedList.jsx` (new, route `#/shared/:token`): header with Join/Leave,
+  member board (sorted by solved count, owner can × remove members), and a table
+  (ID, Contest, Problem, Rating, your editable Status, Solved by chips). The
+  viewer's own solves come from local state, so marking AC updates the board at
+  once. Waits for `codeforces.json` too (`loaded && cfLoaded`) so CF problems in
+  a list resolve. Logged-out visitors hit the normal login screen; the hash
+  route survives login, so they land on the board afterwards.
+- `src/Lists.css`: share bar, board, solved-by chips.
+
+### Verification
+
+- API against local SQLite (`LIBSQL_URL=<file>`): 18/18 scripted checks — token
+  create/idempotent, non-owner can't share, 401 unauth, 404 bad token, view as
+  non-member, join (idempotent), per-member solved sets, only list problems
+  counted, joined-lists summary, leave, 403 member-removes-other, owner removes,
+  unshare kills link + members, reshare gives new token, delete list kills link.
+- Browser (Vite dev proxied to local uvicorn): as a non-member the board and
+  solved-by column render, Join adds you (0/9), setting AC moves you to 1/9 and
+  adds your chip; "Shared with me" card appears; as owner the share bar, Open
+  board, member remove and Stop sharing work; a dead link shows the 404 message.
+  Zero console errors. Headless-Chrome screenshot of the desktop layout checked.
+  Phone-width layout could not be checked properly (headless Chrome clips at its
+  minimum window width, same for the existing pages).
+- `npm run lint` clean, `npm run build` clean.
+
+### Deploy note
+
+Backend changed → Render redeploys on push to `master`; schema migrates itself.
+
+
+## Hosting research: free API host without cold starts (2026-09-29)
+
+Asked for an alternative to Render with no cold start and free. Research only,
+nothing migrated. Constraints from this app: FastAPI + a long-running asyncio
+loop (QOJ auto-sync every 30 min), bcrypt on login, Turso over HTTPS.
+
+| Option | Free? | Cold start | Fit |
+|---|---|---|---|
+| **Render free + cron-job.org pinger (current)** | yes | none while the pinger works (1 service ≈ 744 h/mo < 750 h quota) | already running; weak spot is the pinger getting disabled after timeouts |
+| **Oracle Cloud Always Free VM** | yes (card for verification) | **none** (a real VM) | best "truly always-on" option; runs uvicorn as is. Cons: you manage the VM (systemd, TLS via Caddy); ARM quota cut to 2 OCPU/12 GB in June 2026; idle instances (<20% CPU/net/mem over 7 days) can be reclaimed, which a tiny API will hit unless the account is upgraded to Pay-As-You-Go (still $0 within Always Free limits) |
+| Koyeb free | needs a card since Feb 2026 | scales to zero after 1 h idle, then 1–5 s (vs Render's ~30–50 s) | runs as is; background loop stops while asleep; 0.1 vCPU |
+| Google Cloud Run | free quota (2M req/mo), billing account needed | ~1–3 s for Python after idle; min-instances=1 is not free | 30-min loop needs Cloud Scheduler instead of asyncio |
+| Cloudflare Workers (Python GA Sept 2026) | yes | ~1 s Python snapshot start | free plan caps CPU at 10 ms/request — FastAPI + bcrypt won't fit; would need a rewrite (JS, WebCrypto hashing, Cron Trigger) |
+| Hugging Face Spaces / PythonAnywhere free | yes | Spaces sleep after 48 h idle; PythonAnywhere free blocks outbound hosts (Turso, qoj.ac) | not suitable |
+
+Recommendation: **keep Render + the pinger** if it's working (it already hides
+the cold start). If you want a real always-on host at $0, **Oracle Always Free
+VM** is the only one that needs no code change; plan ~1 h setup (VM, Python,
+systemd unit, Caddy for HTTPS, same env vars) and switch `API_BASE` in
+`src/api.js` / `VITE_API_BASE`. Koyeb is the easiest drop-in, but it still
+scales to zero (a few seconds, not ~40).

@@ -5,6 +5,7 @@ import ProblemSet from './ProblemSet.jsx';
 import Olympiad from './Olympiad.jsx';
 import Codeforces from './Codeforces.jsx';
 import Lists from './Lists.jsx';
+import SharedList from './SharedList.jsx';
 import Profile from './Profile.jsx';
 import { api, getToken, setToken } from './api.js';
 
@@ -321,6 +322,19 @@ export default function App() {
                 isAdmin={user.is_admin}
                 lists={lists}
                 reloadLists={reloadLists}
+              />
+            }
+          />
+          <Route
+            path="/shared/:token"
+            element={
+              <SharedList
+                problems={problems}
+                setProblems={setProblems}
+                cfProblems={cfProblems}
+                setCfProblems={setCfProblems}
+                loaded={loaded && cfLoaded}
+                user={user}
               />
             }
           />

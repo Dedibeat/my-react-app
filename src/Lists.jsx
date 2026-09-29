@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import './Lists.css';
 import './ProblemSet.css';
 import { parseSearch, evalSearchAst } from './search.js';
@@ -20,6 +21,10 @@ function hayFor(p) {
   return isCfId(p.id)
     ? `${p.id} ${p.name} ${p.code} ${p.tags}`.toLowerCase()
     : `${p.id} ${p.name} ${p.searchKey} ${p.tags}`.toLowerCase();
+}
+
+function shareUrl(token) {
+  return `${window.location.origin}${window.location.pathname}#/shared/${token}`;
 }
 
 function SkeletonCard() {
@@ -44,6 +49,7 @@ export default function Lists({
   const [renameVal, setRenameVal] = useState('');
   const [busy, setBusy] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [joined, setJoined] = useState([]);
 
   // members-table controls
   const [showTag, setShowTag] = useState(false);
@@ -88,6 +94,15 @@ export default function Lists({
       .then((d) => { if (!cancelled) setDetail(d); })
       .catch(() => { if (!cancelled) { setSelectedId(null); showToastRef.current('Could not load list', 'error'); } })
       .finally(() => { if (!cancelled) setDetailLoading(false); });
+    return () => { cancelled = true; };
+  }, [selectedId]);
+
+  useEffect(() => {
+    if (selectedId !== null) return;
+    let cancelled = false;
+    api.getJoinedLists()
+      .then((j) => { if (!cancelled) setJoined(j); })
+      .catch(() => {});
     return () => { cancelled = true; };
   }, [selectedId]);
 
@@ -225,6 +240,42 @@ export default function Lists({
     }
   }
 
+  async function startSharing() {
+    setBusy(true);
+    try {
+      const { share_token } = await api.shareList(detail.id);
+      setDetail({ ...detail, share_token });
+      reloadLists();
+    } catch (err) {
+      showToast(`Share failed: ${err.message}`, 'error');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function stopSharing() {
+    if (!window.confirm('Turn off the share link? The current link stops working and all members are removed.')) return;
+    setBusy(true);
+    try {
+      await api.unshareList(detail.id);
+      setDetail({ ...detail, share_token: null });
+      reloadLists();
+    } catch (err) {
+      showToast(`Failed: ${err.message}`, 'error');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function copyShareLink() {
+    try {
+      await navigator.clipboard.writeText(shareUrl(detail.share_token));
+      showToast('Link copied', 'success');
+    } catch {
+      showToast('Copy failed — select the link and copy it manually', 'error');
+    }
+  }
+
   async function addAllMatches() {
     const ids = newMatches.map((p) => Number(p.id));
     if (!ids.length || busy) return;
@@ -349,6 +400,7 @@ export default function Lists({
                 >
                   <div className="list-card-head">
                     <span className="list-card-name">{l.name}</span>
+                    {l.share_token && <span className="list-card-shared">Shared</span>}
                     <span className="list-card-count">{l.problem_count} problems</span>
                   </div>
                   <div className="list-card-progress">
@@ -391,6 +443,32 @@ export default function Lists({
               );
             })}
           </div>
+        )}
+
+        {joined.length > 0 && (
+          <>
+            <h2 className="lists-title lists-section-title">Shared with me</h2>
+            <div className="lists-grid">
+              {joined.map((l) => {
+                const pct = l.problem_count > 0 ? (l.solved_count / l.problem_count) * 100 : 0;
+                return (
+                  <Link key={l.share_token} to={`/shared/${l.share_token}`} className="list-card list-card-link">
+                    <div className="list-card-head">
+                      <span className="list-card-name">{l.name}</span>
+                      <span className="list-card-count">{l.problem_count} problems</span>
+                    </div>
+                    <div className="list-card-progress">
+                      <div className="list-card-track">
+                        <div className="list-card-fill" style={{ width: `${pct}%` }} />
+                      </div>
+                      <span className="list-card-solved">{l.solved_count}/{l.problem_count}</span>
+                    </div>
+                    <span className="list-card-owner">by {l.owner}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </>
         )}
 
         {toast && <div className={`toast toast-${toast.kind}`} role="status">{toast.msg}</div>}
@@ -451,6 +529,11 @@ export default function Lists({
                 </>
               )}
             </button>
+            {!detail.share_token && (
+              <button type="button" className="btn" disabled={busy} onClick={startSharing}>
+                Share
+              </button>
+            )}
             <button type="button" className="btn" onClick={() => { setRenamingId('detail'); setRenameVal(detail.name); }}>
               Rename
             </button>
@@ -460,6 +543,23 @@ export default function Lists({
           </>
         )}
       </div>
+
+      {detail && detail.share_token && (
+        <div className="share-bar">
+          <span className="share-bar-label">Share link</span>
+          <input
+            readOnly
+            className="share-bar-url"
+            value={shareUrl(detail.share_token)}
+            onFocus={(e) => e.target.select()}
+          />
+          <button type="button" className="btn btn-primary" onClick={copyShareLink}>Copy</button>
+          <Link className="btn" to={`/shared/${detail.share_token}`}>Open board</Link>
+          <button type="button" className="btn btn-danger-ghost" disabled={busy} onClick={stopSharing}>
+            Stop sharing
+          </button>
+        </div>
+      )}
 
       {detail && editing && (
         <div className="add-panel">

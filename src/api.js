@@ -107,6 +107,24 @@ export const api = {
       body: JSON.stringify({ problem_ids: problemIds }),
     });
   },
+  async shareList(id) {
+    return request(`/api/lists/${id}/share`, { method: "POST" });
+  },
+  async unshareList(id) {
+    return request(`/api/lists/${id}/share`, { method: "DELETE" });
+  },
+  async getJoinedLists() {
+    return request("/api/shared");
+  },
+  async getShared(token) {
+    return request(`/api/shared/${encodeURIComponent(token)}`);
+  },
+  async joinShared(token) {
+    return request(`/api/shared/${encodeURIComponent(token)}/join`, { method: "POST" });
+  },
+  async removeSharedMember(token, userId) {
+    return request(`/api/shared/${encodeURIComponent(token)}/members/${userId}`, { method: "DELETE" });
+  },
   async qojSync(handle, cookies, solved, attempted) {
     return request("/api/qoj-sync", {
       method: "POST",

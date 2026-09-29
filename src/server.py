@@ -12,7 +12,7 @@ from src.cf_sync import router as cf_sync_router
 from src.qoj_sync import router as qoj_sync_router, run_qoj_auto_sync_all
 from src.db import get_conn
 from src.feedback import router as feedback_router
-from src.lists import router as lists_router
+from src.lists import router as lists_router, shared_router
 from src.status import router as status_router
 
 logging.basicConfig(level=logging.INFO)
@@ -32,6 +32,7 @@ app.include_router(auth_router)
 app.include_router(status_router)
 app.include_router(feedback_router)
 app.include_router(lists_router)
+app.include_router(shared_router)
 app.include_router(cf_sync_router)
 app.include_router(qoj_sync_router)
 
