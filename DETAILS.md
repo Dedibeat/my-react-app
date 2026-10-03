@@ -2078,3 +2078,12 @@ VM** is the only one that needs no code change; plan ~1 h setup (VM, Python,
 systemd unit, Caddy for HTTPS, same env vars) and switch `API_BASE` in
 `src/api.js` / `VITE_API_BASE`. Koyeb is the easiest drop-in, but it still
 scales to zero (a few seconds, not ~40).
+
+## One-off: wipe TEAM_R3's statuses (2026-10-03)
+
+User `TEAM_R3` was accidentally linked to the `dedibeat` QOJ account, importing its statuses.
+Added `scripts/wipe_user_status.py <username> [--yes]`: prints the user's status counts (dry
+run), and with `--yes` unlinks QOJ (same columns as the Profile "disconnect" endpoint, so the
+background auto-sync can't re-import) and deletes all of that user's `problem_status` rows.
+Tested against a temp local SQLite DB (target user cleared, other users untouched). Must be run
+by the owner with prod `TURSO_URL`/`TURSO_TOKEN` set — no credentials are stored in the repo.
