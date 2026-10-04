@@ -2465,3 +2465,11 @@ contest file changed because the refit moves team strengths slightly.
   (Ghost of Tsushima 3982 … Joker or Judger 827).
 - The console's only error is the local API's `/api/qoj-sync` 503 (no QOJ
   credentials locally).
+
+**Live check (2026-10-04).** Pages workflow run 37183572097 deployed
+`93a21bc` (the Pages repo head is "Deploy from …@93a21bc"). The live
+`/problem_rating.json`, `/tagged.json`, `/contest_fields/index.json`,
+`/contest_fields/4071.json` and `/contest_fields/4113.json` parse equal to
+`data/`. The analyzer's later commits on `origin/master` (dynamic-rating
+research, EC-Final cutoff script) leave its shipped outputs unchanged, so
+there is nothing further to copy.
