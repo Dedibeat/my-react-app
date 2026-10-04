@@ -130,6 +130,18 @@ export const api = {
   async removeSharedMember(token, userId) {
     return request(`/api/shared/${encodeURIComponent(token)}/members/${userId}`, { method: "DELETE" });
   },
+  async getParticipations() {
+    return request("/api/participations");
+  },
+  async addParticipation(result) {
+    return request("/api/participations", {
+      method: "POST",
+      body: JSON.stringify(result),
+    });
+  },
+  async deleteParticipation(id) {
+    return request(`/api/participations/${id}`, { method: "DELETE" });
+  },
   async qojSync(handle, cookies, solved, attempted) {
     return request("/api/qoj-sync", {
       method: "POST",

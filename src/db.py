@@ -67,6 +67,21 @@ CREATE TABLE IF NOT EXISTS problem_list_members (
 );
 
 CREATE INDEX IF NOT EXISTS idx_list_members_user ON problem_list_members(user_id);
+
+CREATE TABLE IF NOT EXISTS contest_participations (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  contest_id INTEGER NOT NULL,
+  kind TEXT NOT NULL,
+  solved INTEGER NOT NULL,
+  penalty INTEGER NOT NULL,
+  team_name TEXT,
+  participated_on TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_participations_user ON contest_participations(user_id);
 """
 
 

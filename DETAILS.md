@@ -2240,3 +2240,61 @@ Verified locally: endpoint returns `application/pdf` inline for 1522, 307 to QOJ
 for 1051/1697; links in the table point at it; peek reveals one row's tags on
 desktop and phone, no horizontal overflow at 375px; lint and build clean.
 Backend changed (`editorial.py`, `server.py`) → Render redeploy on push.
+
+## Contests page: virtual/official results with performance rating (2026-10-04)
+
+Idea 2 from the proposals, plus the user's ask to show a performance rating for
+a virtual or an official participation. Decisions (asked): results are entered
+manually for now (QOJ auto-import later); performance = rank in the contest's
+real final standings, the same method as `analyze_standings`' virtual
+calculator; a result belongs to the account that saves it (a team account such
+as TEAM_R3 saves its own runs).
+
+- **`#/contests`** (new nav tab): every contest in the dataset with your solves
+  (`AC`/total, mini bar), your saved results as `Vir`/`Off` + rating badge, and
+  an "Add result" / "Results" button. Filters: Show (All / With results /
+  Untouched — no status on any problem and no result, i.e. a fresh contest for a
+  virtual), Region, live search. Contest name links to QOJ, book icon to the
+  editorial.
+- **Results dialog**: saved results (with rank and performance, delete), and an
+  add form. *Virtual*: date, solved, penalty (minutes). *Official*: search your
+  team or university in the real standings and pick the row. Live preview
+  "Rank r of N · performance P" before saving.
+- **Math** (`src/performance.js`), ported from `virtual_calc_template.html`: rank =
+  1 + teams with more solved, or equal solved and lower penalty; find by
+  bisection the rating whose expected number of teams ahead (Elo win
+  probability against every team's fitted strength) equals rank − 1; map it to
+  CF points through the analyzer's lookup table. Official results use the team's
+  own row: its official rank and the analyzer's performance for it. Cross-checked
+  in node against the calculator's own embedded functions: 150 virtual results
+  over 25 contests agree within 0.022 CF points, and official rows reproduce the
+  analyzer's rank/performance exactly (e.g. Shanghai 2023, "world.search(you);",
+  rank 27, 3238).
+- **Data**: `scripts/export_contest_fields.py` reads the DATA embedded in
+  `../analyze_standings/output/virtual_calc.html` and writes
+  `data/contest_fields/index.json` (scale, CF lookup table, covered ids) and one
+  `<contest_id>.json` per contest (`[name, affiliation, solved, penalty_min,
+  theta, performance, rank]` per team). 241 of the app's 258 contests are
+  covered (17 — some World Finals and a few regionals — have no standings in the
+  fit; their button is disabled). 3.9 MB total, median 6 KB per contest, fetched
+  only when that contest is opened or has a saved result. Re-run the script
+  after regenerating `virtual_calc.html`. Some fields include QOJ mirror teams
+  (e.g. Shanghai 2023's top rows); that is the analyzer's field, kept as is so
+  numbers match the calculator.
+- **Backend** (`src/participations.py`, table `contest_participations` added to
+  `SCHEMA`, applies itself on first request): `GET /api/participations`,
+  `POST /api/participations {contest_id, kind: virtual|official, solved, penalty,
+  team_name?, participated_on?}` (official needs `team_name`; date YYYY-MM-DD,
+  defaults to today), `DELETE /api/participations/{id}` (own rows only). Only
+  the raw result is stored; performance is computed in the browser so it
+  follows rating refreshes.
+- Problems now carry `contestId`. Nav tabs get tighter padding on phones so four
+  tabs fit on one line.
+
+Verified locally: API cases (create virtual/official, 400s for bad kind / no
+team / bad date, 401 without auth, another user can't delete yours); in the
+browser, search "shanghai" → saved virtual shows "VIR 2720"; official search
+"清华" lists that university's teams with rank/solved/penalty, picking one shows
+the preview and saving adds "OFF 3238"; delete, Esc, Show filters (1 with
+results, 147 untouched, 258 all); phone layout with no horizontal overflow.
+Lint and build clean. Backend changed → Render redeploy on push.

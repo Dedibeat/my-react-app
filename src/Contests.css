@@ -1,0 +1,140 @@
+/* ---------- Contests table ---------- */
+/* Column widths for the desktop table only; on phones rows become cards (ProblemSet.css). */
+@media (min-width: 769px) {
+  .contests-table { min-width: 760px; }
+  .contests-table th[data-label="Contest"],
+  .contests-table td[data-label="Contest"] { width: auto; max-width: 420px; }
+  .contests-table th[data-label="Region"],
+  .contests-table td[data-label="Region"] { width: 170px; }
+  .contests-table th[data-label="Your solves"],
+  .contests-table td[data-label="Your solves"] { width: 150px; }
+  .contests-table .contest-action { width: 120px; text-align: right; }
+}
+.contests-table .contest-action .btn { font-size: 0.8125rem; padding: 4px 10px; }
+
+.contest-solves {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+.contest-solves .mini-track {
+  width: 60px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.contest-solves .mini-fill {
+  display: block;
+  height: 100%;
+  background: var(--green);
+}
+
+.result-chips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.result-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.result-kind {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+/* ---------- Results modal ---------- */
+.modal-card.results-modal { max-width: 560px; }
+
+.results-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.results-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: 0.875rem;
+}
+.results-what {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.results-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.results-inputs .field { flex: 1 1 120px; }
+.results-inputs .field.results-team { flex: 2 1 220px; }
+.results-inputs input {
+  padding: 8px 10px;
+  font-size: 0.9375rem;
+}
+
+.team-matches {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  max-height: 240px;
+  overflow: auto;
+}
+.team-matches button {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  padding: 7px 10px;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  text-align: left;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.team-matches li:last-child button { border-bottom: none; }
+.team-matches button:hover { background: var(--accent-soft); }
+.team-matches .team-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.results-preview {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 0.9375rem;
+}
+.results-note { font-size: 0.75rem; }
+
+@media (max-width: 768px) {
+  .contests-table .contest-action .btn { width: 100%; min-height: 40px; }
+}

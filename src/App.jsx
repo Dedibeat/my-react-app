@@ -7,6 +7,7 @@ import Codeforces from './Codeforces.jsx';
 import Lists from './Lists.jsx';
 import SharedList from './SharedList.jsx';
 import Profile from './Profile.jsx';
+import Contests from './Contests.jsx';
 import { api, getToken, setToken, editorialHref } from './api.js';
 
 function flattenContests(contests) {
@@ -32,6 +33,7 @@ function flattenContests(contests) {
       out.push({
         id: String(p.problem_id),
         contest: c.contest_name + ' ' + c.year,
+        contestId: c.contest_id,
         contestUrl: `https://qoj.ac/contest/${c.contest_id}`,
         editorialUrl: c.editorial_url
           ? editorialHref(c.contest_id, new URL(c.editorial_url).searchParams.get('r'))
@@ -291,6 +293,7 @@ export default function App() {
           </Link>
           <nav className="app-nav">
             <NavLink to="/" end className="nav-tab">Problem Set</NavLink>
+            <NavLink to="/contests" className="nav-tab">Contests</NavLink>
             <NavLink to="/lists" className="nav-tab">Lists</NavLink>
             <a href="/techniques_viewer.html" className="nav-tab">Techniques</a>
           </nav>
@@ -313,6 +316,10 @@ export default function App() {
                 isAdmin={user.is_admin}
               />
             }
+          />
+          <Route
+            path="/contests"
+            element={<Contests problems={problems} loaded={loaded} />}
           />
           <Route
             path="/lists"

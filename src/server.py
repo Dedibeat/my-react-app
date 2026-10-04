@@ -14,6 +14,7 @@ from src.db import get_conn
 from src.editorial import router as editorial_router
 from src.feedback import router as feedback_router
 from src.lists import router as lists_router, shared_router
+from src.participations import router as participations_router
 from src.status import router as status_router
 
 logging.basicConfig(level=logging.INFO)
@@ -37,6 +38,7 @@ app.include_router(shared_router)
 app.include_router(cf_sync_router)
 app.include_router(qoj_sync_router)
 app.include_router(editorial_router)
+app.include_router(participations_router)
 
 
 async def _qoj_background_worker():
