@@ -239,7 +239,9 @@ export default function Profile({ user, setUser, problems, loaded, reloadStatuse
     try {
       const res = await api.qojSync(handle);
       if (reloadStatuses) await reloadStatuses();
-      setQojInfo({ connected: true, handle: res.handle, last_synced: new Date().toISOString() });
+      setQojInfo({
+        connected: true, handle: res.handle, last_synced: new Date().toISOString(), dates_imported: res.dates_imported,
+      });
       if (setUser) {
         setUser((prev) => ({ ...prev, qoj_handle: res.handle }));
       }
@@ -417,6 +419,12 @@ export default function Profile({ user, setUser, problems, loaded, reloadStatuse
                   <span className="qoj-meta-val">{relativeTime(parseTs(qojInfo.last_synced))}</span>
                 </span>
               )}
+              <span className="qoj-meta-item">
+                <span className="qoj-meta-label">Solve dates:</span>
+                <span className="qoj-meta-val">
+                  {qojInfo.dates_imported ? 'your first AC on QOJ' : 'importing from QOJ… reload in a minute'}
+                </span>
+              </span>
             </div>
 
             <div className="qoj-connected-actions">

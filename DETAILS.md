@@ -2356,3 +2356,45 @@ real QOJ** (no service-account credentials here).
 account without 2FA (a dedicated account is safest; its password then lives in
 Render's env). Until they're set, QOJ sync is off for everyone. `QOJ_COOKIES`
 is no longer read and can be removed.
+
+## Real solve dates from QOJ submissions (2026-10-04)
+
+Idea 1 from the proposals. The heatmap, streaks and Recent activity read
+`problem_status.updated_at`, which for QOJ imports was only the sync time (and,
+before the earlier fix, the *last* sync time for every AC). Now each user's AC
+dates are set to their **first accepted QOJ submission**, once per handle.
+
+- Format, checked in a logged-in browser (read-only) on QOJ 4.5.46:
+  `/submissions?submitter=<handle>&min_score=100&max_score=100&page=N` lists 10
+  accepted submissions per page, newest first; each row has
+  `href="/submission/<id>"`, the problem link `/problem/<pid>"`,
+  `data-full`/`data-score`, and `<time datetime="2025-09-07T20:51:30+08:00">`.
+  A page past the end returns the last page again (QOJ clamps). A logged-in
+  account can see other users' lists, so the service account works for everyone.
+- `src/qoj_sync.py`: `parse_ac_submissions` (full-score rows only, time → UTC
+  `YYYY-MM-DD HH:MM:SS`, same format as `CURRENT_TIMESTAMP`),
+  `fetch_first_ac_times` (walks pages until a page brings no new submission ids,
+  cap 500 pages, 0.3 s between pages), `import_solve_dates` (chunked
+  `WITH t(pid, ts) AS (VALUES …) UPDATE … SET updated_at = MIN(updated_at, ts)`
+  on the user's AC rows only — `MIN` keeps an earlier date set by hand; then sets
+  `users.qoj_dates_imported_at`). An in-memory guard stops overlapping imports
+  for the same user (focus syncs can fire every 20 s).
+- When it runs: after `POST /api/qoj-sync` as a FastAPI background task (after
+  the response) if the handle's dates aren't imported yet, and in the 30-minute
+  job. Changing the handle or disconnecting clears the flag. New column
+  `users.qoj_dates_imported_at` (schema + `ALTER` migration, applies itself).
+- After the import, new ACs found by later syncs still get the sync time
+  (within ~30 min, or seconds when the app tab gets focus). Not refined further.
+- `GET /api/qoj-sync/status` and the sync response include `dates_imported`;
+  the Profile QOJ card shows "Solve dates: your first AC on QOJ" or "importing
+  from QOJ… reload in a minute".
+- `_fetch(url, not_found)` is the shared logged-in fetch (profile + submissions).
+
+Verified with a fake-QOJ test whose rows are the exact server HTML captured
+from qoj.ac: the real row parses to `(1296684, 7927, "2025-09-07 12:51:30")`
+(+08:00 → UTC); a problem with two ACs gets the earlier one; a 40-point row is
+ignored; an earlier hand-set date is kept; pages 1–4 requested with page 4
+clamped → stop; flag set, reported by status, reset on handle change. The login
+test still passes. Locally the migration added the column and the Profile card
+shows the new line. Not run against real QOJ from the server (needs the
+deployed service account).

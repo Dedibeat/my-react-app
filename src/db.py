@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
   qoj_cookie TEXT,
   qoj_last_synced TEXT,
   qoj_auto_sync INTEGER DEFAULT 1,
+  qoj_dates_imported_at TEXT,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -233,7 +234,7 @@ def get_conn():
             if not _schema_done:
                 conn.executescript(SCHEMA)
                 # Ensure new columns exist on legacy databases
-                for col_def in ["qoj_handle TEXT", "qoj_cookie TEXT", "qoj_last_synced TEXT", "qoj_auto_sync INTEGER DEFAULT 1"]:
+                for col_def in ["qoj_handle TEXT", "qoj_cookie TEXT", "qoj_last_synced TEXT", "qoj_auto_sync INTEGER DEFAULT 1", "qoj_dates_imported_at TEXT"]:
                     try:
                         conn.execute(f"ALTER TABLE users ADD COLUMN {col_def}")
                     except Exception:
