@@ -2349,8 +2349,9 @@ not configured → 503, wrong password → 502, correct login imports AC/WA, the
 second sync reuses the session (1 login), an expired session triggers exactly
 one re-login, unknown user → 404, existing AC/TL rows keep their timestamps,
 and the legacy cookie is cleared. In the browser, Connect without server
-credentials shows the 503 message. Lint and build clean. **Not verified against
-real QOJ** (no service-account credentials here).
+credentials shows the 503 message. Lint and build clean. Not verified against
+real QOJ here (no service-account credentials); checked in production on
+2026-10-04, see the solve-dates entry below.
 
 **Deploy (required):** set `QOJ_USERNAME` and `QOJ_PASSWORD` on Render for a QOJ
 account without 2FA (a dedicated account is safest; its password then lives in
@@ -2396,5 +2397,11 @@ from qoj.ac: the real row parses to `(1296684, 7927, "2025-09-07 12:51:30")`
 ignored; an earlier hand-set date is kept; pages 1–4 requested with page 4
 clamped → stop; flag set, reported by status, reset on handle change. The login
 test still passes. Locally the migration added the column and the Profile card
-shows the new line. Not run against real QOJ from the server (needs the
-deployed service account).
+shows the new line.
+
+Checked in production (2026-10-04), after `QOJ_USERNAME`/`QOJ_PASSWORD` were
+set on Render and these commits deployed: the new endpoints are live
+(`/api/participations` → 401 signed out, `/api/editorial/1447?r=1` → 200
+`application/pdf`); the user's Sync now succeeded with the service account,
+and a minute later the card showed "your first AC on QOJ" and the heatmap
+looked right.
