@@ -2473,3 +2473,53 @@ contest file changed because the refit moves team strengths slightly.
 `data/`. The analyzer's later commits on `origin/master` (dynamic-rating
 research, EC-Final cutoff script) leave its shipped outputs unchanged, so
 there is nothing further to copy.
+
+
+## Calibrated team performance + Medals page (2026-10-04)
+
+**Request.** Improve the team performance rating on the Contests page with
+the right version from the analyzer, preferably calibrated. Then update the
+medal viewer and ship it into the app. Choices (asked): binary-fit
+performance; calibrated cutoff performance in the medal viewer; a "Medals"
+nav link.
+
+**Performance.** `data/contest_fields/` was re-exported
+(`scripts/export_contest_fields.py`) from the analyzer's regenerated
+`virtual_calc.html` (analyzer commit `5f4cc36`, branch
+`calibrated-team-performance`).
+- **What changed upstream:** the calculator now measures teams on the
+  analyzer's **binary** fit instead of the survival fit. The survival fit
+  compresses team abilities, so its difficulty map understated strong teams
+  and overstated weak ones.
+- **Agreement with the displayed DE problem ratings:** slope 0.97 vs 0.80
+  before, RMSE 141 vs 233. The check is on 77,770 rows; the analyzer's
+  `details.md` has the method.
+- **No app code change.** `src/performance.js` reads `theta`, `scale` and
+  `to_cf` from the files, and only their values changed.
+- **Effect:** mean field performance 2117 → 2225. Weak teams rise most (+271
+  below 1600); teams above 2800 barely move (+4). Saved results are recomputed
+  in the browser, so they show the new numbers without a migration.
+
+**Medals page.** `data/medal_viewer.html` is a byte copy of the analyzer's
+`output/medal_viewer.html`, served at `/medal_viewer.html` like the Technique
+Atlas. The nav gains a "Medals" link. The viewer's cutoff teams now show
+performance in CF points, equal to the Contests page value for that row. Its
+bars, badges and problem difficulties stay on the analyzer's survival gym map,
+where badges are defined, so a problem's difficulty there can differ from its
+Problem Set (DE) rating.
+
+**Phone nav.** Five tabs did not fit at 375 px: the nav scrolled and "Medals"
+was cut off. Under 768 px the tabs now use 7 px side padding, a 13 px font
+and a 2 px gap. All five fit at 375 px, and the page has no horizontal
+overflow.
+
+**Verified:**
+- Lint clean; `npm run build` succeeds. The local `dist/` output was
+  discarded (the Pages workflow builds it).
+- On the local dev server, EC Online (II) 2026 with 5 solved and a 600-minute
+  penalty previews rank 134 of 2,534, performance **2807** (was 2895; not
+  saved). The analyzer's own computation on `virtual_calc.html` gives the
+  same.
+- "Medals" opens the viewer. The Shanghai 2023 cutoffs show "perf 2977 / 2663
+  / 2355 CF", and the lowest-gold table's column is "Perf (CF)".
+- The only console error is the viewer's missing `/favicon.ico` (404).

@@ -215,6 +215,6 @@
 @media (max-width: 768px) {
   .app-shell { padding: 12px 14px 48px; }
   .app-header { margin-bottom: 14px; padding-bottom: 12px; }
-  .app-nav { max-width: 100%; overflow-x: auto; }
-  .nav-tab { padding: 6px 10px; white-space: nowrap; }
+  .app-nav { max-width: 100%; overflow-x: auto; gap: 2px; }
+  .nav-tab { padding: 6px 7px; font-size: 0.8125rem; white-space: nowrap; }
 }

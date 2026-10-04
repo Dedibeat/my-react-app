@@ -296,6 +296,7 @@ export default function App() {
             <NavLink to="/contests" className="nav-tab">Contests</NavLink>
             <NavLink to="/lists" className="nav-tab">Lists</NavLink>
             <a href="/techniques_viewer.html" className="nav-tab">Techniques</a>
+            <a href="/medal_viewer.html" className="nav-tab">Medals</a>
           </nav>
           <div className="user-area">
             <Link to="/profile" className="user-chip" title="Your profile">
