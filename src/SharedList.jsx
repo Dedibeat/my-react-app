@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import './Lists.css';
 import './ProblemSet.css';
-import { RatingBadge, StatusEditor } from './problemUI.jsx';
+import { RatingBadge, StatusEditor, ContestLink } from './problemUI.jsx';
 import { useProblemActions } from './useProblemActions.js';
 import { api } from './api.js';
 
@@ -160,7 +160,7 @@ export default function SharedList({ problems, setProblems, cfProblems, setCfPro
               return (
                 <tr key={p.id} className={p.status === 'AC' ? 'row-solved' : ''}>
                   <td className="cell-id" data-label="ID">{p.id}</td>
-                  <td data-label="Contest">{p.contest}</td>
+                  <td data-label="Contest"><ContestLink problem={p} /></td>
                   <td data-label="Problem">
                     <a className="problem-link" href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>
                   </td>

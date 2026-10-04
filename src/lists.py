@@ -102,9 +102,11 @@ def create_list(body: ListBody, user: dict = Depends(get_current_user)):
         raise HTTPException(409, "You already have a list with that name")
     cur.execute("INSERT INTO problem_lists (user_id, name) VALUES (?, ?)", (user["id"], name))
     conn.commit()
-    cur.execute("SELECT created_at FROM problem_lists WHERE id = ?", (cur.lastrowid,))
+    # Read the id before the SELECT: on Turso the SELECT resets the cursor's lastrowid.
+    list_id = cur.lastrowid
+    cur.execute("SELECT created_at FROM problem_lists WHERE id = ?", (list_id,))
     created_at = cur.fetchone()[0]
-    return {"id": cur.lastrowid, "name": name, "created_at": created_at,
+    return {"id": list_id, "name": name, "created_at": created_at,
             "problem_count": 0, "solved_count": 0, "share_token": None}
 
 

@@ -4,7 +4,7 @@ import './Lists.css';
 import './ProblemSet.css';
 import { parseSearch, evalSearchAst } from './search.js';
 import FeedbackModal from './FeedbackModal.jsx';
-import { ProgressSummary, RatingBadge, StatusEditor, FeedbackButton } from './problemUI.jsx';
+import { ProgressSummary, RatingBadge, StatusEditor, FeedbackButton, ContestLink } from './problemUI.jsx';
 import { useProblemActions } from './useProblemActions.js';
 import { api } from './api.js';
 
@@ -93,7 +93,12 @@ export default function Lists({
     let cancelled = false;
     setDetailLoading(true);
     api.getList(selectedId)
-      .then((d) => { if (!cancelled) setDetail(d); })
+      .then((d) => {
+        if (cancelled) return;
+        setDetail(d);
+        // An empty list has nothing to show yet, so open straight into the add panel.
+        if (d.problem_ids.length === 0) setEditing(true);
+      })
       .catch(() => { if (!cancelled) { setSelectedId(null); showToastRef.current('Could not load list', 'error'); } })
       .finally(() => { if (!cancelled) setDetailLoading(false); });
     return () => { cancelled = true; };
@@ -151,7 +156,7 @@ export default function Lists({
       list = list.filter((p) => p.rating >= ratingMin);
     }
     if (ratingMax != null) {
-      list = list.filter((p) => p.rating <= ratingMax);
+      list = list.filter((p) => p.rating != null && p.rating <= ratingMax);
     }
 
     if (searchAst) {
@@ -201,9 +206,11 @@ export default function Lists({
     if (!name || busy) return;
     setBusy(true);
     try {
-      await api.createList(name);
+      const created = await api.createList(name);
       setNewName('');
       await reloadLists();
+      // Older API builds returned no id on Turso; then just stay on the overview.
+      if (created.id) setSelectedId(created.id);
     } catch (err) {
       showToast(`Create failed: ${err.message}`, 'error');
     } finally {
@@ -386,7 +393,7 @@ export default function Lists({
           <SkeletonCard />
         ) : lists.length === 0 ? (
           <div className="lists-empty">
-            No lists yet. Create one above, or select problems on the Problem Set page and add them to a list.
+            No lists yet. Create one above, then use “Edit problems” to add problems by search.
           </div>
         ) : (
           <div className="lists-grid">
@@ -645,6 +652,7 @@ export default function Lists({
             solved={solvedCount}
             total={members.list.length}
             visibleCount={visible.length}
+            visibleSolved={visible.reduce((n, p) => n + (p.status === "AC" ? 1 : 0), 0)}
             loaded={loaded}
           />
 
@@ -654,7 +662,7 @@ export default function Lists({
               <select className="inline-select" value={filter} onChange={(e) => setFilter(e.target.value)}>
                 <option value="all">All</option>
                 <option value="solved">Solved</option>
-                <option value="unsolved">Unsolved</option>
+                <option value="unsolved">Attempted</option>
                 <option value="no submission">No submission</option>
               </select>
             </label>
@@ -751,7 +759,13 @@ export default function Lists({
               <tbody>
                 {visible.length === 0 && (
                   <tr className="empty-row">
-                    <td colSpan={editing ? 8 : 7}>No problems match your filters.</td>
+                    <td colSpan={editing ? 8 : 7}>
+                      {members.list.length > 0
+                        ? 'No problems match your filters.'
+                        : editing
+                          ? 'This list is empty — search above to add problems.'
+                          : 'This list is empty — use “Edit problems” to add some.'}
+                    </td>
                   </tr>
                 )}
                 {capped.map((p) => (
@@ -767,7 +781,7 @@ export default function Lists({
                       </td>
                     )}
                     <td className="cell-id" data-label="ID">{p.id}</td>
-                    <td data-label="Contest">{p.contest}</td>
+                    <td data-label="Contest"><ContestLink problem={p} /></td>
                     <td data-label="Problem">
                       <a className="problem-link" href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>
                     </td>

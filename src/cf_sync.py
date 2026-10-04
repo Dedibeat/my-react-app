@@ -82,7 +82,8 @@ def cf_sync(body: SyncBody, user: dict = Depends(get_current_user)):
 
     conn = get_conn()
     uid = user["id"]
-    # AC always wins (overrides any existing status, including NI).
+    # AC always wins (overrides any existing status, including NI). Already-AC rows
+    # are left alone so re-syncing doesn't reset their solve date.
     for chunk in _chunked(ac):
         values = ",".join(["(?, ?, 'AC')"] * len(chunk))
         args = [x for pid in chunk for x in (uid, pid)]
@@ -90,10 +91,11 @@ def cf_sync(body: SyncBody, user: dict = Depends(get_current_user)):
             f"""INSERT INTO problem_status (user_id, problem_id, status)
                 VALUES {values}
                 ON CONFLICT(user_id, problem_id) DO UPDATE SET
-                  status='AC', updated_at=CURRENT_TIMESTAMP""",
+                  status='AC', updated_at=CURRENT_TIMESTAMP
+                WHERE problem_status.status != 'AC'""",
             args,
         )
-    # Failed verdicts do NOT override an existing AC or NI.
+    # Failed verdicts do NOT override an existing AC or NI, and unchanged rows keep their date.
     for chunk in _chunked(failed):
         values = ",".join(["(?, ?, ?)"] * len(chunk))
         args = [x for pid, st in chunk for x in (uid, pid, st)]
@@ -102,7 +104,8 @@ def cf_sync(body: SyncBody, user: dict = Depends(get_current_user)):
                 VALUES {values}
                 ON CONFLICT(user_id, problem_id) DO UPDATE SET
                   status=excluded.status, updated_at=CURRENT_TIMESTAMP
-                WHERE problem_status.status NOT IN ('AC', 'NI')""",
+                WHERE problem_status.status NOT IN ('AC', 'NI')
+                  AND problem_status.status != excluded.status""",
             args,
         )
     conn.commit()

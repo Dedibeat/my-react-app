@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { getStatusClass } from './problemMeta.js';
 
-export function ProgressSummary({ solved, total, visibleCount, loaded }) {
+// `visibleSolved` is optional; when given and a filter is active, the solved count
+// of the filtered rows is shown next to "N shown".
+export function ProgressSummary({ solved, total, visibleCount, visibleSolved, loaded }) {
   const pct = total > 0 ? (solved / total) * 100 : 0;
+  const filtered = visibleSolved != null && visibleCount < total;
   return (
     <div className="progress-card">
       <div className="progress-info">
@@ -11,13 +14,49 @@ export function ProgressSummary({ solved, total, visibleCount, loaded }) {
           <span className="progress-pct">{pct.toFixed(1)}%</span>
         </span>
         <span className="progress-visible-count" id="summary">
-          {loaded ? `${visibleCount.toLocaleString()} shown` : 'Loading…'}
+          {!loaded
+            ? 'Loading…'
+            : filtered
+              ? `${visibleSolved.toLocaleString()} of ${visibleCount.toLocaleString()} shown solved`
+              : `${visibleCount.toLocaleString()} shown`}
         </span>
       </div>
       <div className="progress-track" aria-hidden="true">
         <div className="progress-fill" style={{ width: `${pct}%` }} />
       </div>
     </div>
+  );
+}
+
+// Contest name, linked to the contest page when known (QOJ contests; Codeforces rows have
+// none), plus a book icon linking the contest's editorial when the dataset has one.
+export function ContestLink({ problem }) {
+  const title = problem.region ? `${problem.contest} · ${problem.region}` : problem.contest;
+  return (
+    <span className="contest-cell">
+      {problem.contestUrl ? (
+        <a className="contest-link" href={problem.contestUrl} target="_blank" rel="noopener noreferrer" title={title}>
+          {problem.contest}
+        </a>
+      ) : (
+        <span className="contest-link" title={title}>{problem.contest}</span>
+      )}
+      {problem.editorialUrl && (
+        <a
+          className="editorial-link"
+          href={problem.editorialUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Contest editorial"
+          aria-label={`Editorial for ${problem.contest}`}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z" />
+            <path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z" />
+          </svg>
+        </a>
+      )}
+    </span>
   );
 }
 

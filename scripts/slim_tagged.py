@@ -5,7 +5,7 @@ The canonical file (canonical/tagged.json) keeps the full LLM-generated
 fields (statement, analysis_notes, shortest_solution, tagging provenance, ...)
 for future use; this script produces the served data/tagged.json with only:
 
-  contest: contest_id, contest_name, year, region
+  contest: contest_id, contest_name, year, region, editorial_url
   problem: problem_id, problem_name, problem_url,
            primary_tags, secondary_tags, extra_tags,
            importance, importance_confidence, olympiad_techniques
@@ -20,7 +20,7 @@ to override).
 import json
 import sys
 
-CONTEST_KEEP = ("contest_id", "contest_name", "year", "region")
+CONTEST_KEEP = ("contest_id", "contest_name", "year", "region", "editorial_url")
 PROBLEM_KEEP = (
     "problem_id",
     "problem_name",

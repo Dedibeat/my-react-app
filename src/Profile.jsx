@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import './Profile.css';
 import { getStatusClass } from './problemMeta.js';
 import { RatingBadge } from './problemUI.jsx';
@@ -65,6 +65,12 @@ function Stat({ n, unit, label }) {
 function ActivityHeatmap({ problems }) {
   const currentYear = new Date().getFullYear();
   const [year, setYear] = useState(currentYear);
+  const calRef = useRef(null);
+
+  // When the calendar is wider than the screen, start scrolled to the newest weeks.
+  useEffect(() => {
+    if (calRef.current) calRef.current.scrollLeft = calRef.current.scrollWidth;
+  }, [year]);
 
   // dayKey -> number of problems marked AC that day (by last status change).
   const solveCounts = useMemo(() => {
@@ -154,7 +160,7 @@ function ActivityHeatmap({ problems }) {
         )}
       </div>
 
-      <div className="cal">
+      <div className="cal" ref={calRef}>
         <div className="cal-months">
           {monthLabels.map((m, i) => <span key={i}>{m}</span>)}
         </div>
@@ -211,7 +217,7 @@ function relativeTime(date) {
 
 export default function Profile({ user, setUser, problems, loaded, reloadStatuses }) {
   const [qojInfo, setQojInfo] = useState(null);
-  const [qojHandle, setQojHandle] = useState(user?.qoj_handle || 'Dedibeat');
+  const [qojHandle, setQojHandle] = useState(user?.qoj_handle || '');
   const [qojCookie, setQojCookie] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [syncing, setSyncing] = useState(false);
@@ -491,7 +497,7 @@ export default function Profile({ user, setUser, problems, loaded, reloadStatuse
               <input
                 type="text"
                 className="qoj-handle-input"
-                placeholder="QOJ Username (e.g. Dedibeat)"
+                placeholder="Your QOJ username"
                 value={qojHandle}
                 onChange={(e) => setQojHandle(e.target.value)}
                 required

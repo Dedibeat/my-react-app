@@ -1,11 +1,28 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import './ProblemSet.css';
 import { parseSearch, evalSearchAst } from './search.js';
 import FeedbackModal from './FeedbackModal.jsx';
-import { ProgressSummary, RatingBadge, StatusEditor, FeedbackButton } from './problemUI.jsx';
+import { ProgressSummary, RatingBadge, StatusEditor, FeedbackButton, ContestLink } from './problemUI.jsx';
 import { useProblemActions } from './useProblemActions.js';
 
 const RENDER_CAP = 500;
+
+// useState that survives leaving the page (and reloads) within the browser tab,
+// so filters aren't lost when you open Profile or Lists and come back.
+function useSessionState(key, initial) {
+  const [value, setValue] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem(key);
+      return saved != null ? JSON.parse(saved) : initial;
+    } catch {
+      return initial;
+    }
+  });
+  useEffect(() => {
+    try { sessionStorage.setItem(key, JSON.stringify(value)); } catch { /* storage unavailable */ }
+  }, [key, value]);
+  return [value, setValue];
+}
 
 function Controls(props) {
   const {
@@ -15,6 +32,7 @@ function Controls(props) {
     region, setRegion, regions,
     ratingMin, setRatingMin, ratingMax, setRatingMax,
     searchInput, setSearchInput, onCommitSearch,
+    onPick,
   } = props;
   return (
     <div className="controls">
@@ -28,7 +46,7 @@ function Controls(props) {
         >
           <option value="all">All</option>
           <option value="solved">Solved</option>
-          <option value="unsolved">Unsolved</option>
+          <option value="unsolved">Attempted</option>
           <option value="no submission">No submission</option>
         </select>
       </label>
@@ -124,6 +142,44 @@ function Controls(props) {
       <button id="toggle-tags" className="btn" onClick={() => setShowTag(!showTag)}>
         {showTag ? 'Hide tags' : 'Show tags'}
       </button>
+
+      <button
+        type="button"
+        className="btn pick-btn"
+        onClick={onPick}
+        title="Pick a random unsolved problem from the current filters"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="3" />
+          <circle cx="8.5" cy="8.5" r="1.2" fill="currentColor" />
+          <circle cx="15.5" cy="15.5" r="1.2" fill="currentColor" />
+          <circle cx="12" cy="12" r="1.2" fill="currentColor" />
+        </svg>
+        Random unsolved
+      </button>
+    </div>
+  );
+}
+
+function PickCard({ problem, updateStatus, justSolved, onAgain, onClose }) {
+  return (
+    <div className="pick-card" role="region" aria-label="Random pick">
+      <span className="pick-label">Random pick</span>
+      <a className="problem-link pick-name" href={problem.url} target="_blank" rel="noopener noreferrer">
+        {problem.name}
+      </a>
+      <span className="pick-contest"><ContestLink problem={problem} /></span>
+      <RatingBadge rating={problem.rating} />
+      <span className="pick-status">
+        <StatusEditor
+          value={problem.status}
+          onChange={(s) => updateStatus(problem.id, s)}
+          celebrating={justSolved === problem.id}
+        />
+      </span>
+      <span className="modal-spacer" />
+      <button type="button" className="btn" onClick={onAgain}>Another</button>
+      <button type="button" className="btn btn-icon pick-close" onClick={onClose} aria-label="Close" title="Close">×</button>
     </div>
   );
 }
@@ -160,7 +216,7 @@ function ProblemsTable({
           {capped.map((p) => (
             <tr key={p.id} className={p.status === "AC" ? "row-solved" : ""}>
               <td className="cell-id" data-label="ID">{p.id}</td>
-              <td data-label="Contest">{p.contest}</td>
+              <td data-label="Contest"><ContestLink problem={p} /></td>
               <td data-label="Problem">
                 <a className="problem-link" href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>
               </td>
@@ -209,14 +265,15 @@ function SkeletonTable() {
 }
 
 export default function ProblemSet({ problems, setProblems, loaded, isAdmin }) {
-  const [showTag, setShowTag] = useState(false);
-  const [filter, setFilter] = useState("all");
-  const [sort, setSort] = useState("rating_desc");
-  const [searchInput, setSearchInput] = useState("");
-  const [committedSearch, setCommittedSearch] = useState("");
-  const [region, setRegion] = useState("all");
-  const [ratingMin, setRatingMin] = useState(null);
-  const [ratingMax, setRatingMax] = useState(null);
+  const [showTag, setShowTag] = useSessionState("pset.ps.showTag", false);
+  const [filter, setFilter] = useSessionState("pset.ps.filter", "all");
+  const [sort, setSort] = useSessionState("pset.ps.sort", "rating_desc");
+  const [committedSearch, setCommittedSearch] = useSessionState("pset.ps.search", "");
+  const [searchInput, setSearchInput] = useState(committedSearch);
+  const [region, setRegion] = useSessionState("pset.ps.region", "all");
+  const [ratingMin, setRatingMin] = useSessionState("pset.ps.ratingMin", null);
+  const [ratingMax, setRatingMax] = useSessionState("pset.ps.ratingMax", null);
+  const [pickedId, setPickedId] = useState(null);
 
   const {
     feedback, feedbackFor, setFeedbackFor,
@@ -252,7 +309,7 @@ export default function ProblemSet({ problems, setProblems, loaded, isAdmin }) {
       list = list.filter((p) => p.rating >= ratingMin);
     }
     if (ratingMax != null) {
-      list = list.filter((p) => p.rating <= ratingMax);
+      list = list.filter((p) => p.rating != null && p.rating <= ratingMax);
     }
 
     if (filter === "solved") {
@@ -282,6 +339,17 @@ export default function ProblemSet({ problems, setProblems, loaded, isAdmin }) {
   }, [problems, filter, sort, region, ratingMin, ratingMax, searchAst]);
 
   const capped = visible.slice(0, RENDER_CAP);
+  const visibleSolved = visible.reduce((n, p) => n + (p.status === "AC" ? 1 : 0), 0);
+  const picked = pickedId ? problems.find((p) => p.id === pickedId) : null;
+
+  function pickRandom() {
+    const pool = visible.filter((p) => p.status !== "AC" && p.id !== pickedId);
+    if (pool.length === 0) {
+      showToast("No other unsolved problem matches these filters", "error");
+      return;
+    }
+    setPickedId(pool[Math.floor(Math.random() * pool.length)].id);
+  }
 
   return (
     <>
@@ -289,6 +357,7 @@ export default function ProblemSet({ problems, setProblems, loaded, isAdmin }) {
         solved={solvedCount}
         total={problems.length}
         visibleCount={visible.length}
+        visibleSolved={visibleSolved}
         loaded={loaded}
       />
       <Controls
@@ -308,7 +377,17 @@ export default function ProblemSet({ problems, setProblems, loaded, isAdmin }) {
         setRatingMin={setRatingMin}
         ratingMax={ratingMax}
         setRatingMax={setRatingMax}
+        onPick={pickRandom}
       />
+      {picked && (
+        <PickCard
+          problem={picked}
+          updateStatus={updateStatus}
+          justSolved={justSolved}
+          onAgain={pickRandom}
+          onClose={() => setPickedId(null)}
+        />
+      )}
       {loaded ? (
         <ProblemsTable
           showTag={showTag}

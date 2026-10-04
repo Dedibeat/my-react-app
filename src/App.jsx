@@ -32,6 +32,8 @@ function flattenContests(contests) {
       out.push({
         id: String(p.problem_id),
         contest: c.contest_name + ' ' + c.year,
+        contestUrl: `https://qoj.ac/contest/${c.contest_id}`,
+        editorialUrl: c.editorial_url || null,
         region: c.region,
         year: c.year,
         searchKey: `${c.region || ''} ${c.contest_name || ''} ${c.year || ''}`,

@@ -2087,3 +2087,126 @@ run), and with `--yes` unlinks QOJ (same columns as the Profile "disconnect" end
 background auto-sync can't re-import) and deletes all of that user's `problem_status` rows.
 Tested against a temp local SQLite DB (target user cleared, other users untouched). Must be run
 by the owner with prod `TURSO_URL`/`TURSO_TOKEN` set — no credentials are stored in the repo.
+
+## Bug fixes, QoL and training aids (2026-10-04)
+
+Open-ended pass: improve design, fix bugs, add quality-of-life features, and
+propose what would make ICPC training easier. Ran the app locally (uvicorn on a
+temp SQLite file + Vite proxy, no prod access) and reviewed every page at
+desktop and phone widths.
+
+### Bugs fixed
+
+- **QOJ sync reset every solve date (backend, important).** `qoj_sync.py`'s
+  upsert ran `ON CONFLICT DO UPDATE SET status='AC', updated_at=CURRENT_TIMESTAMP`
+  with no guard, so every sync (startup, every 30 min, every tab focus) re-stamped
+  *all* already-AC rows to "now". The heatmap, streaks and Recent activity all
+  read `updated_at`, so for QOJ-connected users every solve collapsed onto the
+  last sync day. It also overwrote a manual TL/RE with WA. Now: the AC upsert
+  only touches rows that aren't AC yet; "tried" only fills rows with no verdict
+  (`''` / `No submission`). `cf_sync.py` (hidden) had the same bug and got the
+  same guard (a failed verdict only rewrites the row when the verdict changes).
+  Repro test written first (failed), then passes: an existing AC/NI/TL row keeps
+  its timestamp, WA→AC and new rows still apply.
+  **Existing prod dates can't be recovered by this fix**: rows already
+  re-stamped keep the last-sync time. Real dates would need QOJ submission
+  history (see proposals).
+- **Profile pre-filled the QOJ handle with `Dedibeat`** for every user without
+  one, so clicking "Connect" linked the owner's QOJ account (how TEAM_R3 got
+  linked, see the 2026-10-03 entry). Now empty, placeholder "Your QOJ username".
+- **Rating filter with only a max let unrated problems through** (`null <= max`
+  is true in JS). Problem Set and Lists now require a rating for the max bound,
+  matching the min bound (verified: max 1000 → 35 rows, 0 unrated).
+- **`POST /api/lists` returned the wrong id on Turso**: it read `cur.lastrowid`
+  after a follow-up SELECT, which on the HTTP cursor is the SELECT's (empty)
+  value. The id is now captured right after the INSERT. Local SQLite was never
+  affected, and nothing used the id until now.
+- **Phone layout**: cards clipped contest names (desktop `max-width`/`overflow`
+  column rules leaked into the card layout), the Feedback row was indented, and
+  labels were mis-aligned. The mobile rules now reset the column widths.
+  Profile overflowed sideways on phones (grid column grew to fit the heatmap /
+  unwrapped activity rows); fixed with `minmax(0, 1fr)` columns. Checked
+  `scrollWidth == clientWidth` at 375px on Problem Set, Lists, shared board, and
+  Profile.
+- **Profile heatmap hid the newest weeks** behind a horizontal scrollbar (54
+  weeks × 14px didn't fit the 760px card). Cells are 10px now, so a year fits on
+  desktop; on phones the calendar starts scrolled to the newest week.
+- Smaller: "By status" tiles wrapped 4+1 (now one row of 5); the QOJ "Session
+  cookie" toggle rendered as a grey bordered box (missing button reset); Lists'
+  empty-state text pointed to a removed Problem Set feature; an empty list's
+  table said "No problems match your filters".
+
+### Quality of life / training aids
+
+- **Random unsolved problem** (Problem Set): picks a random non-AC problem from
+  the *current filters* (region, rating band, search, quick filter) and shows it
+  in a card with link, contest, rating, an editable status, and "Another".
+  E.g. Region = Asia East, Rating 1800–2200 → one click gives today's problem.
+- **Filters survive navigation**: Problem Set sort/filters/search/tags toggle
+  are kept in `sessionStorage` (`pset.ps.*`), so going to Profile/Lists and back
+  (or reloading) keeps them; a new tab starts clean.
+- **"N of M shown solved"**: when a filter is active the progress card shows how
+  many of the filtered problems you've solved (e.g. how much of EC you've done).
+  Problem Set and list detail.
+- **Contest links + editorials**: the Contest cell links to the QOJ contest page
+  (to run a past contest as a virtual) with the full name + region as a tooltip,
+  and shows a book icon linking the contest editorial when one exists
+  (125 of 258 contests; 33/39 Asia East). `scripts/slim_tagged.py` now keeps
+  `editorial_url`; `data/tagged.json` regenerated (only that field added: one
+  line per contest, +~20 KB raw). Before the change the script reproduced the
+  served file byte-for-byte. Both links need a QOJ login, like problem links;
+  the editorial URLs weren't opened (no QOJ session here).
+- **Lists**: creating a list opens it, and an empty list opens straight into
+  edit mode (search panel), saving two clicks.
+- Quick filter "Unsolved" renamed **"Attempted"** (Problem Set + Lists) — it
+  always meant "tried, not AC" (untouched problems are "No submission"), which
+  clashed with the new "Random unsolved". Value is still `unsolved`.
+- Phone: filters are one compact row each instead of stacked cards (≈half the
+  height before the first problem).
+
+### Verification
+
+- Backend: scratch repro tests for QOJ and CF sync timestamps (fail before,
+  pass after); `POST /api/lists` returns its id.
+- Browser (local API + Vite, seeded test user): random pick respects filters and
+  "Another"; filters persist across Profile → Problem Set; max-only rating
+  filter; contest/editorial links and tooltip; list create → opens in edit mode;
+  shared board renders; phone layout and no horizontal overflow on all pages;
+  heatmap fits (758/758 px) on desktop and scrolls to the newest week on phones.
+  No new console errors.
+- `npm run lint` clean, `npm run build` clean (tracked `dist/` restored, not
+  committed, like the previous entry).
+
+### Deploy note
+
+Backend changed (`qoj_sync.py`, `cf_sync.py`, `lists.py`) → Render redeploys on
+push. Frontend + `data/tagged.json` → GitHub Pages workflow.
+
+### Noticed, not changed
+
+- 3 problem names contain raw LaTeX (`$P \oplus Q = R$`, `$k$ Operations`,
+  `$+$ and $\times$ with a sugar`).
+- Hidden Codeforces/Olympiad pages still label the filter "Unsolved".
+- `public/tagged.json` is stale and unused (already noted above).
+
+### Proposals for ICPC training (not built)
+
+1. **Real solve dates.** Backfill `updated_at` (or a new `solve_events` log)
+   from QOJ submission history so heatmap/streaks are true; today they are the
+   last status change, and for QOJ users the last pre-fix sync.
+2. **Contest board + virtual-contest debrief.** A page listing past contests
+   with your/your team's progress per contest ("which EC regionals haven't we
+   touched"), a link to start a QOJ virtual, and after the 5 h run, enter
+   solves/times to see the rank and medal you'd have had in the real standings
+   (the standings already exist in `analyze_standings`).
+3. **Team view on the main table.** Shared lists already show "solved by"; let a
+   team of 3 see per-member status over the whole set, with a filter "unsolved
+   by all of us" — the natural pool for team practice and the random picker.
+4. **"Train at my level".** Estimate a level from the ratings of your recent ACs
+   and preset the rating band (level … level+300) for the random picker.
+5. **Spoiler-free tags with a peek.** Keep tags hidden but reveal one row's tags
+   on click, so you can practice blind and peek when stuck.
+6. **Dark mode** for late sessions: colors are mostly tokens in `index.css`, but
+   ~80 hard-coded colors (CSS + heatmap/tier colors in JS) need tokenizing first.
+7. **Upsolve nudges.** On Profile, list "Attempted" problems older than a week,
+   with their editorial links.

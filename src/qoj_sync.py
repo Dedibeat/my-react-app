@@ -165,7 +165,8 @@ def sync_user_qoj(
         (target_handle, target_cookie, auto_sync_val, user_id),
     )
 
-    # 1. AC always wins
+    # 1. AC always wins. Rows that are already AC are left alone so their
+    # updated_at (the solve date the heatmap/activity feed use) isn't reset each sync.
     ac_pids = list(dict.fromkeys(accepted))
     for chunk in _chunked(ac_pids):
         values = ",".join(["(?, ?, 'AC')"] * len(chunk))
@@ -174,11 +175,13 @@ def sync_user_qoj(
             f"""INSERT INTO problem_status (user_id, problem_id, status)
                 VALUES {values}
                 ON CONFLICT(user_id, problem_id) DO UPDATE SET
-                  status='AC', updated_at=CURRENT_TIMESTAMP""",
+                  status='AC', updated_at=CURRENT_TIMESTAMP
+                WHERE problem_status.status != 'AC'""",
             args,
         )
 
-    # 2. Failed verdicts do not overwrite existing AC or NI
+    # 2. "Tried" only fills rows with no verdict yet: never overwrites AC/NI or a
+    # more specific WA/TL/RE, and never re-stamps an unchanged row.
     tried_pids = [pid for pid in dict.fromkeys(tried) if pid not in set(ac_pids)]
     for chunk in _chunked(tried_pids):
         values = ",".join(["(?, ?, 'WA')"] * len(chunk))
@@ -188,7 +191,7 @@ def sync_user_qoj(
                 VALUES {values}
                 ON CONFLICT(user_id, problem_id) DO UPDATE SET
                   status=excluded.status, updated_at=CURRENT_TIMESTAMP
-                WHERE problem_status.status NOT IN ('AC', 'NI')""",
+                WHERE problem_status.status IN ('', 'No submission')""",
             args,
         )
 
