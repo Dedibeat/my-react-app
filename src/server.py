@@ -11,6 +11,7 @@ from src.auth import router as auth_router
 from src.cf_sync import router as cf_sync_router
 from src.qoj_sync import router as qoj_sync_router, run_qoj_auto_sync_all
 from src.db import get_conn
+from src.editorial import router as editorial_router
 from src.feedback import router as feedback_router
 from src.lists import router as lists_router, shared_router
 from src.status import router as status_router
@@ -35,6 +36,7 @@ app.include_router(lists_router)
 app.include_router(shared_router)
 app.include_router(cf_sync_router)
 app.include_router(qoj_sync_router)
+app.include_router(editorial_router)
 
 
 async def _qoj_background_worker():

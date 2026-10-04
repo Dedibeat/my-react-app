@@ -416,17 +416,47 @@ a.contest-link:hover {
   background: var(--accent-soft);
 }
 
-/* ---------- Random pick ---------- */
-.controls > .pick-btn.btn {
-  height: 34px;
-  font-size: 0.8125rem;
-  padding: 0 12px;
+/* ---------- Tag peek (tags hidden) ---------- */
+.tag-peek {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: 6px;
+  padding: 3px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-muted);
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.12s, color 0.12s, background 0.12s;
+}
+tr:hover .tag-peek,
+.pick-card .tag-peek,
+.tag-peek:focus-visible,
+.tag-peek.open {
+  opacity: 1;
+}
+.tag-peek:hover,
+.tag-peek.open {
   color: var(--accent);
-  border-color: var(--accent-border);
   background: var(--accent-soft);
 }
+.tag-peek-list {
+  margin-top: 6px;
+  animation: slideDown 0.15s ease-out;
+}
+.pick-card .tag-peek { margin-left: -6px; }
+.pick-card .tag-peek-list { order: 1; flex-basis: 100%; margin-top: 0; }
+
+/* ---------- Random pick ---------- */
+.controls > .pick-btn.btn {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  color: var(--text-muted);
+}
 .controls > .pick-btn.btn:hover {
-  border-color: var(--accent);
+  color: var(--text);
 }
 
 .pick-card {
@@ -763,12 +793,13 @@ a.contest-link:hover {
 /* ---------- Mobile: table becomes cards ---------- */
 @media (max-width: 768px) {
   .controls {
-    flex-direction: column;
+    flex-wrap: wrap;
     align-items: stretch;
     gap: 8px;
   }
   /* One compact row per control (label left, field right) instead of stacked cards. */
   .controls > label {
+    flex: 1 1 100%;
     height: auto;
     gap: 8px;
     padding: 0 4px 0 10px;
@@ -791,8 +822,9 @@ a.contest-link:hover {
   }
   #searchInput { min-width: 0; margin: 0; }
   .controls > label > .btn-icon { width: 40px; height: 40px; flex: none; }
-  .controls > #toggle-tags.btn,
-  .controls > .pick-btn.btn { height: 44px; }
+  /* "Show tags" and the dice share the last row. */
+  .controls > #toggle-tags.btn { flex: 1; height: 44px; }
+  .controls > .pick-btn.btn { flex: none; width: 44px; height: 44px; }
 
   .pick-card { gap: 8px 12px; }
   .pick-card .modal-spacer { display: none; }
@@ -806,6 +838,10 @@ a.contest-link:hover {
     text-align: right;
   }
   tbody td[data-label="Contest"] { white-space: normal; }
+  tbody td[data-label="Problem"] { flex-wrap: wrap; }
+  tbody td[data-label="Problem"] .problem-link { flex: 1 1 0; min-width: 0; max-width: none; text-align: right; }
+  tbody td[data-label="Problem"] .tag-peek { opacity: 1; }
+  tbody td[data-label="Problem"] .tag-peek-list { flex-basis: 100%; justify-content: flex-end; }
 
   .table-card { background: transparent; border: none; box-shadow: none; overflow: visible; }
   table { min-width: 100%; }

@@ -4,6 +4,11 @@ const API_BASE =
   import.meta.env.VITE_API_BASE ??
   (import.meta.env.DEV ? "" : "https://my-react-app-33zw.onrender.com");
 
+// QOJ serves editorials as downloads; the API re-serves PDFs inline so they open in a tab.
+export function editorialHref(contestId, r) {
+  return `${API_BASE}/api/editorial/${contestId}?r=${r}`;
+}
+
 export function getToken() {
   return localStorage.getItem(TOKEN_KEY) || "";
 }

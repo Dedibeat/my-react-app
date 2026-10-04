@@ -60,6 +60,35 @@ export function ContestLink({ problem }) {
   );
 }
 
+// While tags are hidden: a small button next to the problem name that reveals just this
+// problem's tags, so you can practice spoiler-free and peek when stuck.
+export function TagPeek({ tags }) {
+  const [open, setOpen] = useState(false);
+  if (!tags.length) return null;
+  return (
+    <>
+      <button
+        type="button"
+        className={`tag-peek ${open ? 'open' : ''}`}
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        aria-label={open ? 'Hide tags' : 'Peek at tags'}
+        title={open ? 'Hide tags' : 'Peek at tags'}
+      >
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+          <line x1="7" y1="7" x2="7.01" y2="7" />
+        </svg>
+      </button>
+      {open && (
+        <div className="tags tag-peek-list">
+          {tags.map((t, i) => <span key={i} className="tag">{t}</span>)}
+        </div>
+      )}
+    </>
+  );
+}
+
 // Codeforces rating color tiers (soft-background badge design)
 function cfClass(rating) {
   if (rating < 1200) return 'difficulty-grey';

@@ -4,7 +4,7 @@ import './Lists.css';
 import './ProblemSet.css';
 import { parseSearch, evalSearchAst } from './search.js';
 import FeedbackModal from './FeedbackModal.jsx';
-import { ProgressSummary, RatingBadge, StatusEditor, FeedbackButton, ContestLink } from './problemUI.jsx';
+import { ProgressSummary, RatingBadge, StatusEditor, FeedbackButton, ContestLink, TagPeek } from './problemUI.jsx';
 import { useProblemActions } from './useProblemActions.js';
 import { api } from './api.js';
 
@@ -784,6 +784,7 @@ export default function Lists({
                     <td data-label="Contest"><ContestLink problem={p} /></td>
                     <td data-label="Problem">
                       <a className="problem-link" href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>
+                      {!showTag && <TagPeek tags={p.tagList} />}
                     </td>
                     <td data-label="Tags">
                       <div className="tags">

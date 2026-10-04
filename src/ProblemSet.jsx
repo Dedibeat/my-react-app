@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import './ProblemSet.css';
 import { parseSearch, evalSearchAst } from './search.js';
 import FeedbackModal from './FeedbackModal.jsx';
-import { ProgressSummary, RatingBadge, StatusEditor, FeedbackButton, ContestLink } from './problemUI.jsx';
+import { ProgressSummary, RatingBadge, StatusEditor, FeedbackButton, ContestLink, TagPeek } from './problemUI.jsx';
 import { useProblemActions } from './useProblemActions.js';
 
 const RENDER_CAP = 500;
@@ -147,15 +147,15 @@ function Controls(props) {
         type="button"
         className="btn pick-btn"
         onClick={onPick}
-        title="Pick a random unsolved problem from the current filters"
+        aria-label="Random unsolved problem"
+        title="Random unsolved problem from the current filters"
       >
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <rect x="3" y="3" width="18" height="18" rx="3" />
           <circle cx="8.5" cy="8.5" r="1.2" fill="currentColor" />
           <circle cx="15.5" cy="15.5" r="1.2" fill="currentColor" />
           <circle cx="12" cy="12" r="1.2" fill="currentColor" />
         </svg>
-        Random unsolved
       </button>
     </div>
   );
@@ -168,6 +168,7 @@ function PickCard({ problem, updateStatus, justSolved, onAgain, onClose }) {
       <a className="problem-link pick-name" href={problem.url} target="_blank" rel="noopener noreferrer">
         {problem.name}
       </a>
+      <TagPeek key={problem.id} tags={problem.tagList} />
       <span className="pick-contest"><ContestLink problem={problem} /></span>
       <RatingBadge rating={problem.rating} />
       <span className="pick-status">
@@ -219,6 +220,7 @@ function ProblemsTable({
               <td data-label="Contest"><ContestLink problem={p} /></td>
               <td data-label="Problem">
                 <a className="problem-link" href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>
+                {!showTag && <TagPeek tags={p.tagList} />}
               </td>
               <td data-label="Tags">
                 <div className="tags">

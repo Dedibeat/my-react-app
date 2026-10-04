@@ -7,7 +7,7 @@ import Codeforces from './Codeforces.jsx';
 import Lists from './Lists.jsx';
 import SharedList from './SharedList.jsx';
 import Profile from './Profile.jsx';
-import { api, getToken, setToken } from './api.js';
+import { api, getToken, setToken, editorialHref } from './api.js';
 
 function flattenContests(contests) {
   const out = [];
@@ -33,7 +33,9 @@ function flattenContests(contests) {
         id: String(p.problem_id),
         contest: c.contest_name + ' ' + c.year,
         contestUrl: `https://qoj.ac/contest/${c.contest_id}`,
-        editorialUrl: c.editorial_url || null,
+        editorialUrl: c.editorial_url
+          ? editorialHref(c.contest_id, new URL(c.editorial_url).searchParams.get('r'))
+          : null,
         region: c.region,
         year: c.year,
         searchKey: `${c.region || ''} ${c.contest_name || ''} ${c.year || ''}`,

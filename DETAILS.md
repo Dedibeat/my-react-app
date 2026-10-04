@@ -2210,3 +2210,33 @@ push. Frontend + `data/tagged.json` → GitHub Pages workflow.
    ~80 hard-coded colors (CSS + heatmap/tier colors in JS) need tokenizing first.
 7. **Upsolve nudges.** On Profile, list "Attempted" problems older than a week,
    with their editorial links.
+
+### Follow-up (2026-10-04): dice button, inline editorials, tag peek
+
+- **Random pick button** is now an icon-only dice in the normal neutral button
+  style (the blue pill was distracting). On phones it shares the last controls
+  row with "Show tags".
+- **Editorials open in a browser tab.** QOJ serves contest attachments with
+  `Content-Disposition: filename="..."` (no `inline`), so browsers download
+  them. New `GET /api/editorial/{contest_id}?r=N` (`src/editorial.py`, no auth)
+  fetches the QOJ attachment server-side and re-serves it with
+  `Content-Disposition: inline` + a 7-day cache header. Only PDFs are served;
+  anything else (contest 1051's editorial is a zip, 1697's link is dead on QOJ)
+  or any fetch failure redirects to the original QOJ URL, so the worst case is
+  the old download. QOJ needs a browser User-Agent (curl's default gets 403),
+  but no login. `App.jsx` builds the link via `editorialHref()` in `api.js`
+  (relative `/api/...` in dev, Render in prod). Checked all 125 links: 123 PDF,
+  1 zip, 1 dead. Not verified from Render's IPs (Cloudflare could treat them
+  differently); the redirect fallback covers that.
+- **Tag peek (spoiler-free practice).** While tags are hidden, each problem name
+  (Problem Set, list detail, and the random-pick card) has a faint tag icon that
+  reveals just that problem's tags below the name. The pick card's peek resets
+  for each new pick. Opacity rises on row hover; always visible on phones.
+- The "couldn't open a list" report was the local dev servers having been
+  stopped at the end of the previous session (console showed
+  `ERR_CONNECTION_REFUSED`); opening lists works.
+
+Verified locally: endpoint returns `application/pdf` inline for 1522, 307 to QOJ
+for 1051/1697; links in the table point at it; peek reveals one row's tags on
+desktop and phone, no horizontal overflow at 375px; lint and build clean.
+Backend changed (`editorial.py`, `server.py`) → Render redeploy on push.
