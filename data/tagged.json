@@ -1,7 +1,7 @@
 [
   {
     "contest_id": 1485,
-    "contest_name": "ICPC",
+    "contest_name": "EC Online (I)",
     "year": 2023,
     "region": "Asia East Continent",
     "editorial_url": null,
@@ -284,7 +284,7 @@
   },
   {
     "contest_id": 1794,
-    "contest_name": "ICPC",
+    "contest_name": "EC Online (I)",
     "year": 2024,
     "region": "Asia East Continent",
     "editorial_url": null,
@@ -611,7 +611,7 @@
   },
   {
     "contest_id": 1799,
-    "contest_name": "ICPC",
+    "contest_name": "EC Online (II)",
     "year": 2024,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1799&r=1",
@@ -917,7 +917,7 @@
   },
   {
     "contest_id": 2513,
-    "contest_name": "ICPC",
+    "contest_name": "EC Online (I)",
     "year": 2025,
     "region": "Asia East Continent",
     "editorial_url": null,
@@ -1239,7 +1239,7 @@
   },
   {
     "contest_id": 2524,
-    "contest_name": "ICPC",
+    "contest_name": "EC Online (II)",
     "year": 2025,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2524&r=1",
@@ -1558,7 +1558,7 @@
   },
   {
     "contest_id": 1197,
-    "contest_name": "ICPC",
+    "contest_name": "EC-Final",
     "year": 2022,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1197&r=2",
@@ -53318,6 +53318,310 @@
         "secondary_tags": [
           "sqrt-decomposition"
         ],
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4071,
+    "contest_name": "EC Online (I)",
+    "year": 2026,
+    "region": "Asia East Continent",
+    "editorial_url": null,
+    "problems": [
+      {
+        "problem_id": 20016,
+        "problem_name": "Recall",
+        "problem_url": "https://qoj.ac/contest/4071/problem/20016",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20017,
+        "problem_name": "Mod",
+        "problem_url": "https://qoj.ac/contest/4071/problem/20017",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20018,
+        "problem_name": "Permutation Inversions",
+        "problem_url": "https://qoj.ac/contest/4071/problem/20018",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20019,
+        "problem_name": "Sequence",
+        "problem_url": "https://qoj.ac/contest/4071/problem/20019",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20020,
+        "problem_name": "LCM Permutation",
+        "problem_url": "https://qoj.ac/contest/4071/problem/20020",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20021,
+        "problem_name": "50 Years of Excellence",
+        "problem_url": "https://qoj.ac/contest/4071/problem/20021",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20022,
+        "problem_name": "Toll Gates on a Tight Schedule",
+        "problem_url": "https://qoj.ac/contest/4071/problem/20022",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20023,
+        "problem_name": "The First Problem",
+        "problem_url": "https://qoj.ac/contest/4071/problem/20023",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20024,
+        "problem_name": "A Lamp of Moon",
+        "problem_url": "https://qoj.ac/contest/4071/problem/20024",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20025,
+        "problem_name": "String",
+        "problem_url": "https://qoj.ac/contest/4071/problem/20025",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20026,
+        "problem_name": "Wolf Game",
+        "problem_url": "https://qoj.ac/contest/4071/problem/20026",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20027,
+        "problem_name": "Longest Common Prefix",
+        "problem_url": "https://qoj.ac/contest/4071/problem/20027",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20028,
+        "problem_name": "Check In",
+        "problem_url": "https://qoj.ac/contest/4071/problem/20028",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20029,
+        "problem_name": "Red Sequence",
+        "problem_url": "https://qoj.ac/contest/4071/problem/20029",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4113,
+    "contest_name": "EC Online (II)",
+    "year": 2026,
+    "region": "Asia East Continent",
+    "editorial_url": null,
+    "problems": [
+      {
+        "problem_id": 20236,
+        "problem_name": "All Closed",
+        "problem_url": "https://qoj.ac/contest/4113/problem/20236",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20237,
+        "problem_name": "Bread",
+        "problem_url": "https://qoj.ac/contest/4113/problem/20237",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20238,
+        "problem_name": "Cut Tree",
+        "problem_url": "https://qoj.ac/contest/4113/problem/20238",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20239,
+        "problem_name": "Divide and Conquer",
+        "problem_url": "https://qoj.ac/contest/4113/problem/20239",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20240,
+        "problem_name": "Exponent",
+        "problem_url": "https://qoj.ac/contest/4113/problem/20240",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20241,
+        "problem_name": "Folding Game of Ohto Ai",
+        "problem_url": "https://qoj.ac/contest/4113/problem/20241",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20242,
+        "problem_name": "Ghost of Tsushima",
+        "problem_url": "https://qoj.ac/contest/4113/problem/20242",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20243,
+        "problem_name": "Hidden Track (Easy Version)",
+        "problem_url": "https://qoj.ac/contest/4113/problem/20243",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20244,
+        "problem_name": "Island",
+        "problem_url": "https://qoj.ac/contest/4113/problem/20244",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20245,
+        "problem_name": "Joker or Judger",
+        "problem_url": "https://qoj.ac/contest/4113/problem/20245",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20246,
+        "problem_name": "K-MEX",
+        "problem_url": "https://qoj.ac/contest/4113/problem/20246",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20247,
+        "problem_name": "Loop",
+        "problem_url": "https://qoj.ac/contest/4113/problem/20247",
+        "primary_tags": null,
+        "secondary_tags": null,
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,

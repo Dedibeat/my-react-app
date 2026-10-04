@@ -2405,3 +2405,63 @@ set on Render and these commits deployed: the new endpoints are live
 `application/pdf`); the user's Sync now succeeded with the service account,
 and a minute later the card showed "your first AC on QOJ" and the heatmap
 looked right.
+
+## EC online rounds named; 2026 Online I/II added (2026-10-04)
+
+**Request.** The EC online rounds were all named "ICPC", so Online I and II
+could not be told apart. Add the 2026 Online I and II to the fit, write a
+script for adding a contest, and apply it to the app.
+
+**Names** (`canonical/tagged.json` → `data/tagged.json`), checked against
+the QOJ titles:
+- 1485, 1794 and 2513 are now `EC Online (I)`; 1799 and 2524 are
+  `EC Online (II)`. The app shows them as e.g. "EC Online (II) 2025".
+- 1197 was also named "ICPC", but QOJ titles it EC-Final 2022, so it is now
+  `EC-Final`.
+
+**New contests:** QOJ 4071 (EC Online (I) 2026, 14 problems) and 4113
+(EC Online (II) 2026, 12 problems). That gives 260 contests and 3,090
+problems.
+- **Fetch:** they were added to the fit with
+  `../analyze_standings/scripts/add_qoj_contest.py` (new). QOJ shows contest
+  pages only to logged-in users, so it reads `QOJ_USERNAME`/`QOJ_PASSWORD`,
+  the same login as `src/qoj_sync.py`. It appends the dashboard's problems
+  and the standings page's rows to the analyzer's `data/tagged.json`.
+- **Fit:** the analyzer then reran the release steps; its `details.md` has
+  the method and numbers.
+- **Copy into the app:** `scripts/add_contests.py` (new, this repo) copies
+  contests by id from the analyzer's `data/tagged.json` into
+  `canonical/tagged.json`, without standings, and skips ids already present.
+  It does not add tags or importance (the LLM pipeline hasn't run on these
+  problems), which the app shows as blank, as for the UCup contests.
+  Steps:
+
+      python3 scripts/add_contests.py 4071 4113
+      python3 scripts/slim_tagged.py
+      cp ../analyze_standings/output/problem_ratings_calibrated.json data/problem_rating.json
+      python3 scripts/export_contest_fields.py
+
+**Ratings.** `data/problem_rating.json` is a byte copy of the analyzer's
+refit (analyzer commit `c877cfd`): 3,185 records (+26).
+- Existing problems move by mean +3.6, at most 56.8, and none by 100 or more.
+  The earlier online rounds rise 23.5 on average, because the 2026 rosters
+  link more of their teams.
+- The 26 new problems run from 800 (4071 F) to 3982 (4113 G).
+
+**Contest fields.** `data/contest_fields/` was regenerated from the new
+`virtual_calc.html`, so 243 contests now have standings (was 241). Every
+contest file changed because the refit moves team strengths slightly.
+
+**Verified:**
+- Lint clean; `npm run build` succeeds. The local build output in `dist/`
+  was discarded: the Pages workflow builds `dist/` itself, and the tracked
+  `dist/tagged.json` was already older than `data/` before this change.
+- In the browser (local dev server), Contests search "online" lists all
+  seven rounds as "EC Online (I)/(II) <year>".
+- EC Online (II) 2026's dialog loads its field ("2533 teams"). A virtual
+  result of 5 solved with a 600-minute penalty previews as rank 134 of 2,534,
+  performance 2895 (not saved).
+- The Problem Set lists all 12 Online (II) 2026 problems with ratings
+  (Ghost of Tsushima 3982 … Joker or Judger 827).
+- The console's only error is the local API's `/api/qoj-sync` 503 (no QOJ
+  credentials locally).
