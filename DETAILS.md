@@ -2298,3 +2298,61 @@ browser, search "shanghai" → saved virtual shows "VIR 2720"; official search
 the preview and saving adds "OFF 3238"; delete, Esc, Show filters (1 with
 results, 147 untouched, 258 all); phone layout with no horizontal overflow.
 Lint and build clean. Backend changed → Render redeploy on push.
+
+## QOJ integration simplified: one service account (2026-10-04)
+
+Asked to review a "Browserless QOJ Authentication" write-up (username +
+password → session, QOJ 4.5.46) and simplify the QOJ integration. Decision
+(asked): **one service account** on the server; users only give their handle.
+
+Review notes on the write-up, as applied here:
+- Only the login itself is needed: GET `/login`, read the `_token` literal from
+  the page's JavaScript, POST `_token`, `login=''`, `username`,
+  `password=md5(password)`; success is the body `ok` (no redirect).
+- `curl_cffi` (TLS impersonation) is not used: on 2026-10-04 stdlib `urllib`
+  with a browser User-Agent fetched `/login` with no Cloudflare challenge and the
+  `_token` present. If Cloudflare starts challenging, the sync now fails with a
+  clear 503 ("Cloudflare check"); that is the point to revisit.
+- Left out: the CLI, Tor proxy, worker-pool wrapper, 2FA path and the
+  vulnerability notes — none apply to a once-every-30-minutes profile read.
+- No user's QOJ password (or its md5, which is itself the credential) is ever
+  stored.
+
+Why it was needed: signed-out requests for a QOJ profile now redirect to the
+login page, so the old sync only worked with a pasted `UOJSESSID` cookie or the
+server-wide `QOJ_COOKIES` fallback.
+
+Changes (`src/qoj_sync.py` rewritten around the same parser and upsert guards):
+- The server keeps one cookie-jar session. `fetch_qoj_profile(handle)` fetches;
+  if QOJ answers with the login page it logs in with `QOJ_USERNAME` /
+  `QOJ_PASSWORD` (under a lock) and retries once. Missing env vars → 503 "QOJ
+  sync isn't set up on the server"; rejected login → 502; unknown handle → 404.
+- `POST /api/qoj-sync` takes only `{handle}` (dropped `cookies`, `auto_sync`,
+  and the client-pushed `solved`/`attempted` lists). Response is
+  `{handle, solved, attempted}`. `GET /status` returns `{connected, handle,
+  last_synced}`.
+- Each sync and disconnect sets `qoj_cookie = NULL`, so cookies users pasted
+  earlier are cleared as they sync. The `qoj_cookie` / `qoj_auto_sync` columns
+  stay in the schema (unused) — dropping columns on the live DB isn't worth it.
+- The 30-minute background job now syncs every user with a handle, runs in a
+  worker thread (`asyncio.to_thread`) — before, its blocking network calls ran
+  on the event loop and stalled every API request while it ran — and skips with
+  one log line when the env vars aren't set.
+- Profile card: just "Your QOJ username" + Connect; connected view keeps Sync
+  now / Disconnect / last synced. Removed the cookie box, DevTools tip, "Update
+  session cookie", and their CSS. `api.qojSync(handle)`.
+- Deleted `scripts/sync_qoj.py` and `scripts/qoj_browser_sync.cjs` (cookie-based
+  and Puppeteer-based workarounds for the same problem).
+
+Verified: a scratch test runs `src/qoj_sync.py` against a fake QOJ HTTP server —
+not configured → 503, wrong password → 502, correct login imports AC/WA, the
+second sync reuses the session (1 login), an expired session triggers exactly
+one re-login, unknown user → 404, existing AC/TL rows keep their timestamps,
+and the legacy cookie is cleared. In the browser, Connect without server
+credentials shows the 503 message. Lint and build clean. **Not verified against
+real QOJ** (no service-account credentials here).
+
+**Deploy (required):** set `QOJ_USERNAME` and `QOJ_PASSWORD` on Render for a QOJ
+account without 2FA (a dedicated account is safest; its password then lives in
+Render's env). Until they're set, QOJ sync is off for everyone. `QOJ_COOKIES`
+is no longer read and can be removed.

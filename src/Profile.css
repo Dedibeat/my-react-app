@@ -357,55 +357,6 @@
   font-weight: 600;
 }
 
-.qoj-cookie-toggle {
-  align-self: flex-start;
-  justify-self: start;
-  background: none;
-  border: none;
-  font-size: 0.8125rem;
-  color: var(--text-muted);
-  cursor: pointer;
-  padding: 2px 0;
-  transition: color 0.15s;
-}
-.qoj-cookie-toggle:hover {
-  color: var(--accent);
-}
-
-.qoj-cookie-box {
-  display: grid;
-  gap: 6px;
-  animation: fadeIn 0.15s ease;
-}
-
-.qoj-cookie-input {
-  width: 100%;
-  padding: 8px 12px;
-  font-size: 0.8125rem;
-  font-family: monospace;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--surface-2);
-}
-.qoj-cookie-input:focus {
-  outline: none;
-  border-color: var(--accent);
-  background: var(--surface);
-}
-
-.qoj-cookie-tip {
-  margin: 0;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-.qoj-cookie-tip code {
-  background: var(--surface-2);
-  padding: 1px 5px;
-  border-radius: 4px;
-  border: 1px solid var(--border);
-  font-size: 0.75rem;
-}
-
 .qoj-sync-msg {
   padding: 10px 14px;
   border-radius: var(--radius-sm);

@@ -218,8 +218,6 @@ function relativeTime(date) {
 export default function Profile({ user, setUser, problems, loaded, reloadStatuses }) {
   const [qojInfo, setQojInfo] = useState(null);
   const [qojHandle, setQojHandle] = useState(user?.qoj_handle || '');
-  const [qojCookie, setQojCookie] = useState('');
-  const [showAdvanced, setShowAdvanced] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [syncMsg, setSyncMsg] = useState(null);
 
@@ -239,18 +237,9 @@ export default function Profile({ user, setUser, problems, loaded, reloadStatuse
     setSyncing(true);
     setSyncMsg(null);
     try {
-      const rawCookie = qojCookie.trim();
-      const formattedCookie = rawCookie && !rawCookie.includes('=') ? `UOJSESSID=${rawCookie}` : rawCookie;
-      const res = await api.qojSync(handle, formattedCookie || undefined, undefined, undefined);
+      const res = await api.qojSync(handle);
       if (reloadStatuses) await reloadStatuses();
-      setQojInfo({
-        connected: true,
-        handle: res.handle,
-        last_synced: new Date().toISOString(),
-        auto_sync: true,
-        has_cookie: Boolean(rawCookie || qojInfo?.has_cookie),
-        solved_count: res.solved,
-      });
+      setQojInfo({ connected: true, handle: res.handle, last_synced: new Date().toISOString() });
       if (setUser) {
         setUser((prev) => ({ ...prev, qoj_handle: res.handle }));
       }
@@ -409,7 +398,7 @@ export default function Profile({ user, setUser, problems, loaded, reloadStatuse
               </>
             ) : (
               <>
-                Connect your <b>qoj.ac</b> account to automatically synchronize your solved and attempted ICPC problem statuses across the app.
+                Enter your <b>qoj.ac</b> username to import your solved and attempted problems. No password or cookie needed.
               </>
             )}
           </p>
@@ -456,40 +445,12 @@ export default function Profile({ user, setUser, problems, loaded, reloadStatuse
 
               <button
                 type="button"
-                className="btn btn-ghost btn-sm"
-                onClick={() => setShowAdvanced(!showAdvanced)}
-              >
-                {showAdvanced ? 'Hide cookie' : 'Update session cookie'}
-              </button>
-
-              <button
-                type="button"
                 className="btn btn-danger-ghost btn-sm"
                 onClick={handleDisconnect}
               >
                 Disconnect
               </button>
             </div>
-
-            {showAdvanced && (
-              <form onSubmit={handleQojSync} className="qoj-cookie-box" style={{ marginTop: '10px' }}>
-                <input
-                  type="text"
-                  className="qoj-cookie-input"
-                  placeholder="Paste new UOJSESSID=... if session expired"
-                  value={qojCookie}
-                  onChange={(e) => setQojCookie(e.target.value)}
-                />
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                  <button type="submit" className="btn btn-primary btn-sm" disabled={syncing || !qojCookie.trim()}>
-                    Update & Sync
-                  </button>
-                  <p className="qoj-cookie-tip">
-                    QOJ persistent cookies keep auto-sync active for 30+ days.
-                  </p>
-                </div>
-              </form>
-            )}
           </div>
         ) : (
           <form className="qoj-form" onSubmit={handleQojSync}>
@@ -524,29 +485,6 @@ export default function Profile({ user, setUser, problems, loaded, reloadStatuse
                 )}
               </button>
             </div>
-
-            <button
-              type="button"
-              className="qoj-cookie-toggle"
-              onClick={() => setShowAdvanced(!showAdvanced)}
-            >
-              {showAdvanced ? '▴ Hide session cookie' : '▾ Session cookie (optional / if Cloudflare protected)'}
-            </button>
-
-            {showAdvanced && (
-              <div className="qoj-cookie-box">
-                <input
-                  type="text"
-                  className="qoj-cookie-input"
-                  placeholder="Paste UOJSESSID value (e.g. vognkrelsevjan6d4fsd6180v0)"
-                  value={qojCookie}
-                  onChange={(e) => setQojCookie(e.target.value)}
-                />
-                <p className="qoj-cookie-tip">
-                  Tip: Copy <code>UOJSESSID</code> from browser DevTools for 30-day continuous background sync.
-                </p>
-              </div>
-            )}
           </form>
         )}
 

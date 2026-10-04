@@ -142,15 +142,10 @@ export const api = {
   async deleteParticipation(id) {
     return request(`/api/participations/${id}`, { method: "DELETE" });
   },
-  async qojSync(handle, cookies, solved, attempted) {
+  async qojSync(handle) {
     return request("/api/qoj-sync", {
       method: "POST",
-      body: JSON.stringify({
-        handle: handle || undefined,
-        cookies: cookies || undefined,
-        solved: solved || undefined,
-        attempted: attempted || undefined,
-      }),
+      body: JSON.stringify({ handle: handle || undefined }),
     });
   },
   async getQojStatus() {
