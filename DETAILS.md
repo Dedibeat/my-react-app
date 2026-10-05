@@ -2523,3 +2523,27 @@ overflow.
 - "Medals" opens the viewer. The Shanghai 2023 cutoffs show "perf 2977 / 2663
   / 2355 CF", and the lowest-gold table's column is "Perf (CF)".
 - The only console error is the viewer's missing `/favicon.ico` (404).
+
+## Medals page: real medal cutoffs (2026-10-05)
+
+**Report.** A virtual Xi'an 2022 result of 6 solved in 357 minutes showed
+performance 2435 on Contests. The Medals page put the silver cutoff team at
+6 solved and 565 minutes (2319 CF), suggesting silver. The team did not get
+silver.
+
+**Cause (analyzer).** The medal page set its lines at 10/30/60 % of the
+official teams that solved a problem. It also counted 2022–23 star (打星)
+teams as official. The real Xi'an 2022 board awarded 35 gold, 70 silver and
+105 bronze, so the last silver team is at official rank 105: 华中农业大学-吸金石,
+6 solved in 352 minutes, **2436 CF**. The 357-minute result is first bronze.
+The Contests page number was right.
+
+**Change.** `data/medal_viewer.html` was re-copied from the analyzer's
+`output/medal_viewer.html` (analyzer commit `3b8d08a`). It now uses each
+board's own medal counts:
+- **2022 regionals:** 35/105/210.
+- **Xi'an 2023:** it had been matched to the wrong board; it now has 368
+  official teams (was 34).
+- **Xi'an 2025:** 395 official teams (was 215).
+
+The analyzer's `details.md` has the per-contest check. No app code changed.
