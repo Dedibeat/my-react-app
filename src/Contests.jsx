@@ -84,7 +84,7 @@ function ResultsModal({ contest, index, results, onAdd, onDelete, onClose }) {
               return (
                 <li key={r.id}>
                   <span className="results-what">{describe(r)}</span>
-                  {res && <span className="muted">#{res.rank} of {res.of}</span>}
+                  {res && <span className="muted">#{res.rank} of {res.of}{res.event ? ' official' : ''}</span>}
                   {res && <RatingBadge rating={res.performance} />}
                   <button type="button" className="board-remove" aria-label="Delete result" title="Delete" onClick={() => onDelete(r)}>×</button>
                 </li>
@@ -150,7 +150,7 @@ function ResultsModal({ contest, index, results, onAdd, onDelete, onClose }) {
 
         {preview && (
           <p className="results-preview">
-            Rank <b>{preview.rank}</b> of {preview.of} · performance <RatingBadge rating={preview.performance} />
+            Rank <b>{preview.rank}</b> of {preview.of}{preview.event ? ' official teams' : ''} · performance <RatingBadge rating={preview.performance} />
           </p>
         )}
         {error && <div className="auth-error">{error}</div>}
@@ -321,7 +321,7 @@ export default function Contests({ problems, loaded }) {
                         {mine.slice(0, 3).map((r) => {
                           const res = fields[c.id] && index ? resultFor(index, fields[c.id], r) : null;
                           return (
-                            <span key={r.id} className="result-chip" title={describe(r) + (res ? ` · rank ${res.rank} of ${res.of}` : '')}>
+                            <span key={r.id} className="result-chip" title={describe(r) + (res ? ` · rank ${res.rank} of ${res.of}${res.event ? ' official teams' : ''}` : '')}>
                               <span className="result-kind">{r.kind === 'official' ? 'Off' : 'Vir'}</span>
                               {res ? <RatingBadge rating={res.performance} /> : <span className="muted">…</span>}
                             </span>

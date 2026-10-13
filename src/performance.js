@@ -4,7 +4,10 @@
 // rank - 1, then map that rating to Codeforces points. Data comes from
 // scripts/export_contest_fields.py (data/contest_fields/).
 //
-// A field team row is [name, affiliation, solved, penaltyMinutes, theta, performance, officialRank].
+// A field team row is [name, affiliation, solved, penaltyMinutes, theta, performance, officialRank, event].
+// event = 1 marks the contest's own official teams on a board that also lists online mirror entries
+// (UCup teams, QOJ accounts). Mirror entries finish well above the same teams onsite, so the analyzer
+// ranks an official result among the event's own teams; virtual results use the whole board.
 
 // Cached per session; a failed fetch is forgotten so a later call can retry.
 let indexPromise = null;
@@ -64,19 +67,25 @@ function toCf(x, index) {
   return ys[i0] + (ys[i1] - ys[i0]) * (pos - i0);
 }
 
-// { rank, of, performance } for { kind, solved, penalty, team_name }.
-// Official results use the team's own row (its official rank and the analyzer's performance);
-// virtual results, or an official team no longer in the data, are inserted into the field.
+// { rank, of, performance, event } for { kind, solved, penalty, team_name }.
+// Official results use the team's own row (the analyzer's performance, and its rank among the rows
+// it was ranked against); virtual results, or an official team no longer in the data, are inserted
+// into the field. event: the rank counts only the event's own official teams.
 export function resultFor(index, field, result) {
-  const teams = field.teams;
+  const official = result.kind === 'official';
+  const own = official
+    && field.teams.find((t) => t[0] === result.team_name && t[2] === result.solved && t[3] === result.penalty);
+  const eventTeams = field.teams.filter((t) => t[7]);
+  const event = official && eventTeams.length > 0 && (!own || own[7] === 1);
+  const teams = event ? eventTeams : field.teams;
+  if (own) {
+    const rank = event ? teams.filter((t) => t[6] < own[6]).length + 1 : own[6];
+    return { rank, of: teams.length, performance: own[5], event };
+  }
   const better = teams.filter(
     (t) => t[2] > result.solved || (t[2] === result.solved && t[3] < result.penalty),
   ).length;
-  if (result.kind === 'official') {
-    const own = teams.find((t) => t[0] === result.team_name && t[2] === result.solved && t[3] === result.penalty);
-    if (own) return { rank: own[6], of: teams.length, performance: own[5] };
-  }
   const rank = better + 1;
   const rho = ratingForRank(teams.map((t) => t[4]), rank, index.scale);
-  return { rank, of: teams.length + 1, performance: toCf(rho, index) };
+  return { rank, of: teams.length + 1, performance: toCf(rho, index), event };
 }

@@ -9,8 +9,10 @@ numbers match that tool exactly. Writes:
                                     internal-rating -> CF-points lookup table, and
                                     which contest ids have standings
   data/contest_fields/<id>.json     {"teams": [[name, affiliation, solved,
-                                    penalty_minutes, theta, performance, rank], ...]}
-                                    in final-rank order
+                                    penalty_minutes, theta, performance, rank, event], ...]}
+                                    in final-rank order; event = 1 for the contest's own
+                                    official rows on a board that also holds online mirror
+                                    entries (their performance is ranked among those rows)
 
 Re-run after regenerating virtual_calc.html:
 
@@ -41,7 +43,7 @@ def main():
     for c in data["contests"]:
         teams = [
             [t["name"], t["affiliation"], t["solved"], round(t["penalty"] / 60),
-             round(t["theta"], 1), round(t["performance"]), t["rank"]]
+             round(t["theta"], 1), round(t["performance"]), t["rank"], int(t.get("event", False))]
             for t in c["teams"]
         ]
         path = os.path.join(OUT, f"{c['contest_id']}.json")

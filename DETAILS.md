@@ -2547,3 +2547,76 @@ board's own medal counts:
 - **Xi'an 2025:** 395 official teams (was 215).
 
 The analyzer's `details.md` has the per-contest check. No app code changed.
+
+## Contests and Medals: official results ranked within their own event (2026-10-13)
+
+**Request.** Apply the analyzer's fix for performance inflation/deflation to
+the Medals page, the Contests page and the performances in the app.
+
+**Cause (analyzer, commit `a938677`).** Most QOJ boards of onsite contests are
+merged boards: the event's own official teams plus UCup teams and QOJ
+accounts who played the set online as a mirror.
+- **The gap:** the same team rates about 80–100 CF higher as a mirror entry
+  than onsite.
+- **The bias:** ranked against the whole board, onsite results were dragged
+  down by the board's mirror share. Big onsite regionals (few mirror
+  entries) read too high relative to the rest.
+- **The fix:** an official row of a merged board is now ranked within its own
+  official field (at least 30 rows). Mirror rows, and virtual entries like
+  ours, are still ranked on the whole board.
+
+The analyzer's `details.md` (2026-10-13, second entry) has the evidence.
+
+**Data.**
+- **`data/contest_fields/`:** re-exported from the regenerated
+  `virtual_calc.html`. Each team row gains an 8th field, `event`: 1 for an
+  official row ranked within its event.
+  - 47,761 rows in 203 of 243 contests are flagged.
+  - 243 files changed; `index.json` is identical, and no contest was added
+    or removed.
+- **`data/medal_viewer.html`:** a byte copy of the analyzer's output.
+  - Gold cutoff performances rise by a median of +66 CF; bars and badges are
+    unchanged.
+  - The lowest-gold table's caption now says performance is ranked among the
+    contest's official teams.
+
+**Code.**
+- **`scripts/export_contest_fields.py`:** writes the `event` field.
+- **`src/performance.js` (`resultFor`):**
+  - An official result whose row has `event = 1` keeps the analyzer's
+    performance. Its rank is now counted among the event's official rows,
+    out of that many, not the whole board.
+  - An official result whose row is gone from the data is inserted among the
+    event rows when the contest has any.
+  - Virtual results are unchanged (whole board).
+  - It returns `event`.
+- **`src/Contests.jsx`:** when `event` is set, the preview, the saved-result
+  list and the chip tooltip say "of N official teams" ("of N official" in
+  the list). So "#103" in the team picker (board position) and "Rank 14 of
+  358 official teams" in the preview are not read as a contradiction.
+
+**Verified.**
+- **Node check against the previous `performance.js`, on every contest:**
+  - 3,645 virtual results are unchanged.
+  - 3,168 official results outside event fields are unchanged.
+  - 6,865 official event rows return the analyzer's value, the rank among
+    event rows and the event count.
+  - The fallback insertion for a missing official row is within 1.5 CF of the
+    analyzer (median; p90 10). The rare large gaps are last places, which the
+    analyzer pins to the floor, and boards whose listed rank does not follow
+    solved/penalty. The old fallback has the same quirks.
+- **Local dev server** (throwaway account on a temporary local SQLite file,
+  deleted afterwards):
+  - Nanjing 2024, official, Tsinghua's 7-solved row: "Rank 14 of 358
+    official teams · performance 3155". It was rank 103 of 945, 2925.
+  - The same 7/853 as a virtual: "Rank 102 of 946 · performance 2929".
+  - Medals shows the new caption. Hangzhou 2022's gold cutoff reads 2846 in
+    both the viewer and the Contests row.
+  - No console errors.
+- Lint clean; `npm run build` succeeds. The local `dist/` output was
+  discarded (the Pages workflow builds it).
+
+**Note.** A virtual entry with the same scoreline as an onsite team can now
+read up to ~100 lower. That is the measured mirror advantage: a virtual run is
+an online entry, like the board's mirror rows. Saved results are recomputed
+in the browser, so no migration is needed.
