@@ -53896,6 +53896,7 @@
     "region": "Asia East Continent",
     "editorial_url": null,
     "contest_url": "https://board.xcpcio.com/icpc/51st/nanjing",
+    "source": "xcpcio",
     "problems": [
       {
         "problem_id": -215098509737560,
@@ -53906,7 +53907,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "A"
       },
       {
         "problem_id": -179608858189955,
@@ -53917,7 +53919,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "B"
       },
       {
         "problem_id": -65874396231133,
@@ -53928,7 +53931,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "C"
       },
       {
         "problem_id": -103538742820210,
@@ -53939,7 +53943,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "D"
       },
       {
         "problem_id": -123945675138836,
@@ -53950,7 +53955,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "E"
       },
       {
         "problem_id": -59629299122119,
@@ -53961,7 +53967,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "F"
       },
       {
         "problem_id": -174402121819364,
@@ -53972,7 +53979,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "G"
       },
       {
         "problem_id": -280673441292804,
@@ -53983,7 +53991,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "H"
       },
       {
         "problem_id": -222691776132586,
@@ -53994,7 +54003,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "I"
       },
       {
         "problem_id": -253100114683507,
@@ -54005,7 +54015,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "J"
       },
       {
         "problem_id": -93868499203556,
@@ -54016,7 +54027,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "K"
       },
       {
         "problem_id": -111515597212181,
@@ -54027,7 +54039,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "L"
       },
       {
         "problem_id": -145740927317523,
@@ -54038,7 +54051,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "M"
       }
     ]
   },
@@ -54049,6 +54063,7 @@
     "region": "Asia East Continent",
     "editorial_url": null,
     "contest_url": "https://board.xcpcio.com/icpc/51st/shenyang",
+    "source": "xcpcio",
     "problems": [
       {
         "problem_id": -106104781513683,
@@ -54059,7 +54074,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "A"
       },
       {
         "problem_id": -82003273299474,
@@ -54070,7 +54086,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "B"
       },
       {
         "problem_id": -200727835011925,
@@ -54081,7 +54098,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "C"
       },
       {
         "problem_id": -137744279686826,
@@ -54092,7 +54110,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "D"
       },
       {
         "problem_id": -214890734076887,
@@ -54103,7 +54122,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "E"
       },
       {
         "problem_id": -21905232569140,
@@ -54114,7 +54134,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "F"
       },
       {
         "problem_id": -3870173752157,
@@ -54125,7 +54146,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "G"
       },
       {
         "problem_id": -63032760065132,
@@ -54136,7 +54158,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "H"
       },
       {
         "problem_id": -86399191008031,
@@ -54147,7 +54170,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "I"
       },
       {
         "problem_id": -9772984099788,
@@ -54158,7 +54182,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "J"
       },
       {
         "problem_id": -210857693399512,
@@ -54169,7 +54194,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "K"
       },
       {
         "problem_id": -74492653037716,
@@ -54180,7 +54206,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "L"
       },
       {
         "problem_id": -199915917579982,
@@ -54191,7 +54218,8 @@
         "extra_tags": null,
         "importance": null,
         "importance_confidence": null,
-        "olympiad_techniques": null
+        "olympiad_techniques": null,
+        "problem_label": "M"
       }
     ]
   },

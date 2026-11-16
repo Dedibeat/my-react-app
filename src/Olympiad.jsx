@@ -229,7 +229,7 @@ export default function Olympiad({ problems, setProblems, loaded, isAdmin }) {
               )}
               {visible.map((p) => (
                 <tr key={p.id} className={p.status === "AC" ? "row-solved" : ""}>
-                  <td className="cell-id" data-label="ID">{p.id}</td>
+                  <td className="cell-id" data-label="ID">{p.displayId || p.id}</td>
                   <td data-label="Contest">{p.contest}</td>
                   <td data-label="Problem">
                     <a className="problem-link" href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>

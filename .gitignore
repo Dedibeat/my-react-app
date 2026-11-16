@@ -32,6 +32,7 @@ local.db-wal
 local.db-shm
 .env
 .env.local
+.qoj/
 .vercel
 search.json
 # Rating-script backup

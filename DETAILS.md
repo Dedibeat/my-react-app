@@ -2678,3 +2678,75 @@ match, pick → Solved 8, Penalty 849, preview "Rank 27 of 681 · performance
 participated_on}`; switching to Official clears the preview; no page errors.
 Not tested: phone width, and a real login (the live `team_r3` login was
 rejected with 401).
+
+## XCPC display and targeted QOJ status cleanup (2026-11-16)
+
+**Request.** Fix XCPC.io rows whose negative synthetic IDs overlap the contest
+column and whose placeholder problem titles repeat the full Chinese contest
+name. Remove TEAM_R3's app ACs absent from its QOJ accepted list, and save the
+browserless authentication setup and scripts in this repo.
+
+**XCPC display (implemented).** The analyzer's
+`../analyze_standings/scripts/fetch_xcpcio_standings.py` generates stable negative
+IDs, `source: "xcpcio"`, and `problem_label`. The app's slimming script was
+dropping the last two fields. It now preserves them for the two XCPC contests
+(Nanjing/Shenyang 2026, 26 problems), and the frontend shows `XCPC C` and
+`Problem C` in place of synthetic IDs and contest-title placeholders. These
+boards do not supply actual task titles or problem URLs; links still open the
+correct XCPC board. Problem Set, Lists, shared lists and Olympiad tables use the
+display label. ID cells can wrap instead of overlapping the next column.
+
+Internal IDs remain unchanged for ratings, statuses, feedback and list
+membership. The ratings are still the analyzer's previously imported
+hierarchical release; no refit or rating refresh was needed. QOJ rows retain
+their numeric IDs and task titles. `data/tagged.json` and `public/tagged.json`
+were regenerated; only the two XCPC contests gained source/label metadata.
+
+**Saved authentication setup.** [docs/QOJ_AUTH.md](docs/QOJ_AUTH.md) records the
+recipe from `../p1/qoj/BROWSERLESS_AUTH.md`. `scripts/qoj_auth.py` preserves that
+helper's Chrome 136 TLS impersonation, JavaScript `_token`, MD5 wire format,
+literal `ok` check, profile authentication check, cookie reuse, retries and
+optional existing local Tor proxy. Passwords come from a hidden prompt or
+`QOJ_PASSWORD`, rather than command-line arguments. Cookie files are mode
+`0600`; `.qoj/` is ignored by git. Optional CLI dependencies are pinned in
+`scripts/requirements-qoj.txt`; the deployed backend dependencies and ordinary
+additive sync behavior are unchanged.
+
+**Cleanup tooling (implemented; live cleanup deferred by request).**
+`scripts/reconcile_qoj_status.py TEAM_R3` previews the app account's catalog ACs
+absent from its linked QOJ profile; `--apply` saves a private timestamped status
+backup before clearing them through the authenticated app API. It rechecks
+statuses before deletion and verifies afterwards. Non-AC statuses, Codeforces
+and unknown IDs are preserved. Failed authentication or missing profile
+sections abort before any writes. Use it without concurrent status editing;
+the app API has no conditional-delete endpoint. See the setup document for
+commands and the backup's timestamp-restoration limitation.
+
+**Live result / blocker.** App login for `TEAM_R3` succeeded, confirming user
+79 and QOJ handle `TEAM_R3`: 227 status rows, including 204 ACs. No live statuses
+were cleared. QOJ returned Cloudflare HTTP 403 from the app server, this
+machine's direct impersonated requests and Chromium. The upstream helper's
+direct retries and the repo copy with curl_cffi 0.17.0 also failed; the existing
+documented local Tor route timed out, then returned a challenge. A blocked
+profile cannot safely be treated as an empty accepted list. Re-run the cleanup
+when authenticated QOJ access works; credentials and session snapshots are not
+committed.
+
+User subsequently asked to ignore the Cloudflare issue and deploy the XCPC
+representation. Live QOJ reconciliation is deferred; the saved scripts remain
+available for a later run. Publishing uses the existing master-branch GitHub
+Actions workflow to build and deploy to https://dedibeat.github.io/.
+
+**Verified.**
+- `npm run lint`, `npm run build:gh`, and `git diff --check` pass. Generated
+  `dist/` changes were discarded as before; the deployment workflow builds it.
+- Six regression tests pass: `.venv/bin/python -m unittest scripts.test_qoj_tools -v`.
+  They cover the login payload, persistent challenges, private cookie files,
+  dry-run behavior, backed-up deletion of stale catalog ACs (including synthetic
+  IDs), preservation of accepted/non-AC/CF/unknown statuses, and rejection of an
+  unrecognized profile before writes.
+- Chromium with stubbed API: all 26 XCPC rows have the expected labels, titles,
+  board links and unchanged ratings; a status edit targets the original
+  negative ID. At 1353 px ID text fits its cell; at 375 px all 26 rows render
+  with `scrollWidth == clientWidth == 375`. No production status writes were
+  used for frontend verification.

@@ -252,9 +252,9 @@ td.cell-check {
 th[data-label="ID"],
 td[data-label="ID"],
 .cell-id {
-  width: 76px;
-  min-width: 76px;
-  max-width: 76px;
+  width: 90px;
+  min-width: 90px;
+  max-width: 90px;
 }
 
 th[data-label="Code"],
@@ -369,6 +369,7 @@ tbody tr.row-solved:hover td {
 
 .cell-id {
   color: var(--text-muted);
+  overflow-wrap: anywhere;
   font-variant-numeric: tabular-nums;
   font-size: 0.8125rem;
   font-weight: 500;

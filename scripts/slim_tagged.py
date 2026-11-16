@@ -5,8 +5,8 @@ The canonical file (canonical/tagged.json) keeps the full LLM-generated
 fields (statement, analysis_notes, shortest_solution, tagging provenance, ...)
 for future use; this script produces the served data/tagged.json with only:
 
-  contest: contest_id, contest_name, year, region, editorial_url, contest_url
-  problem: problem_id, problem_name, problem_url,
+  contest: contest_id, contest_name, year, region, editorial_url, contest_url, source
+  problem: problem_id, problem_label, problem_name, problem_url,
            primary_tags, secondary_tags, extra_tags,
            importance, importance_confidence, olympiad_techniques
 
@@ -44,9 +44,14 @@ def main():
     slim = []
     for contest in data:
         out_contest = {k: contest.get(k) for k in CONTEST_KEEP}
-        out_contest["problems"] = [
-            {k: p.get(k) for k in PROBLEM_KEEP} for p in contest.get("problems", [])
-        ]
+        if contest.get("source"):
+            out_contest["source"] = contest["source"]
+        out_contest["problems"] = []
+        for p in contest.get("problems", []):
+            out_problem = {k: p.get(k) for k in PROBLEM_KEEP}
+            if contest.get("source") == "xcpcio" and p.get("problem_label"):
+                out_problem["problem_label"] = p["problem_label"]
+            out_contest["problems"].append(out_problem)
         slim.append(out_contest)
 
     with open(dst, "w", encoding="utf-8") as f:

@@ -216,7 +216,7 @@ function ProblemsTable({
           )}
           {capped.map((p) => (
             <tr key={p.id} className={p.status === "AC" ? "row-solved" : ""}>
-              <td className="cell-id" data-label="ID">{p.id}</td>
+              <td className="cell-id" data-label="ID">{p.displayId || p.id}</td>
               <td data-label="Contest"><ContestLink problem={p} /></td>
               <td data-label="Problem">
                 <a className="problem-link" href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>

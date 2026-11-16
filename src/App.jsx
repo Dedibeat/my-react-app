@@ -32,6 +32,7 @@ function flattenContests(contests) {
 
       out.push({
         id: String(p.problem_id),
+        displayId: c.source === 'xcpcio' ? `XCPC ${p.problem_label}` : String(p.problem_id),
         contest: c.contest_name + ' ' + c.year,
         contestId: c.contest_id,
         contestUrl: c.contest_url || `https://qoj.ac/contest/${c.contest_id}`,
@@ -40,8 +41,9 @@ function flattenContests(contests) {
           : null,
         region: c.region,
         year: c.year,
-        searchKey: `${c.region || ''} ${c.contest_name || ''} ${c.year || ''}`,
-        name: p.problem_name,
+        searchKey: `${c.region || ''} ${c.contest_name || ''} ${c.year || ''} ${c.source || ''} ${p.problem_label || ''}`,
+        // XCPC boards supply contest-title placeholders rather than task titles.
+        name: c.source === 'xcpcio' ? `Problem ${p.problem_label}` : p.problem_name,
         tags,
         tagList,
         extraTagSet,
