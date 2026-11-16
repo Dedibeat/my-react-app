@@ -2678,3 +2678,44 @@ match, pick → Solved 8, Penalty 849, preview "Rank 27 of 681 · performance
 participated_on}`; switching to Official clears the preview; no page errors.
 Not tested: phone width, and a real login (the live `team_r3` login was
 rejected with 401).
+
+## Plan: public release of ratings and tags on Codeforces (2026-11-16)
+
+**Request.** Release the problem ratings and tags publicly with a Codeforces
+blog post. Scope (user decision): **ratings and tags only, no methods.** Not
+started; this records what is needed.
+
+**Already public, no login (checked 2026-11-16 on dedibeat.github.io).**
+- `/problem_rating.json`: 3,409 rated problem appearances (the hierarchical
+  binary-with-time release).
+- `/tagged.json`: 277 contests, 3,314 problems; 2,276 have `primary_tags`.
+  Joins to the ratings on `problem_id`.
+- Both are raw JSON. The app itself opens on a login screen, and
+  `/ratings_viewer.html` returned 503, so there is no browsable public page.
+- Both repos (`analyze_standings`, `my-react-app`) are public on GitHub.
+
+**To do before posting.**
+1. **Public browsable page (the blocker).** Problem, contest, rating, tags,
+   problem link; filters for tag, rating range and region; search. Show a
+   problem once even when it appears on several mirror boards (3,409 are
+   appearances). Prefer a static page on the existing site, or a read-only
+   signed-out Problem Set: the Render backend sleeps on the free tier, and a
+   static page does not depend on it.
+2. **Untagged problems.** About 1,038 (31%) have no tags: show them as
+   untagged or leave them out.
+3. **Data licence.** Neither repo has a `LICENSE`; without one nobody may
+   legally reuse the data. CC BY 4.0 for the data is a common choice.
+4. **Credit sources** in one line: the ratings are derived from QOJ, XCPCIO,
+   Universal Cup and CF Gym standings.
+5. **Other public files (decision open).** The same site serves
+   `/contest_fields/` (team names, schools, per-team performance) and the
+   medal viewer, reachable by URL. Removing them breaks the logged-in Contests
+   page, which reads those files.
+
+**Recommended for the post, without describing methods.** One line of
+context, e.g. "CF-equivalent difficulty estimated from ICPC-style team
+standings; expect roughly ±200", so readers do not take it as an official CF
+rating. If the tags were machine-generated, say so in a few words.
+
+**Not needed with this scope.** Methods write-up, accuracy table, uncertainty
+discussion.
