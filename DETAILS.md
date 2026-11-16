@@ -2656,3 +2656,25 @@ Reproduce after an analyzer update: run its `python -m arch_b.hier_time release`
 and production exporters (see analyzer README), copy the hierarchical rating
 and calibration files plus medal_viewer.html, then run
 `python scripts/export_contest_fields.py` and `npm run build:gh`.
+
+## Contests: add your team to a virtual from the standings (2026-11-16)
+
+**Request.** "Add option to add my team from virtual in contest page."
+Chosen reading (asked): in the Results dialog's Virtual form, pick a team from
+the contest's standings instead of typing its solved count and penalty.
+
+**Change (`src/Contests.jsx`, dialog only).**
+- Virtual mode gets an optional "Fill from a team in the standings" search, the
+  same team/university search Official mode already had. Picking a row fills
+  Solved and Penalty (still editable); the preview and save are unchanged.
+- The result is still saved as a **virtual** (no `team_name`, no backend or
+  schema change) and ranked on the whole board, like any virtual.
+- Switching Virtual/Official clears the picked team and the search text.
+
+**Verified.** Lint clean. In headless Chromium on the Vite dev server with the
+API stubbed (no real data touched): Shanghai 2023, search "world.search" → one
+match, pick → Solved 8, Penalty 849, preview "Rank 27 of 681 · performance
+3195"; Save posts `{contest_id:1522, kind:"virtual", solved:8, penalty:849,
+participated_on}`; switching to Official clears the preview; no page errors.
+Not tested: phone width, and a real login (the live `team_r3` login was
+rejected with 401).

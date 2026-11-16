@@ -97,7 +97,7 @@ function ResultsModal({ contest, index, results, onAdd, onDelete, onClose }) {
           <span>Add a result</span>
           <div className="chip-row" role="group" aria-label="Kind">
             {['virtual', 'official'].map((k) => (
-              <button key={k} type="button" aria-pressed={kind === k} className={`chip ${kind === k ? 'chip-on' : ''}`} onClick={() => setKind(k)}>
+              <button key={k} type="button" aria-pressed={kind === k} className={`chip ${kind === k ? 'chip-on' : ''}`} onClick={() => { setKind(k); setTeam(null); setTeamQuery(''); }}>
                 {k === 'virtual' ? 'Virtual' : 'Official'}
               </button>
             ))}
@@ -111,6 +111,15 @@ function ResultsModal({ contest, index, results, onAdd, onDelete, onClose }) {
           </label>
           {kind === 'virtual' && (
             <>
+              <label className="field results-team">
+                <span>Fill from a team in the standings (optional)</span>
+                <input
+                  type="search"
+                  placeholder="team or university name"
+                  value={teamQuery}
+                  onChange={(e) => { setTeamQuery(e.target.value); setTeam(null); }}
+                />
+              </label>
               <label className="field">
                 <span>Solved</span>
                 <input type="number" min={0} value={solved} onChange={(e) => setSolved(e.target.value)} />
@@ -134,11 +143,15 @@ function ResultsModal({ contest, index, results, onAdd, onDelete, onClose }) {
           )}
         </div>
 
-        {kind === 'official' && matches.length > 0 && !team && (
+        {matches.length > 0 && !team && (
           <ul className="team-matches">
             {matches.map((t, i) => (
               <li key={i}>
-                <button type="button" onClick={() => { setTeam(t); setTeamQuery(t[0]); }}>
+                <button type="button" onClick={() => {
+                  setTeam(t);
+                  setTeamQuery(t[0]);
+                  if (kind === 'virtual') { setSolved(String(t[2])); setPenalty(String(t[3])); }
+                }}>
                   <span className="muted">#{t[6]}</span>
                   <span className="team-name">{t[0]}{t[1] ? <span className="muted"> · {t[1]}</span> : null}</span>
                   <span className="muted">{t[2]} solved · {t[3]} min</span>
