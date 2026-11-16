@@ -5,6 +5,7 @@
     "year": 2023,
     "region": "Asia East Continent",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1485",
     "problems": [
       {
         "problem_id": 8072,
@@ -288,6 +289,7 @@
     "year": 2024,
     "region": "Asia East Continent",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1794",
     "problems": [
       {
         "problem_id": 9308,
@@ -615,6 +617,7 @@
     "year": 2024,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1799&r=1",
+    "contest_url": "https://qoj.ac/contest/1799",
     "problems": [
       {
         "problem_id": 9370,
@@ -921,6 +924,7 @@
     "year": 2025,
     "region": "Asia East Continent",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2513",
     "problems": [
       {
         "problem_id": 14301,
@@ -1243,6 +1247,7 @@
     "year": 2025,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2524&r=1",
+    "contest_url": "https://qoj.ac/contest/2524",
     "problems": [
       {
         "problem_id": 14314,
@@ -1562,6 +1567,7 @@
     "year": 2022,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1197&r=2",
+    "contest_url": "https://qoj.ac/contest/1197",
     "problems": [
       {
         "problem_id": 6298,
@@ -1907,6 +1913,7 @@
     "year": 2023,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1522&r=1",
+    "contest_url": "https://qoj.ac/contest/1522",
     "problems": [
       {
         "problem_id": 8047,
@@ -2261,6 +2268,7 @@
     "year": 2024,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1894&r=1",
+    "contest_url": "https://qoj.ac/contest/1894",
     "problems": [
       {
         "problem_id": 9975,
@@ -2579,6 +2587,7 @@
     "year": 2025,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=3295&r=1",
+    "contest_url": "https://qoj.ac/contest/3295",
     "problems": [
       {
         "problem_id": 16328,
@@ -2898,6 +2907,7 @@
     "year": 2022,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1071&r=1",
+    "contest_url": "https://qoj.ac/contest/1071",
     "problems": [
       {
         "problem_id": 5301,
@@ -3218,6 +3228,7 @@
     "year": 2022,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1099&r=2",
+    "contest_url": "https://qoj.ac/contest/1099",
     "problems": [
       {
         "problem_id": 5455,
@@ -3547,6 +3558,7 @@
     "year": 2022,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1053&r=1",
+    "contest_url": "https://qoj.ac/contest/1053",
     "problems": [
       {
         "problem_id": 5137,
@@ -3863,6 +3875,7 @@
     "year": 2022,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1093&r=2",
+    "contest_url": "https://qoj.ac/contest/1093",
     "problems": [
       {
         "problem_id": 5414,
@@ -4216,6 +4229,7 @@
     "year": 2022,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1096&r=2",
+    "contest_url": "https://qoj.ac/contest/1096",
     "problems": [
       {
         "problem_id": 5433,
@@ -4572,6 +4586,7 @@
     "year": 2022,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1051&r=1",
+    "contest_url": "https://qoj.ac/contest/1051",
     "problems": [
       {
         "problem_id": 5113,
@@ -4872,6 +4887,7 @@
     "year": 2023,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1516&r=1",
+    "contest_url": "https://qoj.ac/contest/1516",
     "problems": [
       {
         "problem_id": 8230,
@@ -5176,6 +5192,7 @@
     "year": 2023,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1440&r=1",
+    "contest_url": "https://qoj.ac/contest/1440",
     "problems": [
       {
         "problem_id": 7874,
@@ -5460,6 +5477,7 @@
     "year": 2023,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1472&r=2",
+    "contest_url": "https://qoj.ac/contest/1472",
     "problems": [
       {
         "problem_id": 7894,
@@ -5798,6 +5816,7 @@
     "year": 2023,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1459&r=1",
+    "contest_url": "https://qoj.ac/contest/1459",
     "problems": [
       {
         "problem_id": 7857,
@@ -6104,6 +6123,7 @@
     "year": 2023,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1435&r=1",
+    "contest_url": "https://qoj.ac/contest/1435",
     "problems": [
       {
         "problem_id": 7733,
@@ -6446,6 +6466,7 @@
     "year": 2023,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1449&r=1",
+    "contest_url": "https://qoj.ac/contest/1449",
     "problems": [
       {
         "problem_id": 7777,
@@ -6783,6 +6804,7 @@
     "year": 2023,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1784&r=1",
+    "contest_url": "https://qoj.ac/contest/1784",
     "problems": [
       {
         "problem_id": 9242,
@@ -7128,6 +7150,7 @@
     "year": 2023,
     "region": "Asia East Continent",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1481",
     "problems": [
       {
         "problem_id": 8032,
@@ -7202,6 +7225,7 @@
     "year": 2024,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1821&r=1",
+    "contest_url": "https://qoj.ac/contest/1821",
     "problems": [
       {
         "problem_id": 9535,
@@ -7534,6 +7558,7 @@
     "year": 2024,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1893&r=1",
+    "contest_url": "https://qoj.ac/contest/1893",
     "problems": [
       {
         "problem_id": 9726,
@@ -7862,6 +7887,7 @@
     "year": 2024,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1885&r=1",
+    "contest_url": "https://qoj.ac/contest/1885",
     "problems": [
       {
         "problem_id": 9915,
@@ -8199,6 +8225,7 @@
     "year": 2024,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1871&r=1",
+    "contest_url": "https://qoj.ac/contest/1871",
     "problems": [
       {
         "problem_id": 9862,
@@ -8525,6 +8552,7 @@
     "year": 2024,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1828&r=2",
+    "contest_url": "https://qoj.ac/contest/1828",
     "problems": [
       {
         "problem_id": 9564,
@@ -8879,6 +8907,7 @@
     "year": 2024,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1913&r=1",
+    "contest_url": "https://qoj.ac/contest/1913",
     "problems": [
       {
         "problem_id": 9037,
@@ -9218,6 +9247,7 @@
     "year": 2024,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1865&r=2",
+    "contest_url": "https://qoj.ac/contest/1865",
     "problems": [
       {
         "problem_id": 9798,
@@ -9566,6 +9596,7 @@
     "year": 2024,
     "region": "Asia East Continent",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1888",
     "problems": [
       {
         "problem_id": 9944,
@@ -9617,6 +9648,7 @@
     "year": 2025,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2567&r=1",
+    "contest_url": "https://qoj.ac/contest/2567",
     "problems": [
       {
         "problem_id": 14706,
@@ -9924,6 +9956,7 @@
     "year": 2025,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=3169&r=1",
+    "contest_url": "https://qoj.ac/contest/3169",
     "problems": [
       {
         "problem_id": 15432,
@@ -10217,6 +10250,7 @@
     "year": 2025,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2581&r=2",
+    "contest_url": "https://qoj.ac/contest/2581",
     "problems": [
       {
         "problem_id": 14801,
@@ -10554,6 +10588,7 @@
     "year": 2025,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2908&r=1",
+    "contest_url": "https://qoj.ac/contest/2908",
     "problems": [
       {
         "problem_id": 15314,
@@ -10935,6 +10970,7 @@
     "year": 2025,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2641&r=2",
+    "contest_url": "https://qoj.ac/contest/2641",
     "problems": [
       {
         "problem_id": 14940,
@@ -11272,6 +11308,7 @@
     "year": 2025,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2609&r=1",
+    "contest_url": "https://qoj.ac/contest/2609",
     "problems": [
       {
         "problem_id": 14719,
@@ -11642,6 +11679,7 @@
     "year": 2025,
     "region": "Asia East Continent",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2562&r=1",
+    "contest_url": "https://qoj.ac/contest/2562",
     "problems": [
       {
         "problem_id": 14681,
@@ -12007,6 +12045,7 @@
     "year": 2025,
     "region": "Asia East Continent",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3294",
     "problems": [
       {
         "problem_id": 16340,
@@ -12105,6 +12144,7 @@
     "year": 2024,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1886&r=1",
+    "contest_url": "https://qoj.ac/contest/1886",
     "problems": [
       {
         "problem_id": 10153,
@@ -12481,6 +12521,7 @@
     "year": 2025,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2527&r=1",
+    "contest_url": "https://qoj.ac/contest/2527",
     "problems": [
       {
         "problem_id": 14326,
@@ -12825,6 +12866,7 @@
     "year": 2026,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=3747&r=1",
+    "contest_url": "https://qoj.ac/contest/3747",
     "problems": [
       {
         "problem_id": 18234,
@@ -13204,6 +13246,7 @@
     "year": 2022,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1109&r=0",
+    "contest_url": "https://qoj.ac/contest/1109",
     "problems": [
       {
         "problem_id": 5537,
@@ -13534,6 +13577,7 @@
     "year": 2023,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1991&r=1",
+    "contest_url": "https://qoj.ac/contest/1991",
     "problems": [
       {
         "problem_id": 10558,
@@ -13879,6 +13923,7 @@
     "year": 2024,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1992&r=1",
+    "contest_url": "https://qoj.ac/contest/1992",
     "problems": [
       {
         "problem_id": 10571,
@@ -14204,6 +14249,7 @@
     "year": 2025,
     "region": "Asia Pacific",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2755",
     "problems": [
       {
         "problem_id": 15784,
@@ -14544,6 +14590,7 @@
     "year": 2022,
     "region": "Asia Pacific",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1101",
     "problems": [
       {
         "problem_id": 5470,
@@ -14811,6 +14858,7 @@
     "year": 2023,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1447&r=1",
+    "contest_url": "https://qoj.ac/contest/1447",
     "problems": [
       {
         "problem_id": 7921,
@@ -15109,6 +15157,7 @@
     "year": 2024,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1987&r=1",
+    "contest_url": "https://qoj.ac/contest/1987",
     "problems": [
       {
         "problem_id": 10474,
@@ -15421,6 +15470,7 @@
     "year": 2025,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2690&r=2",
+    "contest_url": "https://qoj.ac/contest/2690",
     "problems": [
       {
         "problem_id": 15617,
@@ -15726,6 +15776,7 @@
     "year": 2022,
     "region": "Asia Pacific",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1045",
     "problems": [
       {
         "problem_id": 5077,
@@ -15938,6 +15989,7 @@
     "year": 2023,
     "region": "Asia Pacific",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1450",
     "problems": [
       {
         "problem_id": 7945,
@@ -16153,6 +16205,7 @@
     "year": 2024,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1989&r=1",
+    "contest_url": "https://qoj.ac/contest/1989",
     "problems": [
       {
         "problem_id": 10535,
@@ -16363,6 +16416,7 @@
     "year": 2025,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2673&r=1",
+    "contest_url": "https://qoj.ac/contest/2673",
     "problems": [
       {
         "problem_id": 15461,
@@ -16598,6 +16652,7 @@
     "year": 2022,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2781&r=1",
+    "contest_url": "https://qoj.ac/contest/2781",
     "problems": [
       {
         "problem_id": 15845,
@@ -16820,6 +16875,7 @@
     "year": 2025,
     "region": "Asia Pacific",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2779",
     "problems": [
       {
         "problem_id": 15832,
@@ -17050,6 +17106,7 @@
     "year": 2022,
     "region": "Asia Pacific",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1026",
     "problems": [
       {
         "problem_id": 4999,
@@ -17209,6 +17266,7 @@
     "year": 2023,
     "region": "Asia Pacific",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2623",
     "problems": [
       {
         "problem_id": 15181,
@@ -17424,6 +17482,7 @@
     "year": 2024,
     "region": "Asia Pacific",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2622",
     "problems": [
       {
         "problem_id": 15126,
@@ -17639,6 +17698,7 @@
     "year": 2025,
     "region": "Asia Pacific",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2621",
     "problems": [
       {
         "problem_id": 15114,
@@ -17846,6 +17906,7 @@
     "year": 2022,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1124&r=1",
+    "contest_url": "https://qoj.ac/contest/1124",
     "problems": [
       {
         "problem_id": 5660,
@@ -18086,6 +18147,7 @@
     "year": 2023,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2768&r=1",
+    "contest_url": "https://qoj.ac/contest/2768",
     "problems": [
       {
         "problem_id": 15819,
@@ -18318,6 +18380,7 @@
     "year": 2024,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=3297&r=1",
+    "contest_url": "https://qoj.ac/contest/3297",
     "problems": [
       {
         "problem_id": 16908,
@@ -18565,6 +18628,7 @@
     "year": 2025,
     "region": "Asia Pacific",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2657",
     "problems": [
       {
         "problem_id": 15393,
@@ -18803,6 +18867,7 @@
     "year": 2025,
     "region": "Asia Pacific",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2826&r=1",
+    "contest_url": "https://qoj.ac/contest/2826",
     "problems": [
       {
         "problem_id": 16101,
@@ -19062,6 +19127,7 @@
     "year": 2022,
     "region": "Asia West Continent",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2685",
     "problems": [
       {
         "problem_id": 15641,
@@ -19258,6 +19324,7 @@
     "year": 2023,
     "region": "Asia West Continent",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2686",
     "problems": [
       {
         "problem_id": 15652,
@@ -19479,6 +19546,7 @@
     "year": 2024,
     "region": "Asia West Continent",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2606",
     "problems": [
       {
         "problem_id": 15665,
@@ -19673,6 +19741,7 @@
     "year": 2022,
     "region": "Asia West Continent",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1166",
     "problems": [
       {
         "problem_id": 6243,
@@ -19846,6 +19915,7 @@
     "year": 2024,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1967&r=1",
+    "contest_url": "https://qoj.ac/contest/1967",
     "problems": [
       {
         "problem_id": 10336,
@@ -20039,6 +20109,7 @@
     "year": 2025,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1964&r=1",
+    "contest_url": "https://qoj.ac/contest/1964",
     "problems": [
       {
         "problem_id": 10310,
@@ -20241,6 +20312,7 @@
     "year": 2022,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1070&r=1",
+    "contest_url": "https://qoj.ac/contest/1070",
     "problems": [
       {
         "problem_id": 5249,
@@ -20460,6 +20532,7 @@
     "year": 2023,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1697&r=1",
+    "contest_url": "https://qoj.ac/contest/1697",
     "problems": [
       {
         "problem_id": 8863,
@@ -20685,6 +20758,7 @@
     "year": 2025,
     "region": "Europe",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3394",
     "problems": [
       {
         "problem_id": 17444,
@@ -20904,6 +20978,7 @@
     "year": 2022,
     "region": "Europe",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1103",
     "problems": [
       {
         "problem_id": 5499,
@@ -21143,6 +21218,7 @@
     "year": 2022,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1054&r=1",
+    "contest_url": "https://qoj.ac/contest/1054",
     "problems": [
       {
         "problem_id": 5150,
@@ -21361,6 +21437,7 @@
     "year": 2023,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1446&r=1",
+    "contest_url": "https://qoj.ac/contest/1446",
     "problems": [
       {
         "problem_id": 7907,
@@ -21575,6 +21652,7 @@
     "year": 2024,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1863&r=1",
+    "contest_url": "https://qoj.ac/contest/1863",
     "problems": [
       {
         "problem_id": 9811,
@@ -21805,6 +21883,7 @@
     "year": 2025,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2694&r=1",
+    "contest_url": "https://qoj.ac/contest/2694",
     "problems": [
       {
         "problem_id": 15629,
@@ -22010,6 +22089,7 @@
     "year": 2022,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1044&r=1",
+    "contest_url": "https://qoj.ac/contest/1044",
     "problems": [
       {
         "problem_id": 5125,
@@ -22221,6 +22301,7 @@
     "year": 2023,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2605&r=1",
+    "contest_url": "https://qoj.ac/contest/2605",
     "problems": [
       {
         "problem_id": 14880,
@@ -22430,6 +22511,7 @@
     "year": 2024,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2604&r=1",
+    "contest_url": "https://qoj.ac/contest/2604",
     "problems": [
       {
         "problem_id": 14867,
@@ -22653,6 +22735,7 @@
     "year": 2025,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2603&r=1",
+    "contest_url": "https://qoj.ac/contest/2603",
     "problems": [
       {
         "problem_id": 14855,
@@ -22857,6 +22940,7 @@
     "year": 2022,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1110&r=1",
+    "contest_url": "https://qoj.ac/contest/1110",
     "problems": [
       {
         "problem_id": 5553,
@@ -23088,6 +23172,7 @@
     "year": 2023,
     "region": "Europe",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1402",
     "problems": [
       {
         "problem_id": 7652,
@@ -23316,6 +23401,7 @@
     "year": 2024,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2132&r=1",
+    "contest_url": "https://qoj.ac/contest/2132",
     "problems": [
       {
         "problem_id": 12137,
@@ -23546,6 +23632,7 @@
     "year": 2025,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2535&r=1",
+    "contest_url": "https://qoj.ac/contest/2535",
     "problems": [
       {
         "problem_id": 14560,
@@ -23766,6 +23853,7 @@
     "year": 2022,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1024&r=1",
+    "contest_url": "https://qoj.ac/contest/1024",
     "problems": [
       {
         "problem_id": 4988,
@@ -23961,6 +24049,7 @@
     "year": 2023,
     "region": "Europe",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1476",
     "problems": [
       {
         "problem_id": 8441,
@@ -24149,6 +24238,7 @@
     "year": 2024,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2138&r=1",
+    "contest_url": "https://qoj.ac/contest/2138",
     "problems": [
       {
         "problem_id": 11958,
@@ -24340,6 +24430,7 @@
     "year": 2025,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2576&r=1",
+    "contest_url": "https://qoj.ac/contest/2576",
     "problems": [
       {
         "problem_id": 14827,
@@ -24539,6 +24630,7 @@
     "year": 2023,
     "region": "Europe",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1432",
     "problems": [
       {
         "problem_id": 7840,
@@ -24765,6 +24857,7 @@
     "year": 2025,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2580&r=1",
+    "contest_url": "https://qoj.ac/contest/2580",
     "problems": [
       {
         "problem_id": 14842,
@@ -24992,6 +25085,7 @@
     "year": 2022,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2511&r=1",
+    "contest_url": "https://qoj.ac/contest/2511",
     "problems": [
       {
         "problem_id": 14105,
@@ -25235,6 +25329,7 @@
     "year": 2022,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1123&r=1",
+    "contest_url": "https://qoj.ac/contest/1123",
     "problems": [
       {
         "problem_id": 5645,
@@ -25443,6 +25538,7 @@
     "year": 2023,
     "region": "Europe",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2030",
     "problems": [
       {
         "problem_id": 10675,
@@ -25674,6 +25770,7 @@
     "year": 2024,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2691&r=1",
+    "contest_url": "https://qoj.ac/contest/2691",
     "problems": [
       {
         "problem_id": 15695,
@@ -25902,6 +25999,7 @@
     "year": 2025,
     "region": "Europe",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2692&r=1",
+    "contest_url": "https://qoj.ac/contest/2692",
     "problems": [
       {
         "problem_id": 15708,
@@ -26106,6 +26204,7 @@
     "year": 2025,
     "region": "Latin America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2080",
     "problems": [
       {
         "problem_id": 11632,
@@ -26323,6 +26422,7 @@
     "year": 2026,
     "region": "Latin America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3762",
     "problems": [
       {
         "problem_id": 17989,
@@ -26535,6 +26635,7 @@
     "year": 2023,
     "region": "Latin America",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2574&r=1",
+    "contest_url": "https://qoj.ac/contest/2574",
     "problems": [
       {
         "problem_id": 16178,
@@ -26768,6 +26869,7 @@
     "year": 2022,
     "region": "North America",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1102&r=1",
+    "contest_url": "https://qoj.ac/contest/1102",
     "problems": [
       {
         "problem_id": 5481,
@@ -26970,6 +27072,7 @@
     "year": 2023,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1517",
     "problems": [
       {
         "problem_id": 8243,
@@ -27180,6 +27283,7 @@
     "year": 2024,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1837",
     "problems": [
       {
         "problem_id": 8984,
@@ -27381,6 +27485,7 @@
     "year": 2025,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2554",
     "problems": [
       {
         "problem_id": 14437,
@@ -27610,6 +27715,7 @@
     "year": 2022,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1248",
     "problems": [
       {
         "problem_id": 6558,
@@ -27846,6 +27952,7 @@
     "year": 2026,
     "region": "North America",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=3518&r=1",
+    "contest_url": "https://qoj.ac/contest/3518",
     "problems": [
       {
         "problem_id": 17319,
@@ -28089,6 +28196,7 @@
     "year": 2022,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1122",
     "problems": [
       {
         "problem_id": 5605,
@@ -28298,6 +28406,7 @@
     "year": 2023,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1406",
     "problems": [
       {
         "problem_id": 7690,
@@ -28508,6 +28617,7 @@
     "year": 2024,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1844",
     "problems": [
       {
         "problem_id": 9754,
@@ -28730,6 +28840,7 @@
     "year": 2025,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2797",
     "problems": [
       {
         "problem_id": 15948,
@@ -28930,6 +29041,7 @@
     "year": 2022,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1126",
     "problems": [
       {
         "problem_id": 5673,
@@ -29098,6 +29210,7 @@
     "year": 2023,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1482",
     "problems": [
       {
         "problem_id": 7702,
@@ -29174,6 +29287,7 @@
     "year": 2022,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1118",
     "problems": [
       {
         "problem_id": 5591,
@@ -29408,6 +29522,7 @@
     "year": 2022,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1119",
     "problems": [
       {
         "problem_id": 5578,
@@ -29497,6 +29612,7 @@
     "year": 2024,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3504",
     "problems": [
       {
         "problem_id": 16821,
@@ -29727,6 +29843,7 @@
     "year": 2024,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3505",
     "problems": [
       {
         "problem_id": 16823,
@@ -29797,6 +29914,7 @@
     "year": 2025,
     "region": "North America",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=3502&r=1",
+    "contest_url": "https://qoj.ac/contest/3502",
     "problems": [
       {
         "problem_id": 16814,
@@ -30029,6 +30147,7 @@
     "year": 2025,
     "region": "North America",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=3503&r=1",
+    "contest_url": "https://qoj.ac/contest/3503",
     "problems": [
       {
         "problem_id": 16818,
@@ -30135,6 +30254,7 @@
     "year": 2022,
     "region": "North America",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1117&r=0",
+    "contest_url": "https://qoj.ac/contest/1117",
     "problems": [
       {
         "problem_id": 5581,
@@ -30244,6 +30364,7 @@
     "year": 2023,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1755",
     "problems": [
       {
         "problem_id": 9051,
@@ -30471,6 +30592,7 @@
     "year": 2023,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1754",
     "problems": [
       {
         "problem_id": 9064,
@@ -30570,6 +30692,7 @@
     "year": 2022,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1116",
     "problems": [
       {
         "problem_id": 5599,
@@ -30611,6 +30734,7 @@
     "year": 2022,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1121",
     "problems": [
       {
         "problem_id": 5587,
@@ -30637,6 +30761,7 @@
     "year": 2023,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1753",
     "problems": [
       {
         "problem_id": 9070,
@@ -30662,6 +30787,7 @@
     "year": 2023,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1752",
     "problems": [
       {
         "problem_id": 9071,
@@ -30688,6 +30814,7 @@
     "year": 2024,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1952",
     "problems": [
       {
         "problem_id": 10584,
@@ -30922,6 +31049,7 @@
     "year": 2024,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1953",
     "problems": [
       {
         "problem_id": 10586,
@@ -31006,6 +31134,7 @@
     "year": 2025,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2583",
     "problems": [
       {
         "problem_id": 14917,
@@ -31236,6 +31365,7 @@
     "year": 2025,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2582",
     "problems": [
       {
         "problem_id": 14916,
@@ -31350,6 +31480,7 @@
     "year": 2022,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1115",
     "problems": [
       {
         "problem_id": 5598,
@@ -31390,6 +31521,7 @@
     "year": 2023,
     "region": "North America",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1483&r=1",
+    "contest_url": "https://qoj.ac/contest/1483",
     "problems": [
       {
         "problem_id": 8060,
@@ -31608,6 +31740,7 @@
     "year": 2024,
     "region": "North America",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2151&r=1",
+    "contest_url": "https://qoj.ac/contest/2151",
     "problems": [
       {
         "problem_id": 12182,
@@ -31826,6 +31959,7 @@
     "year": 2025,
     "region": "North America",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2796",
     "problems": [
       {
         "problem_id": 15863,
@@ -32047,6 +32181,7 @@
     "year": 2022,
     "region": "Northern Eurasia",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1062&r=1",
+    "contest_url": "https://qoj.ac/contest/1062",
     "problems": [
       {
         "problem_id": 5199,
@@ -32264,6 +32399,7 @@
     "year": 2023,
     "region": "Northern Eurasia",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1985&r=1",
+    "contest_url": "https://qoj.ac/contest/1985",
     "problems": [
       {
         "problem_id": 10427,
@@ -32474,6 +32610,7 @@
     "year": 2024,
     "region": "Northern Eurasia",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1984&r=1",
+    "contest_url": "https://qoj.ac/contest/1984",
     "problems": [
       {
         "problem_id": 10414,
@@ -32688,6 +32825,7 @@
     "year": 2025,
     "region": "Northern Eurasia",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2785&r=1",
+    "contest_url": "https://qoj.ac/contest/2785",
     "problems": [
       {
         "problem_id": 15893,
@@ -32906,6 +33044,7 @@
     "year": 2023,
     "region": "Northern Eurasia",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1426",
     "problems": [
       {
         "problem_id": 7796,
@@ -33137,6 +33276,7 @@
     "year": 2024,
     "region": "Northern Eurasia",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1864&r=1",
+    "contest_url": "https://qoj.ac/contest/1864",
     "problems": [
       {
         "problem_id": 9824,
@@ -33374,6 +33514,7 @@
     "year": 2022,
     "region": "Northern Eurasia",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1329&r=1",
+    "contest_url": "https://qoj.ac/contest/1329",
     "problems": [
       {
         "problem_id": 7524,
@@ -33590,6 +33731,7 @@
     "year": 2023,
     "region": "Northern Eurasia",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2068",
     "problems": [
       {
         "problem_id": 11497,
@@ -33816,6 +33958,7 @@
     "year": 2024,
     "region": "Northern Eurasia",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2620&r=1",
+    "contest_url": "https://qoj.ac/contest/2620",
     "problems": [
       {
         "problem_id": 15101,
@@ -34043,6 +34186,7 @@
     "year": 2022,
     "region": "Northern Eurasia",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1075&r=1",
+    "contest_url": "https://qoj.ac/contest/1075",
     "problems": [
       {
         "problem_id": 5266,
@@ -34278,6 +34422,7 @@
     "year": 2025,
     "region": "Northern Eurasia",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2658&r=1",
+    "contest_url": "https://qoj.ac/contest/2658",
     "problems": [
       {
         "problem_id": 15407,
@@ -34482,6 +34627,7 @@
     "year": 2022,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/819",
     "problems": [
       {
         "problem_id": 2539,
@@ -34658,6 +34804,7 @@
     "year": 2022,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/820",
     "problems": [
       {
         "problem_id": 2552,
@@ -34824,6 +34971,7 @@
     "year": 2022,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/821",
     "problems": [
       {
         "problem_id": 2564,
@@ -34995,6 +35143,7 @@
     "year": 2022,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/822",
     "problems": [
       {
         "problem_id": 2223,
@@ -35182,6 +35331,7 @@
     "year": 2022,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/823",
     "problems": [
       {
         "problem_id": 2594,
@@ -35333,6 +35483,7 @@
     "year": 2022,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/824",
     "problems": [
       {
         "problem_id": 2605,
@@ -35487,6 +35638,7 @@
     "year": 2022,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/825",
     "problems": [
       {
         "problem_id": 2616,
@@ -35642,6 +35794,7 @@
     "year": 2021,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/943",
     "problems": [
       {
         "problem_id": 4225,
@@ -35817,6 +35970,7 @@
     "year": 2022,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/955",
     "problems": [
       {
         "problem_id": 4315,
@@ -35938,6 +36092,7 @@
     "year": 2022,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1009",
     "problems": [
       {
         "problem_id": 4798,
@@ -36104,6 +36259,7 @@
     "year": 2022,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1010",
     "problems": [
       {
         "problem_id": 4810,
@@ -36315,6 +36471,7 @@
     "year": 2022,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1012",
     "problems": [
       {
         "problem_id": 4835,
@@ -36470,6 +36627,7 @@
     "year": 2022,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1014",
     "problems": [
       {
         "problem_id": 4855,
@@ -36634,6 +36792,7 @@
     "year": 2022,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1016",
     "problems": [
       {
         "problem_id": 4878,
@@ -36788,6 +36947,7 @@
     "year": 2023,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1168",
     "problems": [
       {
         "problem_id": 6101,
@@ -36974,6 +37134,7 @@
     "year": 2023,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1178",
     "problems": [
       {
         "problem_id": 6114,
@@ -37133,6 +37294,7 @@
     "year": 2023,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1212",
     "problems": [
       {
         "problem_id": 6344,
@@ -37289,6 +37451,7 @@
     "year": 2023,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1223",
     "problems": [
       {
         "problem_id": 6407,
@@ -37437,6 +37600,7 @@
     "year": 2023,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1237",
     "problems": [
       {
         "problem_id": 6535,
@@ -37583,6 +37747,7 @@
     "year": 2023,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1260",
     "problems": [
       {
         "problem_id": 6645,
@@ -37764,6 +37929,7 @@
     "year": 2023,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1356",
     "problems": [
       {
         "problem_id": 7175,
@@ -37948,6 +38114,7 @@
     "year": 2023,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1376",
     "problems": [
       {
         "problem_id": 7501,
@@ -38100,6 +38267,7 @@
     "year": 2023,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1382",
     "problems": [
       {
         "problem_id": 7558,
@@ -38265,6 +38433,7 @@
     "year": 2023,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1388",
     "problems": [
       {
         "problem_id": 6546,
@@ -38437,6 +38606,7 @@
     "year": 2023,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1403",
     "problems": [
       {
         "problem_id": 7716,
@@ -38599,6 +38769,7 @@
     "year": 2024,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1445",
     "problems": [
       {
         "problem_id": 10054,
@@ -38765,6 +38936,7 @@
     "year": 2023,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1464",
     "problems": [
       {
         "problem_id": 7986,
@@ -38911,6 +39083,7 @@
     "year": 2022,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1465",
     "problems": [
       {
         "problem_id": 4824,
@@ -39055,6 +39228,7 @@
     "year": 2023,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1475",
     "problems": [
       {
         "problem_id": 8003,
@@ -39197,6 +39371,7 @@
     "year": 2024,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1700",
     "problems": [
       {
         "problem_id": 8467,
@@ -39384,6 +39559,7 @@
     "year": 2024,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1717",
     "problems": [
       {
         "problem_id": 7546,
@@ -39545,6 +39721,7 @@
     "year": 2024,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1751",
     "problems": [
       {
         "problem_id": 10013,
@@ -39702,6 +39879,7 @@
     "year": 2023,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1771",
     "problems": [
       {
         "problem_id": 9321,
@@ -39854,6 +40032,7 @@
     "year": 2024,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1781",
     "problems": [
       {
         "problem_id": 8957,
@@ -39971,6 +40150,7 @@
     "year": 2024,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1806",
     "problems": [
       {
         "problem_id": 10000,
@@ -40146,6 +40326,7 @@
     "year": 2024,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1887",
     "problems": [
       {
         "problem_id": 10025,
@@ -40290,6 +40471,7 @@
     "year": 2024,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1902",
     "problems": [
       {
         "problem_id": 10036,
@@ -40445,6 +40627,7 @@
     "year": 2025,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1903",
     "problems": [
       {
         "problem_id": 9690,
@@ -40604,6 +40787,7 @@
     "year": 2024,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1906",
     "problems": [
       {
         "problem_id": 10072,
@@ -40769,6 +40953,7 @@
     "year": 2025,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1917",
     "problems": [
       {
         "problem_id": 10087,
@@ -40934,6 +41119,7 @@
     "year": 2024,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1931",
     "problems": [
       {
         "problem_id": 10166,
@@ -41106,6 +41292,7 @@
     "year": 2025,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1979",
     "problems": [
       {
         "problem_id": 10792,
@@ -41255,6 +41442,7 @@
     "year": 2025,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1980",
     "problems": [
       {
         "problem_id": 10862,
@@ -41438,6 +41626,7 @@
     "year": 2025,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1983",
     "problems": [
       {
         "problem_id": 10688,
@@ -41612,6 +41801,7 @@
     "year": 2025,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2506",
     "problems": [
       {
         "problem_id": 14014,
@@ -41793,6 +41983,7 @@
     "year": 2025,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2514",
     "problems": [
       {
         "problem_id": 14401,
@@ -41980,6 +42171,7 @@
     "year": 2025,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2551",
     "problems": [
       {
         "problem_id": 14130,
@@ -42150,6 +42342,7 @@
     "year": 2025,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2559",
     "problems": [
       {
         "problem_id": 14415,
@@ -42304,6 +42497,7 @@
     "year": 2025,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2575",
     "problems": [
       {
         "problem_id": 14826,
@@ -42326,6 +42520,7 @@
     "year": 2025,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2683",
     "problems": [
       {
         "problem_id": 15474,
@@ -42497,6 +42692,7 @@
     "year": 2025,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2684",
     "problems": [
       {
         "problem_id": 15486,
@@ -42667,6 +42863,7 @@
     "year": 2025,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3194",
     "problems": [
       {
         "problem_id": 16466,
@@ -42843,6 +43040,7 @@
     "year": 2026,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3384",
     "problems": [
       {
         "problem_id": 17161,
@@ -43021,6 +43219,7 @@
     "year": 2026,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3426",
     "problems": [
       {
         "problem_id": 17260,
@@ -43195,6 +43394,7 @@
     "year": 2026,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3541",
     "problems": [
       {
         "problem_id": 15876,
@@ -43366,6 +43566,7 @@
     "year": 2026,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3831",
     "problems": [
       {
         "problem_id": 18333,
@@ -43547,6 +43748,7 @@
     "year": 2026,
     "region": "Petrozavodsk",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3832",
     "problems": [
       {
         "problem_id": 18552,
@@ -43706,6 +43908,7 @@
     "year": 2022,
     "region": "World Finals",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1661&r=1",
+    "contest_url": "https://qoj.ac/contest/1661",
     "problems": [
       {
         "problem_id": 8680,
@@ -43836,6 +44039,7 @@
     "year": 2023,
     "region": "World Finals",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1662&r=1",
+    "contest_url": "https://qoj.ac/contest/1662",
     "problems": [
       {
         "problem_id": 8675,
@@ -43911,6 +44115,7 @@
     "year": 2024,
     "region": "World Finals",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1966",
     "problems": [
       {
         "problem_id": 10401,
@@ -44052,6 +44257,7 @@
     "year": 2025,
     "region": "World Finals",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2522&r=1",
+    "contest_url": "https://qoj.ac/contest/2522",
     "problems": [
       {
         "problem_id": 14601,
@@ -44193,6 +44399,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1695",
     "problems": [
       {
         "problem_id": 8768,
@@ -44361,6 +44568,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1696&r=1",
+    "contest_url": "https://qoj.ac/contest/1696",
     "problems": [
       {
         "problem_id": 8781,
@@ -44562,6 +44770,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1699&r=1",
+    "contest_url": "https://qoj.ac/contest/1699",
     "problems": [
       {
         "problem_id": 8517,
@@ -44745,6 +44954,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1714",
     "problems": [
       {
         "problem_id": 8829,
@@ -44900,6 +45110,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1738&r=1",
+    "contest_url": "https://qoj.ac/contest/1738",
     "problems": [
       {
         "problem_id": 9113,
@@ -45133,6 +45344,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1741",
     "problems": [
       {
         "problem_id": 9130,
@@ -45304,6 +45516,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1762",
     "problems": [
       {
         "problem_id": 9167,
@@ -45461,6 +45674,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1774",
     "problems": [
       {
         "problem_id": 9220,
@@ -45630,6 +45844,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1780&r=1",
+    "contest_url": "https://qoj.ac/contest/1780",
     "problems": [
       {
         "problem_id": 8932,
@@ -45799,6 +46014,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1803",
     "problems": [
       {
         "problem_id": 9434,
@@ -45979,6 +46195,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1804",
     "problems": [
       {
         "problem_id": 9435,
@@ -46181,6 +46398,7 @@
     "year": 2017,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1807",
     "problems": [
       {
         "problem_id": 9450,
@@ -46350,6 +46568,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1812",
     "problems": [
       {
         "problem_id": 9476,
@@ -46545,6 +46764,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1817&r=2",
+    "contest_url": "https://qoj.ac/contest/1817",
     "problems": [
       {
         "problem_id": 9519,
@@ -46722,6 +46942,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1843&r=2",
+    "contest_url": "https://qoj.ac/contest/1843",
     "problems": [
       {
         "problem_id": 9548,
@@ -46890,6 +47111,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1849&r=1",
+    "contest_url": "https://qoj.ac/contest/1849",
     "problems": [
       {
         "problem_id": 9781,
@@ -47053,6 +47275,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1872",
     "problems": [
       {
         "problem_id": 9875,
@@ -47227,6 +47450,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1873&r=1",
+    "contest_url": "https://qoj.ac/contest/1873",
     "problems": [
       {
         "problem_id": 9768,
@@ -47398,6 +47622,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1890",
     "problems": [
       {
         "problem_id": 9959,
@@ -47553,6 +47778,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1901&r=1",
+    "contest_url": "https://qoj.ac/contest/1901",
     "problems": [
       {
         "problem_id": 8611,
@@ -47727,6 +47953,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1924&r=1",
+    "contest_url": "https://qoj.ac/contest/1924",
     "problems": [
       {
         "problem_id": 10114,
@@ -47884,6 +48111,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1939&r=1",
+    "contest_url": "https://qoj.ac/contest/1939",
     "problems": [
       {
         "problem_id": 10214,
@@ -48053,6 +48281,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1954&r=1",
+    "contest_url": "https://qoj.ac/contest/1954",
     "problems": [
       {
         "problem_id": 10265,
@@ -48242,6 +48471,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/1965",
     "problems": [
       {
         "problem_id": 10321,
@@ -48436,6 +48666,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=1993&r=1",
+    "contest_url": "https://qoj.ac/contest/1993",
     "problems": [
       {
         "problem_id": 10701,
@@ -48603,6 +48834,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2021&r=1",
+    "contest_url": "https://qoj.ac/contest/2021",
     "problems": [
       {
         "problem_id": 10723,
@@ -48778,6 +49010,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2025&r=2",
+    "contest_url": "https://qoj.ac/contest/2025",
     "problems": [
       {
         "problem_id": 10736,
@@ -48957,6 +49190,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2036&r=2",
+    "contest_url": "https://qoj.ac/contest/2036",
     "problems": [
       {
         "problem_id": 11105,
@@ -49142,6 +49376,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2071",
     "problems": [
       {
         "problem_id": 10970,
@@ -49370,6 +49605,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2135&r=1",
+    "contest_url": "https://qoj.ac/contest/2135",
     "problems": [
       {
         "problem_id": 12150,
@@ -49556,6 +49792,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3736",
     "problems": [
       {
         "problem_id": 18199,
@@ -49724,6 +49961,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2041&r=1",
+    "contest_url": "https://qoj.ac/contest/2041",
     "problems": [
       {
         "problem_id": 11356,
@@ -49890,6 +50128,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2539&r=1",
+    "contest_url": "https://qoj.ac/contest/2539",
     "problems": [
       {
         "problem_id": 14426,
@@ -50044,6 +50283,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2661&r=1",
+    "contest_url": "https://qoj.ac/contest/2661",
     "problems": [
       {
         "problem_id": 15301,
@@ -50221,6 +50461,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/2668",
     "problems": [
       {
         "problem_id": 15444,
@@ -50383,6 +50624,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2693&r=1",
+    "contest_url": "https://qoj.ac/contest/2693",
     "problems": [
       {
         "problem_id": 15032,
@@ -50568,6 +50810,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2814&r=1",
+    "contest_url": "https://qoj.ac/contest/2814",
     "problems": [
       {
         "problem_id": 16000,
@@ -50724,6 +50967,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2828&r=1",
+    "contest_url": "https://qoj.ac/contest/2828",
     "problems": [
       {
         "problem_id": 16115,
@@ -50878,6 +51122,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2921&r=1",
+    "contest_url": "https://qoj.ac/contest/2921",
     "problems": [
       {
         "problem_id": 16226,
@@ -51061,6 +51306,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=3347&r=1",
+    "contest_url": "https://qoj.ac/contest/3347",
     "problems": [
       {
         "problem_id": 17150,
@@ -51211,6 +51457,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3420",
     "problems": [
       {
         "problem_id": 17246,
@@ -51399,6 +51646,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=3516&r=1",
+    "contest_url": "https://qoj.ac/contest/3516",
     "problems": [
       {
         "problem_id": 17406,
@@ -51563,6 +51811,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3542",
     "problems": [
       {
         "problem_id": 17419,
@@ -51727,6 +51976,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=3575&r=1",
+    "contest_url": "https://qoj.ac/contest/3575",
     "problems": [
       {
         "problem_id": 17713,
@@ -51934,6 +52184,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=3727&r=1",
+    "contest_url": "https://qoj.ac/contest/3727",
     "problems": [
       {
         "problem_id": 18001,
@@ -52117,6 +52368,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=3749&r=1",
+    "contest_url": "https://qoj.ac/contest/3749",
     "problems": [
       {
         "problem_id": 18119,
@@ -52294,6 +52546,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=3773&r=1",
+    "contest_url": "https://qoj.ac/contest/3773",
     "problems": [
       {
         "problem_id": 18401,
@@ -52474,6 +52727,7 @@
     "year": 2024,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=2757&r=1",
+    "contest_url": "https://qoj.ac/contest/2757",
     "problems": [
       {
         "problem_id": 15517,
@@ -52639,6 +52893,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3387",
     "problems": [
       {
         "problem_id": 15419,
@@ -52813,6 +53068,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/3588",
     "problems": [
       {
         "problem_id": 17753,
@@ -52991,6 +53247,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=3766&r=1",
+    "contest_url": "https://qoj.ac/contest/3766",
     "problems": [
       {
         "problem_id": 17342,
@@ -53158,6 +53415,7 @@
     "year": 2025,
     "region": "Universal Cup",
     "editorial_url": "https://qoj.ac/download.php?type=attachments&id=3799&r=2",
+    "contest_url": "https://qoj.ac/contest/3799",
     "problems": [
       {
         "problem_id": 18428,
@@ -53331,6 +53589,7 @@
     "year": 2026,
     "region": "Asia East Continent",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4071",
     "problems": [
       {
         "problem_id": 20016,
@@ -53494,6 +53753,7 @@
     "year": 2026,
     "region": "Asia East Continent",
     "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4113",
     "problems": [
       {
         "problem_id": 20236,
@@ -53620,6 +53880,2640 @@
         "problem_id": 20247,
         "problem_name": "Loop",
         "problem_url": "https://qoj.ac/contest/4113/problem/20247",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": -216770522111721,
+    "contest_name": "Nanjing",
+    "year": 2026,
+    "region": "Asia East Continent",
+    "editorial_url": null,
+    "contest_url": "https://board.xcpcio.com/icpc/51st/nanjing",
+    "problems": [
+      {
+        "problem_id": -215098509737560,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛南京站 - 正式赛 A",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -179608858189955,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛南京站 - 正式赛 B",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -65874396231133,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛南京站 - 正式赛 C",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -103538742820210,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛南京站 - 正式赛 D",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -123945675138836,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛南京站 - 正式赛 E",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -59629299122119,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛南京站 - 正式赛 F",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -174402121819364,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛南京站 - 正式赛 G",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -280673441292804,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛南京站 - 正式赛 H",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -222691776132586,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛南京站 - 正式赛 I",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -253100114683507,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛南京站 - 正式赛 J",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -93868499203556,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛南京站 - 正式赛 K",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -111515597212181,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛南京站 - 正式赛 L",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -145740927317523,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛南京站 - 正式赛 M",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": -162528714534630,
+    "contest_name": "Shenyang",
+    "year": 2026,
+    "region": "Asia East Continent",
+    "editorial_url": null,
+    "contest_url": "https://board.xcpcio.com/icpc/51st/shenyang",
+    "problems": [
+      {
+        "problem_id": -106104781513683,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛沈阳站 - 正式赛 A",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -82003273299474,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛沈阳站 - 正式赛 B",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -200727835011925,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛沈阳站 - 正式赛 C",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -137744279686826,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛沈阳站 - 正式赛 D",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -214890734076887,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛沈阳站 - 正式赛 E",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -21905232569140,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛沈阳站 - 正式赛 F",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -3870173752157,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛沈阳站 - 正式赛 G",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -63032760065132,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛沈阳站 - 正式赛 H",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -86399191008031,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛沈阳站 - 正式赛 I",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -9772984099788,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛沈阳站 - 正式赛 J",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -210857693399512,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛沈阳站 - 正式赛 K",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -74492653037716,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛沈阳站 - 正式赛 L",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": -199915917579982,
+        "problem_name": "「华为杯」第 51 届 ICPC 国际大学生程序设计竞赛区域赛沈阳站 - 正式赛 M",
+        "problem_url": null,
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4126,
+    "contest_name": "Grand Prix of Nizhny Novgorod",
+    "year": 2026,
+    "region": "Universal Cup",
+    "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4126",
+    "problems": [
+      {
+        "problem_id": 20248,
+        "problem_name": "Astana Hard Metro",
+        "problem_url": "https://qoj.ac/contest/4126/problem/20248",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20249,
+        "problem_name": "Beggar Robin",
+        "problem_url": "https://qoj.ac/contest/4126/problem/20249",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20250,
+        "problem_name": "Cost of Conflicts",
+        "problem_url": "https://qoj.ac/contest/4126/problem/20250",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20251,
+        "problem_name": "Digesting",
+        "problem_url": "https://qoj.ac/contest/4126/problem/20251",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20252,
+        "problem_name": "Easter Eggs",
+        "problem_url": "https://qoj.ac/contest/4126/problem/20252",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20253,
+        "problem_name": "Fresh Cartridges",
+        "problem_url": "https://qoj.ac/contest/4126/problem/20253",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20254,
+        "problem_name": "Game Show: XOR Edition",
+        "problem_url": "https://qoj.ac/contest/4126/problem/20254",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20255,
+        "problem_name": "Hockey Hog",
+        "problem_url": "https://qoj.ac/contest/4126/problem/20255",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20256,
+        "problem_name": "Incident in the Bakery",
+        "problem_url": "https://qoj.ac/contest/4126/problem/20256",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20257,
+        "problem_name": "Jaded Juice",
+        "problem_url": "https://qoj.ac/contest/4126/problem/20257",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20258,
+        "problem_name": "Kitchen Knives",
+        "problem_url": "https://qoj.ac/contest/4126/problem/20258",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20259,
+        "problem_name": "Leave Triple & Link Tree",
+        "problem_url": "https://qoj.ac/contest/4126/problem/20259",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20260,
+        "problem_name": "Minecraft Spiderweb",
+        "problem_url": "https://qoj.ac/contest/4126/problem/20260",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20261,
+        "problem_name": "Native Niuean",
+        "problem_url": "https://qoj.ac/contest/4126/problem/20261",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4207,
+    "contest_name": "Grand Prix of EPS",
+    "year": 2026,
+    "region": "Universal Cup",
+    "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4207",
+    "problems": [
+      {
+        "problem_id": 20715,
+        "problem_name": "All the Trades Are the Best",
+        "problem_url": "https://qoj.ac/contest/4207/problem/20715",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 21379,
+        "problem_name": "Best Trades Again",
+        "problem_url": "https://qoj.ac/contest/4207/problem/21379",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20717,
+        "problem_name": "Cross the Road",
+        "problem_url": "https://qoj.ac/contest/4207/problem/20717",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20718,
+        "problem_name": "Dodge the Car",
+        "problem_url": "https://qoj.ac/contest/4207/problem/20718",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20719,
+        "problem_name": "EPS.AC",
+        "problem_url": "https://qoj.ac/contest/4207/problem/20719",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20720,
+        "problem_name": "Flight of the Night Butterfly",
+        "problem_url": "https://qoj.ac/contest/4207/problem/20720",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20721,
+        "problem_name": "Growing Prefix Span",
+        "problem_url": "https://qoj.ac/contest/4207/problem/20721",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 21380,
+        "problem_name": "Harmonizing Charges",
+        "problem_url": "https://qoj.ac/contest/4207/problem/21380",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20723,
+        "problem_name": "Integer Triple",
+        "problem_url": "https://qoj.ac/contest/4207/problem/20723",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20724,
+        "problem_name": "Jobs through Pipelines",
+        "problem_url": "https://qoj.ac/contest/4207/problem/20724",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 21381,
+        "problem_name": "Killer Die",
+        "problem_url": "https://qoj.ac/contest/4207/problem/21381",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20726,
+        "problem_name": "Logging Compression",
+        "problem_url": "https://qoj.ac/contest/4207/problem/20726",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20727,
+        "problem_name": "Median Equals X",
+        "problem_url": "https://qoj.ac/contest/4207/problem/20727",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4538,
+    "contest_name": "Ho Chi Minh City",
+    "year": 2022,
+    "region": "Asia Pacific",
+    "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4538",
+    "problems": [
+      {
+        "problem_id": 22828,
+        "problem_name": "Aqua",
+        "problem_url": "https://qoj.ac/contest/4538/problem/22828",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22829,
+        "problem_name": "Binary Assignment",
+        "problem_url": "https://qoj.ac/contest/4538/problem/22829",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22830,
+        "problem_name": "Changing Seats",
+        "problem_url": "https://qoj.ac/contest/4538/problem/22830",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22831,
+        "problem_name": "Date, date & date!",
+        "problem_url": "https://qoj.ac/contest/4538/problem/22831",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22832,
+        "problem_name": "Emotional Damage",
+        "problem_url": "https://qoj.ac/contest/4538/problem/22832",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22833,
+        "problem_name": "Fabulous Activity",
+        "problem_url": "https://qoj.ac/contest/4538/problem/22833",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22834,
+        "problem_name": "Goal-line Technology",
+        "problem_url": "https://qoj.ac/contest/4538/problem/22834",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22835,
+        "problem_name": "Hardest Problem",
+        "problem_url": "https://qoj.ac/contest/4538/problem/22835",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22836,
+        "problem_name": "Inversion",
+        "problem_url": "https://qoj.ac/contest/4538/problem/22836",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22837,
+        "problem_name": "Joining Letters",
+        "problem_url": "https://qoj.ac/contest/4538/problem/22837",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22838,
+        "problem_name": "K Paths",
+        "problem_url": "https://qoj.ac/contest/4538/problem/22838",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22839,
+        "problem_name": "Lexicographically Minimum",
+        "problem_url": "https://qoj.ac/contest/4538/problem/22839",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22840,
+        "problem_name": "Median of Xor Sequence — Easy Version",
+        "problem_url": "https://qoj.ac/contest/4538/problem/22840",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4565,
+    "contest_name": "Grand Prix of Gorkovskaya",
+    "year": 2026,
+    "region": "Universal Cup",
+    "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4565",
+    "problems": [
+      {
+        "problem_id": 20729,
+        "problem_name": "Adjacent Decrements",
+        "problem_url": "https://qoj.ac/contest/4565/problem/20729",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20730,
+        "problem_name": "Binary Rotations",
+        "problem_url": "https://qoj.ac/contest/4565/problem/20730",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20731,
+        "problem_name": "Circle Construction",
+        "problem_url": "https://qoj.ac/contest/4565/problem/20731",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20732,
+        "problem_name": "Dynamic Adjustment",
+        "problem_url": "https://qoj.ac/contest/4565/problem/20732",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20733,
+        "problem_name": "Equal Totients",
+        "problem_url": "https://qoj.ac/contest/4565/problem/20733",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20734,
+        "problem_name": "Flipping Lamps",
+        "problem_url": "https://qoj.ac/contest/4565/problem/20734",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20735,
+        "problem_name": "Game",
+        "problem_url": "https://qoj.ac/contest/4565/problem/20735",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20736,
+        "problem_name": "Hamiltonian LCM",
+        "problem_url": "https://qoj.ac/contest/4565/problem/20736",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20737,
+        "problem_name": "Interval MST",
+        "problem_url": "https://qoj.ac/contest/4565/problem/20737",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20738,
+        "problem_name": "Jump Cycle",
+        "problem_url": "https://qoj.ac/contest/4565/problem/20738",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20739,
+        "problem_name": "Keep Colors Apart",
+        "problem_url": "https://qoj.ac/contest/4565/problem/20739",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20740,
+        "problem_name": "Leaf Meeting",
+        "problem_url": "https://qoj.ac/contest/4565/problem/20740",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20741,
+        "problem_name": "Matching Substrings",
+        "problem_url": "https://qoj.ac/contest/4565/problem/20741",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4566,
+    "contest_name": "The 2026 ICPC North America Qualifier (NAQ 2026)",
+    "year": 2026,
+    "region": "North America",
+    "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4566",
+    "problems": [
+      {
+        "problem_id": 24214,
+        "problem_name": "The n Days of Christmas",
+        "problem_url": "https://qoj.ac/contest/4566/problem/24214",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24215,
+        "problem_name": "Airtime",
+        "problem_url": "https://qoj.ac/contest/4566/problem/24215",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24216,
+        "problem_name": "Babylon",
+        "problem_url": "https://qoj.ac/contest/4566/problem/24216",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24217,
+        "problem_name": "Brownie Cutting",
+        "problem_url": "https://qoj.ac/contest/4566/problem/24217",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24218,
+        "problem_name": "Espresso Macchiato",
+        "problem_url": "https://qoj.ac/contest/4566/problem/24218",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24219,
+        "problem_name": "Fairytale",
+        "problem_url": "https://qoj.ac/contest/4566/problem/24219",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24220,
+        "problem_name": "Last Dance",
+        "problem_url": "https://qoj.ac/contest/4566/problem/24220",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24221,
+        "problem_name": "My System",
+        "problem_url": "https://qoj.ac/contest/4566/problem/24221",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24222,
+        "problem_name": "Only One Order",
+        "problem_url": "https://qoj.ac/contest/4566/problem/24222",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24223,
+        "problem_name": "Regarde!",
+        "problem_url": "https://qoj.ac/contest/4566/problem/24223",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24224,
+        "problem_name": "Six Seven",
+        "problem_url": "https://qoj.ac/contest/4566/problem/24224",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24225,
+        "problem_name": "Stardust Curry",
+        "problem_url": "https://qoj.ac/contest/4566/problem/24225",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24226,
+        "problem_name": "Tourism Balance",
+        "problem_url": "https://qoj.ac/contest/4566/problem/24226",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4569,
+    "contest_name": "Extra Stage: Dolgoprudny",
+    "year": 2026,
+    "region": "Universal Cup",
+    "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4569",
+    "problems": [
+      {
+        "problem_id": 23126,
+        "problem_name": "Mafia and Candies",
+        "problem_url": "https://qoj.ac/contest/4569/problem/23126",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23127,
+        "problem_name": "Valid Assignment",
+        "problem_url": "https://qoj.ac/contest/4569/problem/23127",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23128,
+        "problem_name": "Reconstruction",
+        "problem_url": "https://qoj.ac/contest/4569/problem/23128",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23129,
+        "problem_name": "Penalties on a Segment of Cities",
+        "problem_url": "https://qoj.ac/contest/4569/problem/23129",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23130,
+        "problem_name": "Orientation of a Graph",
+        "problem_url": "https://qoj.ac/contest/4569/problem/23130",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23131,
+        "problem_name": "Trading",
+        "problem_url": "https://qoj.ac/contest/4569/problem/23131",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23132,
+        "problem_name": "XOR of All Children",
+        "problem_url": "https://qoj.ac/contest/4569/problem/23132",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23133,
+        "problem_name": "A Near-Inversion Graph",
+        "problem_url": "https://qoj.ac/contest/4569/problem/23133",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23134,
+        "problem_name": "Swap and Shift",
+        "problem_url": "https://qoj.ac/contest/4569/problem/23134",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23135,
+        "problem_name": "Minimum Spanning Forest",
+        "problem_url": "https://qoj.ac/contest/4569/problem/23135",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23136,
+        "problem_name": "Three Permutations",
+        "problem_url": "https://qoj.ac/contest/4569/problem/23136",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23137,
+        "problem_name": "Graph Built by XOR",
+        "problem_url": "https://qoj.ac/contest/4569/problem/23137",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23138,
+        "problem_name": "Board Game",
+        "problem_url": "https://qoj.ac/contest/4569/problem/23138",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23139,
+        "problem_name": "Transfers in a Cactus Graph",
+        "problem_url": "https://qoj.ac/contest/4569/problem/23139",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4576,
+    "contest_name": "Universal Cup Semifinals",
+    "year": 2026,
+    "region": "Universal Cup",
+    "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4576",
+    "problems": [
+      {
+        "problem_id": 22877,
+        "problem_name": "Best Contest Director",
+        "problem_url": "https://qoj.ac/contest/4576/problem/22877",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22878,
+        "problem_name": "Call You With Your Name 4",
+        "problem_url": "https://qoj.ac/contest/4576/problem/22878",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22879,
+        "problem_name": "Strange Sorting 3",
+        "problem_url": "https://qoj.ac/contest/4576/problem/22879",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22880,
+        "problem_name": "Guess the Graph",
+        "problem_url": "https://qoj.ac/contest/4576/problem/22880",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22881,
+        "problem_name": "Subset Sums",
+        "problem_url": "https://qoj.ac/contest/4576/problem/22881",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22882,
+        "problem_name": "Mode",
+        "problem_url": "https://qoj.ac/contest/4576/problem/22882",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22883,
+        "problem_name": "Teleport",
+        "problem_url": "https://qoj.ac/contest/4576/problem/22883",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22884,
+        "problem_name": "Idols and Fans",
+        "problem_url": "https://qoj.ac/contest/4576/problem/22884",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22885,
+        "problem_name": "Graph Game",
+        "problem_url": "https://qoj.ac/contest/4576/problem/22885",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22886,
+        "problem_name": "Merge Sequence",
+        "problem_url": "https://qoj.ac/contest/4576/problem/22886",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22887,
+        "problem_name": "Iridescent Universe 3",
+        "problem_url": "https://qoj.ac/contest/4576/problem/22887",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22888,
+        "problem_name": "White Night 3",
+        "problem_url": "https://qoj.ac/contest/4576/problem/22888",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 22889,
+        "problem_name": "Queue Editor 2",
+        "problem_url": "https://qoj.ac/contest/4576/problem/22889",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4593,
+    "contest_name": "Xi'an",
+    "year": 2026,
+    "region": "Asia East Continent",
+    "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4593",
+    "problems": [
+      {
+        "problem_id": 20051,
+        "problem_name": "And Revive The Melody",
+        "problem_url": "https://qoj.ac/contest/4593/problem/20051",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20052,
+        "problem_name": "Break The Speakers",
+        "problem_url": "https://qoj.ac/contest/4593/problem/20052",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20053,
+        "problem_name": "Cryptarithm",
+        "problem_url": "https://qoj.ac/contest/4593/problem/20053",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20054,
+        "problem_name": "Don't Fight The Music",
+        "problem_url": "https://qoj.ac/contest/4593/problem/20054",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20055,
+        "problem_name": "Ether Strike",
+        "problem_url": "https://qoj.ac/contest/4593/problem/20055",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20056,
+        "problem_name": "False Amber",
+        "problem_url": "https://qoj.ac/contest/4593/problem/20056",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20057,
+        "problem_name": "Gungnir Fracture",
+        "problem_url": "https://qoj.ac/contest/4593/problem/20057",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20058,
+        "problem_name": "Hydra",
+        "problem_url": "https://qoj.ac/contest/4593/problem/20058",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20059,
+        "problem_name": "Incyde",
+        "problem_url": "https://qoj.ac/contest/4593/problem/20059",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20060,
+        "problem_name": "Journey",
+        "problem_url": "https://qoj.ac/contest/4593/problem/20060",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20061,
+        "problem_name": "Kikai No Tsubasa",
+        "problem_url": "https://qoj.ac/contest/4593/problem/20061",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20062,
+        "problem_name": "Lucid Traveler",
+        "problem_url": "https://qoj.ac/contest/4593/problem/20062",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 20063,
+        "problem_name": "Melodiniq",
+        "problem_url": "https://qoj.ac/contest/4593/problem/20063",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4605,
+    "contest_name": "Nordic Collegiate Programming Contest",
+    "year": 2026,
+    "region": "Europe",
+    "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4605",
+    "problems": [
+      {
+        "problem_id": 23605,
+        "problem_name": "Autumn Audio",
+        "problem_url": "https://qoj.ac/contest/4605/problem/23605",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23606,
+        "problem_name": "Beguiling Your Boss",
+        "problem_url": "https://qoj.ac/contest/4605/problem/23606",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23607,
+        "problem_name": "Captain's Compass",
+        "problem_url": "https://qoj.ac/contest/4605/problem/23607",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23608,
+        "problem_name": "Dactylic Hexameter",
+        "problem_url": "https://qoj.ac/contest/4605/problem/23608",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23609,
+        "problem_name": "Exclusive Display",
+        "problem_url": "https://qoj.ac/contest/4605/problem/23609",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23610,
+        "problem_name": "Folds",
+        "problem_url": "https://qoj.ac/contest/4605/problem/23610",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23611,
+        "problem_name": "Grand Hotel",
+        "problem_url": "https://qoj.ac/contest/4605/problem/23611",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23612,
+        "problem_name": "Hydration Station",
+        "problem_url": "https://qoj.ac/contest/4605/problem/23612",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23613,
+        "problem_name": "Isolation Intrusion",
+        "problem_url": "https://qoj.ac/contest/4605/problem/23613",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23614,
+        "problem_name": "Judicious Journey",
+        "problem_url": "https://qoj.ac/contest/4605/problem/23614",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23615,
+        "problem_name": "Kumquat Orchard",
+        "problem_url": "https://qoj.ac/contest/4605/problem/23615",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23616,
+        "problem_name": "Laundry Lines",
+        "problem_url": "https://qoj.ac/contest/4605/problem/23616",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23617,
+        "problem_name": "Marooned",
+        "problem_url": "https://qoj.ac/contest/4605/problem/23617",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4606,
+    "contest_name": "UK & Ireland Programming Contest",
+    "year": 2026,
+    "region": "Europe",
+    "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4606",
+    "problems": [
+      {
+        "problem_id": 23618,
+        "problem_name": "Austere Sign",
+        "problem_url": "https://qoj.ac/contest/4606/problem/23618",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23619,
+        "problem_name": "Bust Blasting",
+        "problem_url": "https://qoj.ac/contest/4606/problem/23619",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23620,
+        "problem_name": "Cryptlet",
+        "problem_url": "https://qoj.ac/contest/4606/problem/23620",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23621,
+        "problem_name": "Dire Strait",
+        "problem_url": "https://qoj.ac/contest/4606/problem/23621",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23622,
+        "problem_name": "Elderberry Wine",
+        "problem_url": "https://qoj.ac/contest/4606/problem/23622",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23623,
+        "problem_name": "Footnotes",
+        "problem_url": "https://qoj.ac/contest/4606/problem/23623",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23624,
+        "problem_name": "Gloucester Somersault",
+        "problem_url": "https://qoj.ac/contest/4606/problem/23624",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23625,
+        "problem_name": "Hoptimisation",
+        "problem_url": "https://qoj.ac/contest/4606/problem/23625",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23626,
+        "problem_name": "Inverse Sum",
+        "problem_url": "https://qoj.ac/contest/4606/problem/23626",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23627,
+        "problem_name": "Jammer Jam",
+        "problem_url": "https://qoj.ac/contest/4606/problem/23627",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23628,
+        "problem_name": "Kilt Quilt",
+        "problem_url": "https://qoj.ac/contest/4606/problem/23628",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23629,
+        "problem_name": "Lawn Stripes",
+        "problem_url": "https://qoj.ac/contest/4606/problem/23629",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23630,
+        "problem_name": "Mid Clocking",
+        "problem_url": "https://qoj.ac/contest/4606/problem/23630",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4607,
+    "contest_name": "Chengdu",
+    "year": 2026,
+    "region": "Asia East Continent",
+    "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4607",
+    "problems": [
+      {
+        "problem_id": 23592,
+        "problem_name": "Average of Averages",
+        "problem_url": "https://qoj.ac/contest/4607/problem/23592",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23593,
+        "problem_name": "Bouncing Particles",
+        "problem_url": "https://qoj.ac/contest/4607/problem/23593",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23594,
+        "problem_name": "Counting Arrays",
+        "problem_url": "https://qoj.ac/contest/4607/problem/23594",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23595,
+        "problem_name": "Duel of Wrath",
+        "problem_url": "https://qoj.ac/contest/4607/problem/23595",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23596,
+        "problem_name": "Enclose the Point",
+        "problem_url": "https://qoj.ac/contest/4607/problem/23596",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23597,
+        "problem_name": "First Word",
+        "problem_url": "https://qoj.ac/contest/4607/problem/23597",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23598,
+        "problem_name": "Graph Reconstruction",
+        "problem_url": "https://qoj.ac/contest/4607/problem/23598",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23599,
+        "problem_name": "Hidden Order",
+        "problem_url": "https://qoj.ac/contest/4607/problem/23599",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23600,
+        "problem_name": "Invisible Edges",
+        "problem_url": "https://qoj.ac/contest/4607/problem/23600",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23601,
+        "problem_name": "Joint Relocation",
+        "problem_url": "https://qoj.ac/contest/4607/problem/23601",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23602,
+        "problem_name": "Keep Your Distance",
+        "problem_url": "https://qoj.ac/contest/4607/problem/23602",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23603,
+        "problem_name": "Long Slides",
+        "problem_url": "https://qoj.ac/contest/4607/problem/23603",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23604,
+        "problem_name": "Minimum Records",
+        "problem_url": "https://qoj.ac/contest/4607/problem/23604",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4614,
+    "contest_name": "Moscow Regional Contest / Moscow Subregional",
+    "year": 2025,
+    "region": "Northern Eurasia",
+    "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4614",
+    "problems": [
+      {
+        "problem_id": 23643,
+        "problem_name": "Arrange Jewels In Necklace",
+        "problem_url": "https://qoj.ac/contest/4614/problem/23643",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23644,
+        "problem_name": "Bean Machine, Reinvented",
+        "problem_url": "https://qoj.ac/contest/4614/problem/23644",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23645,
+        "problem_name": "Captain Thrawn",
+        "problem_url": "https://qoj.ac/contest/4614/problem/23645",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23646,
+        "problem_name": "Divisibility By Factorial",
+        "problem_url": "https://qoj.ac/contest/4614/problem/23646",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23647,
+        "problem_name": "Expected Symmetry",
+        "problem_url": "https://qoj.ac/contest/4614/problem/23647",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23648,
+        "problem_name": "Fast Value Changes",
+        "problem_url": "https://qoj.ac/contest/4614/problem/23648",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23649,
+        "problem_name": "Gravity Zero Experiments",
+        "problem_url": "https://qoj.ac/contest/4614/problem/23649",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23650,
+        "problem_name": "Homework Of Xenia",
+        "problem_url": "https://qoj.ac/contest/4614/problem/23650",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23651,
+        "problem_name": "Interactive Array Modifications",
+        "problem_url": "https://qoj.ac/contest/4614/problem/23651",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23652,
+        "problem_name": "JQU",
+        "problem_url": "https://qoj.ac/contest/4614/problem/23652",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23653,
+        "problem_name": "Know Your Powers",
+        "problem_url": "https://qoj.ac/contest/4614/problem/23653",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23654,
+        "problem_name": "Latin Words",
+        "problem_url": "https://qoj.ac/contest/4614/problem/23654",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23655,
+        "problem_name": "Mobile Game Development Lab",
+        "problem_url": "https://qoj.ac/contest/4614/problem/23655",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4617,
+    "contest_name": "Grand Prix of Hyakumanben",
+    "year": 2026,
+    "region": "Universal Cup",
+    "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4617",
+    "problems": [
+      {
+        "problem_id": 23669,
+        "problem_name": "Fugaku NK-kei",
+        "problem_url": "https://qoj.ac/contest/4617/problem/23669",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23670,
+        "problem_name": "PerMutation",
+        "problem_url": "https://qoj.ac/contest/4617/problem/23670",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23671,
+        "problem_name": "Moving Silver",
+        "problem_url": "https://qoj.ac/contest/4617/problem/23671",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23672,
+        "problem_name": "Go Robots",
+        "problem_url": "https://qoj.ac/contest/4617/problem/23672",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23673,
+        "problem_name": "K-Independent Matrix",
+        "problem_url": "https://qoj.ac/contest/4617/problem/23673",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23674,
+        "problem_name": "Path XOR on MST",
+        "problem_url": "https://qoj.ac/contest/4617/problem/23674",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23675,
+        "problem_name": "Source to Sink",
+        "problem_url": "https://qoj.ac/contest/4617/problem/23675",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23676,
+        "problem_name": "Please Insert Coin",
+        "problem_url": "https://qoj.ac/contest/4617/problem/23676",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23677,
+        "problem_name": "tatesoto decomposition",
+        "problem_url": "https://qoj.ac/contest/4617/problem/23677",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23678,
+        "problem_name": "Hugest Number",
+        "problem_url": "https://qoj.ac/contest/4617/problem/23678",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23679,
+        "problem_name": "Dyads of Hanoi",
+        "problem_url": "https://qoj.ac/contest/4617/problem/23679",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23680,
+        "problem_name": "Consecutive Pairs",
+        "problem_url": "https://qoj.ac/contest/4617/problem/23680",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23681,
+        "problem_name": "I hate prime numbers",
+        "problem_url": "https://qoj.ac/contest/4617/problem/23681",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23682,
+        "problem_name": "Delete Sad Faces (Hard)",
+        "problem_url": "https://qoj.ac/contest/4617/problem/23682",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4620,
+    "contest_name": "Rocky Mountain",
+    "year": 2026,
+    "region": "North America",
+    "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4620",
+    "problems": [
+      {
+        "problem_id": 23995,
+        "problem_name": "Asynchronous Update",
+        "problem_url": "https://qoj.ac/contest/4620/problem/23995",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23996,
+        "problem_name": "Barista Schedule",
+        "problem_url": "https://qoj.ac/contest/4620/problem/23996",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23997,
+        "problem_name": "Betting Simulation",
+        "problem_url": "https://qoj.ac/contest/4620/problem/23997",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23998,
+        "problem_name": "Fibonacho",
+        "problem_url": "https://qoj.ac/contest/4620/problem/23998",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23999,
+        "problem_name": "Game Show Guessing",
+        "problem_url": "https://qoj.ac/contest/4620/problem/23999",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24000,
+        "problem_name": "ICPC Teams",
+        "problem_url": "https://qoj.ac/contest/4620/problem/24000",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24002,
+        "problem_name": "Permutastic",
+        "problem_url": "https://qoj.ac/contest/4620/problem/24002",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24003,
+        "problem_name": "Rotate Puzzle",
+        "problem_url": "https://qoj.ac/contest/4620/problem/24003",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24004,
+        "problem_name": "Rotation Collation",
+        "problem_url": "https://qoj.ac/contest/4620/problem/24004",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24005,
+        "problem_name": "Textbook Display",
+        "problem_url": "https://qoj.ac/contest/4620/problem/24005",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24001,
+        "problem_name": "Minimum Transfer Wait",
+        "problem_url": "https://qoj.ac/contest/4620/problem/24001",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24006,
+        "problem_name": "Vacuum A Round",
+        "problem_url": "https://qoj.ac/contest/4620/problem/24006",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 24007,
+        "problem_name": "XOR Sharing",
+        "problem_url": "https://qoj.ac/contest/4620/problem/24007",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      }
+    ]
+  },
+  {
+    "contest_id": 4694,
+    "contest_name": "Wuhan",
+    "year": 2026,
+    "region": "Asia East Continent",
+    "editorial_url": null,
+    "contest_url": "https://qoj.ac/contest/4694",
+    "problems": [
+      {
+        "problem_id": 23656,
+        "problem_name": "It Is Late at Night, Remember to Rest",
+        "problem_url": "https://qoj.ac/contest/4694/problem/23656",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23657,
+        "problem_name": "When Does BPE Stop Doubling?",
+        "problem_url": "https://qoj.ac/contest/4694/problem/23657",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23658,
+        "problem_name": "Congruence Equation of Puro",
+        "problem_url": "https://qoj.ac/contest/4694/problem/23658",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23659,
+        "problem_name": "Travel Plan",
+        "problem_url": "https://qoj.ac/contest/4694/problem/23659",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23660,
+        "problem_name": "Coffee Record",
+        "problem_url": "https://qoj.ac/contest/4694/problem/23660",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23661,
+        "problem_name": "Skill Activation Order",
+        "problem_url": "https://qoj.ac/contest/4694/problem/23661",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23662,
+        "problem_name": "Shuffle Playlist",
+        "problem_url": "https://qoj.ac/contest/4694/problem/23662",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23663,
+        "problem_name": "Galaxy War",
+        "problem_url": "https://qoj.ac/contest/4694/problem/23663",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23664,
+        "problem_name": "Karma Gate",
+        "problem_url": "https://qoj.ac/contest/4694/problem/23664",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23665,
+        "problem_name": "Number Game",
+        "problem_url": "https://qoj.ac/contest/4694/problem/23665",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23666,
+        "problem_name": "Salary Adjustment",
+        "problem_url": "https://qoj.ac/contest/4694/problem/23666",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23667,
+        "problem_name": "Jigsaw Puzzle",
+        "problem_url": "https://qoj.ac/contest/4694/problem/23667",
+        "primary_tags": null,
+        "secondary_tags": null,
+        "extra_tags": null,
+        "importance": null,
+        "importance_confidence": null,
+        "olympiad_techniques": null
+      },
+      {
+        "problem_id": 23668,
+        "problem_name": "Empire of Construction",
+        "problem_url": "https://qoj.ac/contest/4694/problem/23668",
         "primary_tags": null,
         "secondary_tags": null,
         "extra_tags": null,
