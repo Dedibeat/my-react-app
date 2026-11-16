@@ -9,7 +9,7 @@ which the app renders as blank. Ids already in canonical/tagged.json are skipped
     python3 scripts/add_contests.py 4071 4113
     python3 scripts/slim_tagged.py   # regenerate data/tagged.json afterwards
 
-Then copy ../analyze_standings/output/problem_ratings_calibrated.json to
+Then copy ../analyze_standings/output/problem_ratings_hier.json to
 data/problem_rating.json and re-run scripts/export_contest_fields.py (DETAILS.md).
 """
 import json

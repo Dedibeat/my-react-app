@@ -2620,3 +2620,39 @@ The analyzer's `details.md` (2026-10-13, second entry) has the evidence.
 read up to ~100 lower. That is the measured mirror advantage: a virtual run is
 an online entry, like the board's mirror rows. Saved results are recomputed
 in the browser, so no migration is needed.
+
+
+## Hierarchical binary with time: all rating products refreshed (2026-11-16)
+
+Shipped the analyzer's b3119a1 `time_skip` candidate: five solve-time slices,
+weight 0.25, skip_partial, hierarchical team and problem priors. Its trusted
+184-anchor nested-LOCO RMSE is 205.9 (see analyzer hier_time_report.md for limits).
+All rating products now use this model and its affine CF map, replacing the
+prior mixture of DE problems, binary performances and survival medal bars.
+
+- `data/problem_rating.json`: byte copy of analyzer `problem_ratings_hier.json`,
+  3,409 problem appearances, including UCup; no old UCup-rating merge required.
+- `data/problem_calibration.json`: released settings, map and provenance.
+- `data/contest_fields/`: 260 freshly exported contest fields and conversion
+  table; saved raw results automatically recompute on the new scale.
+- `data/medal_viewer.html`: analyzer's regenerated medal bars, 358 badges and
+  cutoff performances across its 28 supported contests. Medal counts and
+  official-event ranking rules stay intact.
+- Added 17 newly available nonempty tagged contests to the existing catalog,
+  preserving existing tags/importance; regenerated served and public copies.
+- Retained actual contest URLs in the slim catalog and use them in App.jsx;
+  synthetic ids for Nanjing/Shenyang 2026 now link to XCPCIO. Problems without
+  published task links fall back to their contest board.
+- `scripts/add_contests.py` now names the hierarchical rating source.
+
+Verification: analyzer's 23 focused tests pass; all 3,409 released difficulties
+match the shared fit within 0.05 displayed rounding. App lint and production
+build pass. Checked 5,556 sampled official performances and 1,040 virtual
+results across all 260 fields; copied problem JSON exactly equals the release.
+The dev server serves the medal viewer with HTTP 200. Chromium headless
+rendering could not be verified: the browser timed out without producing DOM.
+
+Reproduce after an analyzer update: run its `python -m arch_b.hier_time release`
+and production exporters (see analyzer README), copy the hierarchical rating
+and calibration files plus medal_viewer.html, then run
+`python scripts/export_contest_fields.py` and `npm run build:gh`.

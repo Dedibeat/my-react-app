@@ -34,7 +34,7 @@ function flattenContests(contests) {
         id: String(p.problem_id),
         contest: c.contest_name + ' ' + c.year,
         contestId: c.contest_id,
-        contestUrl: `https://qoj.ac/contest/${c.contest_id}`,
+        contestUrl: c.contest_url || `https://qoj.ac/contest/${c.contest_id}`,
         editorialUrl: c.editorial_url
           ? editorialHref(c.contest_id, new URL(c.editorial_url).searchParams.get('r'))
           : null,
@@ -51,7 +51,7 @@ function flattenContests(contests) {
         practiceHint,
         olyHay,
         rating: null,
-        url: p.problem_url,
+        url: p.problem_url || c.contest_url,
         teamsSolved: p.problem_solved_in_contest,
       });
     }
